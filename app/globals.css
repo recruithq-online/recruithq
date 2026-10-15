@@ -348,13 +348,33 @@
     @apply text-[11px] bg-[#f0f4fa] text-[#526079] px-2 py-1.5 rounded-md;
     border: 1px solid #e8edf5;
   }
+  .team-carousel-track {
+    @apply grid grid-cols-4 gap-[18px] mt-5;
+  }
+  .team-carousel-controls {
+    display: none;
+  }
   .person {
-    @apply bg-white rounded-[14px] p-5;
+    @apply bg-white rounded-[14px] overflow-hidden;
     border: 1px solid #e0e6f0;
     box-shadow: 0 4px 16px #162b4d05;
   }
-  .person .avatar {
-    border-radius: 13px;
+  .person-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 8 / 9;
+    object-fit: cover;
+    border-bottom: 1px solid #e0e6f0;
+  }
+  .person-details {
+    padding: 20px;
+  }
+  .person-role {
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue);
   }
   .person h3 {
     @apply mt-0 mx-0 mb-[5px];
@@ -582,6 +602,11 @@
     box-shadow: 0 8px 30px #0003;
   }
 
+  @media (max-width: 1000px) {
+    .team-carousel-track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
   @media (max-width: 800px) {
     .nav {
       height: 66px;
@@ -634,6 +659,72 @@
     }
   }
   @media (max-width: 560px) {
+    .team-carousel-track {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 85%;
+      gap: 14px;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      padding-bottom: 8px;
+    }
+    .team-carousel-track::-webkit-scrollbar {
+      display: none;
+    }
+    .team-carousel-track > .person {
+      min-width: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    .team-carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .team-carousel-arrow {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--blue);
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .team-carousel-arrow:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+    .team-carousel-dots {
+      display: flex;
+      gap: 4px;
+    }
+    .team-carousel-dot {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 36px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+    .team-carousel-dot::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #c5d5f6;
+    }
+    .team-carousel-dot[aria-current="true"]::before {
+      width: 20px;
+      border-radius: 4px;
+      background: var(--blue);
+    }
     .nav {
       padding-inline: 4%;
     }

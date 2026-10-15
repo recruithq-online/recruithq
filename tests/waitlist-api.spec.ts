@@ -33,7 +33,7 @@ test.beforeEach(() => {
   savedEnv = envNames.map((name) => process.env[name]);
   originalFetch = globalThis.fetch;
   process.env.RESEND_API_KEY = "re_test_placeholder";
-  process.env.RESEND_FROM_EMAIL = "rEcruit <waitlist@example.com>";
+  process.env.RESEND_FROM_EMAIL = "rEcruithq <waitlist@example.com>";
   process.env.ADMIN_EMAIL = "admin@example.com";
   // Any unexpected outgoing request fails locally; no test sends live email.
   globalThis.fetch = async () => {
@@ -61,7 +61,7 @@ test("emails submitted details to the configured admin, with the submitter as re
     });
     const message = JSON.parse(String(options?.body));
     expect(message).toMatchObject({
-      from: "rEcruit <waitlist@example.com>",
+      from: "rEcruithq <waitlist@example.com>",
       to: ["admin@example.com"],
       reply_to: "atlas@example.com",
       subject: "New rEcruit expert waitlist submission",

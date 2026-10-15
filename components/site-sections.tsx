@@ -1,5 +1,8 @@
 import { Brand } from "./brand";
 import { WaitlistTrigger } from "./waitlist-trigger";
+import Image from "next/image";
+import { team } from "@/lib/team";
+import { TeamCarousel } from "./team-carousel";
 
 export function Navbar() {
   return (
@@ -24,16 +27,25 @@ export function Team() {
       <div className="section-head">
         <h2>Team</h2>
       </div>
-      <div className="people grid grid-cols-3 gap-[18px] mt-5 max-[800px]:grid-cols-2 max-[560px]:grid-cols-1">
-        <div className="person">
-          <div className="avatar mb-[14px]">GE</div>
-          <h3>gemhunter</h3>
-          <p>
-            Founder · Building rEcruit as a marketplace where reputation and
-            demonstrated expertise matter.
-          </p>
-        </div>
-      </div>
+      <TeamCarousel>
+        {team.map((member) => (
+          <article className="person" key={member.id}>
+            <Image
+              className="person-image"
+              src={member.image}
+              alt={member.imageAlt}
+              width={640}
+              height={720}
+              sizes="(max-width: 560px) 77vw, (max-width: 1000px) 44vw, 25vw"
+            />
+            <div className="person-details">
+              <h3>{member.name}</h3>
+              <div className="person-role">{member.role}</div>
+              <p>{member.bio}</p>
+            </div>
+          </article>
+        ))}
+      </TeamCarousel>
     </section>
   );
 }
@@ -57,10 +69,10 @@ export function Footer() {
           </div>
           <div className="social">
             <h3>Contact</h3>
-            <p>Follow rEcruit or get in touch with the team.</p>
+            <p>Follow rEcruithq or get in touch with the team.</p>
             <div className="social-row flex gap-2.5 items-center mt-[18px]">
               <a
-                href="https://x.com/the_rEcruitHQ"
+                href="https://x.com/the_rEcruithHQ"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X"
@@ -83,7 +95,7 @@ export function Footer() {
           </div>
         </div>
         <div className="copy">
-          © 2026 rEcruit. Building a marketplace where reputation and proof of
+          © 2026 rEcruithq. Building a marketplace where reputation and proof of
           work matter.
         </div>
       </div>

@@ -70,7 +70,7 @@ export function WaitlistForm() {
           rE
         </div>
         <div className="eyebrow">EARLY ACCESS</div>
-        <h2 id="waitlist-title">Get on the rEcruit list.</h2>
+        <h2 id="waitlist-title">Get on the rEcruithq list.</h2>
         <p>
           Be among the first experts invited to build a reputation around the
           work you do.
@@ -136,7 +136,7 @@ export function WaitlistForm() {
           <span aria-hidden="true">♧</span>
           <span>
             Use an alias instead of your real name. We’ll use your email to
-            contact you about rEcruit early access.
+            contact you about rEcruithq early access.
           </span>
         </div>
         <div className="form-actions">
@@ -177,7 +177,7 @@ export function WaitlistForm() {
           aria-live="polite"
         >
           {status === "success"
-            ? "You’re on the list. Thanks for joining rEcruit — we’ll be in touch when early access opens."
+            ? "You’re on the list. Thanks for joining rEcruithq — we’ll be in touch when early access opens."
             : errorMessage}
         </div>
       )}

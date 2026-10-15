@@ -25,7 +25,7 @@ export function Hero() {
             Join the expert waitlist <span aria-hidden="true">→</span>
           </WaitlistTrigger>
           <div className="waitlist-note">
-            For experts who want to be among the first to join rEcruit.
+            For experts who want to be among the first to join rEcruithq.
           </div>
         </section>
       </div>

@@ -19,6 +19,10 @@ Open http://localhost:3000. For production, run `npm run build` then `npm start`
 - `components/`: navigation, hero, directory, cards, profiles, forms, dialog, and footer.
 - `components/experience-provider.tsx`: shared search, demo profile state, dialog, and toast state. Static sections remain Server Components.
 - `lib/experts.ts`: typed original expert profiles and filter options.
+- `lib/team.ts`: the four team cards, including names, roles, bios, and image paths.
+- `components/team-carousel.tsx`: mobile swipe navigation with snap points, arrows, dots, and keyboard support. Larger screens retain the four-column/two-column team grid.
+- `public/team/`: local portrait placeholders; replace these with the team's own photos.
+- `app/icon.svg`: the rEcruit monogram favicon, discovered automatically by Next.js.
 - `app/api/waitlist/route.ts`: server-side Resend email delivery for waitlist submissions.
 - `lib/waitlist.ts`: expertise options shared by the form and server validation.
 - `lib/waitlist-email.ts`: responsive branded HTML email and its plain-text fallback.

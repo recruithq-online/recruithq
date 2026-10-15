@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "rEcruit — Reputation-based expertise",
+  title: "rEcruithq — Reputation-based expertise",
   description:
     "Find trusted experts using work history, completed jobs, reviews and reputation — not just a CV.",
 };

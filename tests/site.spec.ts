@@ -294,7 +294,7 @@ test("preserves teaser search, filters, profile actions, and listing preview", a
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
   await page.locator(".footer-waitlist").click();
   await expect(
-    dialog.getByRole("heading", { name: "Get on the rEcruit list." }),
+    dialog.getByRole("heading", { name: "Get on the rEcruithq list." }),
   ).toBeVisible();
   await page.locator(".modal").click({ position: { x: 2, y: 2 } });
   await expect(dialog).toHaveCount(0);
