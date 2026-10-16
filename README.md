@@ -22,7 +22,8 @@ Open http://localhost:3000. For production, run `npm run build` then `npm start`
 - `lib/team.ts`: the founder profile and complete bio from the approved HTML.
 - `components/team-carousel.tsx`: reusable team container; controls are hidden for the single founder in this design.
 - `app/logo.jpeg`: retained official raster logo reference.
-- `components/brand-logo.tsx`: transparent vector artwork from the approved HTML. The navigation uses only the wordmark; the footer uses only the owl.
+- `components/brand.tsx`: the navigation uses normal text for rEcruit, with a blue E.
+- `components/brand-logo.tsx`: transparent vector owl used in the footer and join modal.
 - `app/owl.jpeg`: retained original owl reference image.
 - `components/owl-avatar.tsx`: founder’s owl in a suit and blue tie, using the approved HTML’s vector artwork.
 - `components/theme-toggle.tsx`: light/dark switch with system preference detection and a saved browser preference.
@@ -34,13 +35,13 @@ Open http://localhost:3000. For production, run `npm run build` then `npm start`
 
 Tailwind utilities cover layouts, spacing, typography, and reusable component styles through `@apply`. Light mode matches the latest HTML's plain white backgrounds, blue accents, DM Sans body text, and Space Grotesk headings. It preserves the source section order, typography, spacing, breakpoints, transitions, and teaser blur. The explicit client overrides are “Join rEcruit Waitlist” on waitlist buttons and “Select an expertise” in the form. Tailwind Preflight is omitted to preserve native form defaults.
 
-The theme defaults to the visitor's system preference. The navigation toggle saves the selection in local storage, and a small initialization script applies it before rendering to avoid a theme flash. Dark mode adapts backgrounds, panels, text, borders, and forms. Navigation and footer logos have no background in either theme. The navigation wordmark changes from dark to white while its capital E stays blue; the footer owl stays blue. The join modal uses the transparent vector owl with no background, border, or shadow. The favicon uses the same transparent vector owl (`app/icon.svg`).
+The theme defaults to the visitor's system preference. The navigation toggle saves the selection in local storage, and a small initialization script applies it before rendering to avoid a theme flash. Dark mode adapts backgrounds, panels, text, borders, and forms. Navigation and footer logos have no background in either theme. The navigation text changes from dark to light while its capital E stays blue; the footer owl stays blue. The join modal uses the transparent vector owl with no background, border, or shadow. The favicon uses the same transparent vector owl (`app/icon.svg`).
 
 ## Preserved behavior and assets
 
 The marketplace preview intentionally remains blurred with pointer interactions disabled, as in the supplied HTML. Its search, skill filters, expert dialogs, vouches, refute acknowledgements, hire acknowledgement, and expertise preview still have React implementations. Those demo actions remain browser-local and do not create real hires, publish profiles, or persist reputation changes.
 
-Fonts use the exact Google Fonts request from the HTML. Loading them requires an internet connection; builds do not fetch fonts. The transparent wordmark appears in the navigation, and the transparent owl appears in the footer. The founder card uses the suited owl from the approved HTML. Contact links match the supplied HTML, including X, Telegram, and email.
+Fonts use the exact Google Fonts request from the HTML. Loading them requires an internet connection; builds do not fetch fonts. The navigation displays rEcruit as text with a blue E, and the transparent owl appears in the footer. The founder card uses the suited owl from the approved HTML. Contact links match the supplied HTML, including X, Telegram, and email.
 
 Dialogs support initial focus, focus trapping, Escape, backdrop dismissal, scroll locking, and returning focus to the trigger.
 

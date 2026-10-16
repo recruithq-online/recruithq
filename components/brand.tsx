@@ -3,7 +3,13 @@ import { BrandLogo, type BrandVariant } from "./brand-logo";
 export function Brand({ variant = "wordmark" }: { variant?: BrandVariant }) {
   return (
     <a className="brand" href="#top" aria-label="rEcruit home">
-      <BrandLogo variant={variant} />
+      {variant === "owl" ? (
+        <BrandLogo variant="owl" />
+      ) : (
+        <span className="brand-wordmark">
+          r<span className="brand-initial">E</span>cruit
+        </span>
+      )}
     </a>
   );
 }
