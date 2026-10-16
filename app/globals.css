@@ -79,6 +79,8 @@
     width: auto;
     height: 54px;
     object-fit: contain;
+    background: transparent;
+    color: #091420;
   }
   .footer .brand {
     display: flex;
@@ -859,8 +861,7 @@
     color: var(--muted);
   }
   [data-theme="dark"] .logo-image {
-    background: #fff;
-    border-radius: 5px;
+    color: #fff;
   }
   [data-theme="dark"] :is(.avatar, .vouch, .chip.active, .coming-soon .pill) {
     color: #a9c3ff;

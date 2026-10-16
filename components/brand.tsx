@@ -1,16 +1,9 @@
-import Image from "next/image";
-import logo from "@/app/logo.jpeg";
+import { BrandLogo } from "./brand-logo";
 
 export function Brand() {
   return (
     <a className="brand" href="#top" aria-label="rEcruit home">
-      <Image
-        className="logo-image"
-        src={logo}
-        alt="rEcruit"
-        priority
-        sizes="128px"
-      />
+      <BrandLogo />
     </a>
   );
 }

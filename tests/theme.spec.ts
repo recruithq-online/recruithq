@@ -9,12 +9,9 @@ for (const width of [320, 390, 768, 1440]) {
     await page.goto("/");
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
     await expect(page.locator("#team .person")).toHaveCount(1);
-    await expect(page.getByRole("link", { name: "Email team" })).toHaveAttribute("href", "mailto:askrecruithq@gmail.com");
+    await expect(page.getByRole("link", { name: "company mail" })).toHaveAttribute("href", "mailto:askrecruithq@gmail.com");
     await expect(page.locator(".nav .logo-image")).toBeVisible();
     await expect(page.getByRole("img", { name: "gemhunter, owl in a suit and tie" })).toBeVisible();
-    for (const selector of [".nav .logo-image", ".footer .logo-image"]) {
-      await expect.poll(() => page.locator(selector).evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
-    }
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: `test-results/light-${width}.png`, fullPage: true });
     await page.getByRole("button", { name: "Switch to dark mode" }).click();

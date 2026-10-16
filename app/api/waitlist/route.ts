@@ -105,6 +105,13 @@ export async function POST(request: Request) {
     });
     if (!response.ok) {
       const details: unknown = await response.json().catch(() => null);
+      const providerMessage =
+        typeof details === "object" &&
+        details &&
+        "message" in details &&
+        typeof details.message === "string"
+          ? details.message
+          : "No explanation returned by Resend.";
       console.error("[waitlist] Resend rejected the email.", {
         status: response.status,
         code:
@@ -114,6 +121,13 @@ export async function POST(request: Request) {
           typeof details.name === "string"
             ? details.name
             : "unknown",
+        // Keep provider setup guidance in server logs, with credentials and
+        // addresses removed. Visitors still receive the generic retry message.
+        message: providerMessage
+          .replaceAll(apiKey, "[redacted key]")
+          .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, "[redacted email]")
+          .replace(/[\r\n]/g, " ")
+          .slice(0, 1000),
       });
       return Response.json({ error: errorMessage }, { status: 502 });
     }
