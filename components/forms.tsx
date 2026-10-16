@@ -3,8 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useExperience } from "./experience-provider";
 import { expertiseAreas } from "@/lib/waitlist";
-import Image from "next/image";
-import owl from "@/app/owl.jpeg";
+import { BrandLogo } from "./brand-logo";
 
 type Submission = "idle" | "submitting" | "success" | "error";
 const submissionError =
@@ -68,8 +67,8 @@ export function WaitlistForm() {
         <button className="close" onClick={closeModal} aria-label="Close">
           ×
         </button>
-        <div className="waitlist-symbol" aria-hidden="true">
-          <Image src={owl} alt="" sizes="30px" />
+        <div className="waitlist-symbol">
+          <BrandLogo variant="owl" />
         </div>
         <div className="eyebrow">EARLY ACCESS</div>
         <h2 id="waitlist-title">Get on the rEcruit list.</h2>

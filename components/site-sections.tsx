@@ -49,7 +49,7 @@ export function Footer() {
       <div className="wrap">
         <div className="footer-grid">
           <div>
-            <Brand />
+            <Brand variant="owl" />
             <p>Marketplace for reputation-based expertise.</p>
           </div>
           <div className="footer-column">
