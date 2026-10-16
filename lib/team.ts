@@ -11,6 +11,6 @@ export const team: TeamMember[] = [
     id: "gemhunter",
     name: "gemhunter",
     role: "Chief rEcruiter",
-    bio: "- Building the skills marketplace where reputation and demonstrated expertise matter with background in creative management,  product development and sustainable finance others.",
+    bio: "- Building the skills marketplace where reputation and demonstrated expertise matter. Gem has background in creative management,  product development,  and sustainable finance among others.",
   },
 ];
