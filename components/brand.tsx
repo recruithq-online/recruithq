@@ -7,7 +7,7 @@ export function Brand({ variant = "wordmark" }: { variant?: BrandVariant }) {
         <BrandLogo variant="owl" />
       ) : (
         <span className="brand-wordmark">
-          r<span className="brand-initial">E</span>cruit
+          r<span className="text-[#0828cb]">E</span>cruit
         </span>
       )}
     </a>
