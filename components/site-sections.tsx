@@ -1,8 +1,9 @@
 import { Brand } from "./brand";
 import { WaitlistTrigger } from "./waitlist-trigger";
-import Image from "next/image";
 import { team } from "@/lib/team";
 import { TeamCarousel } from "./team-carousel";
+import { ThemeToggle } from "./theme-toggle";
+import { OwlAvatar } from "./owl-avatar";
 
 export function Navbar() {
   return (
@@ -14,9 +15,11 @@ export function Navbar() {
       <div className="navlinks">
         <a href="#team">Team</a>
         <a href="#contact">Contact</a>
-        <WaitlistTrigger>Join waitlist</WaitlistTrigger>
       </div>
-      <WaitlistTrigger>Join waitlist</WaitlistTrigger>
+      <div className="nav-actions flex items-center gap-2">
+        <ThemeToggle />
+        <WaitlistTrigger>Join rEcruit Waitlist</WaitlistTrigger>
+      </div>
     </nav>
   );
 }
@@ -30,19 +33,9 @@ export function Team() {
       <TeamCarousel>
         {team.map((member) => (
           <article className="person" key={member.id}>
-            <Image
-              className="person-image"
-              src={member.image}
-              alt={member.imageAlt}
-              width={640}
-              height={720}
-              sizes="(max-width: 560px) 77vw, (max-width: 1000px) 44vw, 25vw"
-            />
-            <div className="person-details">
-              <h3>{member.name}</h3>
-              <div className="person-role">{member.role}</div>
-              <p>{member.bio}</p>
-            </div>
+            <OwlAvatar name={member.name} />
+            <h3>{member.name}</h3>
+            <p>{member.role} · {member.bio}</p>
           </article>
         ))}
       </TeamCarousel>
@@ -59,20 +52,22 @@ export function Footer() {
             <Brand />
             <p>Marketplace for reputation-based expertise.</p>
           </div>
-          <div>
+          <div className="footer-column">
             <h3>Explore</h3>
-            <a href="#top">Overview</a>
-            <a href="#team">Team</a>
-            <WaitlistTrigger className="footer-waitlist">
-              Join the waitlist
-            </WaitlistTrigger>
+            <div className="footer-links flex flex-col gap-2">
+              <a href="#top">Overview</a>
+              <a href="#team">Team</a>
+              <WaitlistTrigger className="footer-waitlist">
+                Join rEcruit Waitlist
+              </WaitlistTrigger>
+            </div>
           </div>
-          <div className="social">
+          <div className="social footer-column">
             <h3>Contact</h3>
-            <p>Follow rEcruithq or get in touch with the team.</p>
-            <div className="social-row flex gap-2.5 items-center mt-[18px]">
+            <p>Follow rEcruit or get in touch with the team.</p>
+            <div className="social-row flex gap-2.5 items-center mt-2">
               <a
-                href="https://x.com/the_rEcruithHQ"
+                href="https://x.com/the_rEcruitHQ"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X"
@@ -91,11 +86,23 @@ export function Footer() {
                   <path d="M21.4 3.1 2.98 10.2c-1.26.5-1.25 1.2-.23 1.5l4.7 1.47 1.8 5.55c.22.62.11.87.75.87.5 0 .72-.23 1-.5l2.4-2.33 4.98 3.67c.92.51 1.58.25 1.81-.85l3.16-14.88c.34-1.36-.52-1.98-1.65-1.6ZM8.18 12.82l10.92-6.89c.54-.33 1.04-.15.63.2l-8.82 7.97-.34 3.62-1.39-4.9-1-.31Z" />
                 </svg>
               </a>
+              <a href="mailto:askrecruithq@gmail.com" aria-label="company mail">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m4 7 8 6 8-6" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
         <div className="copy">
-          © 2026 rEcruithq. Building a marketplace where reputation and proof of
+          © 2026 rEcruit. Building a marketplace where reputation and proof of
           work matter.
         </div>
       </div>

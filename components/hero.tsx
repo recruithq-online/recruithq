@@ -22,10 +22,10 @@ export function Hero() {
             and proof of work. Join the waitlist to be part of what’s next.
           </p>
           <WaitlistTrigger>
-            Join the expert waitlist <span aria-hidden="true">→</span>
+            Join rEcruit Waitlist <span aria-hidden="true">→</span>
           </WaitlistTrigger>
           <div className="waitlist-note">
-            For experts who want to be among the first to join rEcruithq.
+            For experts who want to be among the first to join rEcruit.
           </div>
         </section>
       </div>

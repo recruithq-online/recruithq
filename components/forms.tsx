@@ -3,6 +3,8 @@
 import { useState, type FormEvent } from "react";
 import { useExperience } from "./experience-provider";
 import { expertiseAreas } from "@/lib/waitlist";
+import Image from "next/image";
+import owl from "@/app/owl.jpeg";
 
 type Submission = "idle" | "submitting" | "success" | "error";
 const submissionError =
@@ -67,10 +69,10 @@ export function WaitlistForm() {
           ×
         </button>
         <div className="waitlist-symbol" aria-hidden="true">
-          rE
+          <Image src={owl} alt="" sizes="30px" />
         </div>
         <div className="eyebrow">EARLY ACCESS</div>
-        <h2 id="waitlist-title">Get on the rEcruithq list.</h2>
+        <h2 id="waitlist-title">Get on the rEcruit list.</h2>
         <p>
           Be among the first experts invited to build a reputation around the
           work you do.
@@ -125,7 +127,7 @@ export function WaitlistForm() {
           <div className="wide">
             <label htmlFor="waitSkill">Your main area of expertise</label>
             <select id="waitSkill" name="expertise" required defaultValue="">
-              <option value="">Select an area</option>
+              <option value="">Select an expertise</option>
               {expertiseAreas.map((area) => (
                 <option key={area}>{area}</option>
               ))}
@@ -136,7 +138,7 @@ export function WaitlistForm() {
           <span aria-hidden="true">♧</span>
           <span>
             Use an alias instead of your real name. We’ll use your email to
-            contact you about rEcruithq early access.
+            contact you about rEcruit early access.
           </span>
         </div>
         <div className="form-actions">
@@ -153,7 +155,7 @@ export function WaitlistForm() {
               "Try again"
             ) : (
               <>
-                Join the waitlist <span aria-hidden="true">→</span>
+                Join rEcruit Waitlist <span aria-hidden="true">→</span>
               </>
             )}
           </button>
@@ -177,7 +179,7 @@ export function WaitlistForm() {
           aria-live="polite"
         >
           {status === "success"
-            ? "You’re on the list. Thanks for joining rEcruithq — we’ll be in touch when early access opens."
+            ? "You’re on the list. Thanks for joining rEcruit — we’ll be in touch when early access opens."
             : errorMessage}
         </div>
       )}

@@ -47,13 +47,13 @@ export function TeamCarousel({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="team-carousel">
+    <div className="team-carousel" data-carousel={count > 1}>
       <div
         ref={track}
         className="people team-carousel-track"
         role="group"
         aria-label="Team members"
-        tabIndex={0}
+        tabIndex={count > 1 ? 0 : undefined}
         onScroll={updateActive}
         onKeyDown={(event) => {
           const element = track.current;
@@ -77,44 +77,46 @@ export function TeamCarousel({ children }: { children: React.ReactNode }) {
       >
         {children}
       </div>
-      <div
-        className="team-carousel-controls"
-        aria-label="Team carousel controls"
-      >
-        <button
-          className="team-carousel-arrow"
-          type="button"
-          aria-label="Previous team member"
-          disabled={active === 0}
-          onClick={() => show(active - 1)}
+      {count > 1 && (
+        <div
+          className="team-carousel-controls"
+          aria-label="Team carousel controls"
         >
-          ←
-        </button>
-        <div className="team-carousel-dots">
-          {Array.from({ length: count }, (_, index) => (
-            <button
-              key={index}
-              className="team-carousel-dot"
-              type="button"
-              aria-label={`Show team member ${index + 1}`}
-              aria-current={index === active ? "true" : undefined}
-              onClick={() => show(index)}
-            />
-          ))}
+          <button
+            className="team-carousel-arrow"
+            type="button"
+            aria-label="Previous team member"
+            disabled={active === 0}
+            onClick={() => show(active - 1)}
+          >
+            ←
+          </button>
+          <div className="team-carousel-dots">
+            {Array.from({ length: count }, (_, index) => (
+              <button
+                key={index}
+                className="team-carousel-dot"
+                type="button"
+                aria-label={`Show team member ${index + 1}`}
+                aria-current={index === active ? "true" : undefined}
+                onClick={() => show(index)}
+              />
+            ))}
+          </div>
+          <button
+            className="team-carousel-arrow"
+            type="button"
+            aria-label="Next team member"
+            disabled={active === count - 1}
+            onClick={() => show(active + 1)}
+          >
+            →
+          </button>
+          <span className="sr-only" role="status">
+            Team member {active + 1} of {count}
+          </span>
         </div>
-        <button
-          className="team-carousel-arrow"
-          type="button"
-          aria-label="Next team member"
-          disabled={active === count - 1}
-          onClick={() => show(active + 1)}
-        >
-          →
-        </button>
-        <span className="sr-only" role="status">
-          Team member {active + 1} of {count}
-        </span>
-      </div>
+      )}
     </div>
   );
 }

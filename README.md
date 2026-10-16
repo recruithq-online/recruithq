@@ -1,6 +1,6 @@
 # rEcruit
 
-Conversion of `recruithq-site-3.html` to Next.js App Router, TypeScript, React, and Tailwind CSS 4.
+Conversion of `recruithq-site-4-6.html` to Next.js App Router, TypeScript, React, and Tailwind CSS 4.
 
 ## Run
 
@@ -19,23 +19,27 @@ Open http://localhost:3000. For production, run `npm run build` then `npm start`
 - `components/`: navigation, hero, directory, cards, profiles, forms, dialog, and footer.
 - `components/experience-provider.tsx`: shared search, demo profile state, dialog, and toast state. Static sections remain Server Components.
 - `lib/experts.ts`: typed original expert profiles and filter options.
-- `lib/team.ts`: the four team cards, including names, roles, bios, and image paths.
-- `components/team-carousel.tsx`: mobile swipe navigation with snap points, arrows, dots, and keyboard support. Larger screens retain the four-column/two-column team grid.
-- `public/team/`: local portrait placeholders; replace these with the team's own photos.
-- `app/icon.svg`: the rEcruit monogram favicon, discovered automatically by Next.js.
+- `lib/team.ts`: the founder profile and complete bio from the approved HTML.
+- `components/team-carousel.tsx`: reusable team container; controls are hidden for the single founder in this design.
+- `app/logo.jpeg` and `app/owl.jpeg`: supplied official images, rendered with Next.js Image without cropping or recoloring.
+- `components/owl-avatar.tsx`: founder’s owl in a suit and blue tie, using the approved HTML’s vector artwork.
+- `app/icon.jpeg`: supplied owl used as the favicon.
+- `components/theme-toggle.tsx`: light/dark switch with system preference detection and a saved browser preference.
 - `app/api/waitlist/route.ts`: server-side Resend email delivery for waitlist submissions.
 - `lib/waitlist.ts`: expertise options shared by the form and server validation.
 - `lib/waitlist-email.ts`: responsive branded HTML email and its plain-text fallback.
 - `.env.example`: required server-side email settings.
 - `tests/site.spec.ts`: source layout comparisons and browser interaction checks.
 
-Tailwind utilities cover layouts, spacing, typography, and reusable component styles through `@apply`. The website uses its original blue accents, dark headings, muted grey body text, white cards, and pale blue backgrounds. DM Sans gives the page a consistent type style, with more comfortable heading tracking and line spacing. The original sections, content, gradients, decorative rings, transitions, breakpoints, and teaser blur remain in place. Tailwind Preflight is omitted to preserve native form defaults.
+Tailwind utilities cover layouts, spacing, typography, and reusable component styles through `@apply`. Light mode matches the latest HTML's plain white backgrounds, blue accents, DM Sans body text, and Space Grotesk headings. It preserves the source section order, typography, spacing, breakpoints, transitions, and teaser blur. The explicit client overrides are “Join rEcruit Waitlist” on waitlist buttons and “Select an expertise” in the form. Tailwind Preflight is omitted to preserve native form defaults.
+
+The theme defaults to the visitor's system preference. The navigation toggle saves the selection in local storage, and a small initialization script applies it before rendering to avoid a theme flash. Dark mode adapts backgrounds, panels, text, borders, and forms; the supplied JPEGs retain their original white backgrounds and colors.
 
 ## Preserved behavior and assets
 
 The marketplace preview intentionally remains blurred with pointer interactions disabled, as in the supplied HTML. Its search, skill filters, expert dialogs, vouches, refute acknowledgements, hire acknowledgement, and expertise preview still have React implementations. Those demo actions remain browser-local and do not create real hires, publish profiles, or persist reputation changes.
 
-The page uses DM Sans from the original Google Fonts request, inline social SVGs, and letter avatars. There are no raster images to migrate. Google Fonts requires an internet connection and retains the original fallback fonts. Font fetching is not required during builds.
+Fonts use the exact Google Fonts request from the HTML. Loading them requires an internet connection; builds do not fetch fonts. The supplied logo appears in the navigation and footer, and the owl appears in the waitlist dialog and favicon. The founder card uses the suited owl from the approved HTML. Contact links match the supplied HTML, including X, Telegram, and email.
 
 Dialogs support initial focus, focus trapping, Escape, backdrop dismissal, scroll locking, and returning focus to the trigger.
 
@@ -95,6 +99,8 @@ npm run build
 npm run test:e2e
 ```
 
-Browser tests start the production server and require a completed build and Google Chrome installed. They compare the original and converted page at 1440px, 768px, and 390px, checking section geometry, typography, overflow, cards, and dialogs. They also exercise waitlist validation/retry/success, focus trapping, search, filters, vouch updates, refute notices, hire acknowledgements, and safe profile previews. Server tests verify the exact Resend request, fixed admin recipient, validation, honeypot, missing configuration, and provider/network failures. The demo tests temporarily remove the pointer gate only in the browser test, leaving the shipped coming-soon design intact.
+If this environment prevents Turbopack from binding its worker port, use `npm run build -- --webpack`.
 
-Source comparison tests require `recruithq-site-3.html` at the project root; they are explicitly skipped if that reference is absent. Responsive rendering, form, and email-handler tests still run. Tests use their own server on port 3107 to avoid reusing a running development server. Screenshots and failure traces are written to the ignored `test-results/` directory.
+Browser tests start the production server and require a completed build and Google Chrome installed. They compare the original and converted page at 1440px, 768px, and 390px, checking section geometry, typography, exact copy (with the client overrides), overflow, cards, and dialogs. Theme tests cover light/dark rendering at 320px, 390px, 768px, and 1440px, system preferences, and persistence after reload. They also exercise waitlist validation/retry/success, focus trapping, search, filters, vouch updates, refute notices, hire acknowledgements, and safe profile previews. Server tests verify the exact Resend request, fixed admin recipient, validation, honeypot, missing configuration, and provider/network failures. The demo tests temporarily remove the pointer gate only in the browser test, leaving the shipped coming-soon design intact.
+
+Source comparison tests require `recruithq-site-4-6.html` at the project root; they are explicitly skipped if that reference is absent. Responsive rendering, form, and email-handler tests still run. Tests use their own server on port 3107 to avoid reusing a running development server. Screenshots and failure traces are written to the ignored `test-results/` directory.

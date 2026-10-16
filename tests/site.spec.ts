@@ -3,14 +3,16 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { existsSync } from "node:fs";
 
+test.use({ colorScheme: "light" });
+
 for (const width of [1440, 768, 390]) {
   test(`preserves source layout at ${width}px`, async ({ page }) => {
     test.skip(
-      !existsSync(path.resolve("recruithq-site-3.html")),
+      !existsSync(path.resolve("recruithq-site-4-6.html")),
       "Original HTML reference is not present in this checkout.",
     );
     await page.setViewportSize({ width, height: 1000 });
-    const original = pathToFileURL(path.resolve("recruithq-site-3.html")).href;
+    const original = pathToFileURL(path.resolve("recruithq-site-4-6.html")).href;
     const selectors = [
       ".nav",
       ".hero",
@@ -56,6 +58,10 @@ for (const width of [1440, 768, 390]) {
                   height: bounds.height,
                   font: style.fontFamily,
                   fontSize: style.fontSize,
+                  weight: style.fontWeight,
+                  lineHeight: style.lineHeight,
+                  tracking: style.letterSpacing,
+                  background: style.backgroundColor,
                 },
               ];
             }),
@@ -63,18 +69,32 @@ for (const width of [1440, 768, 390]) {
         targetSelectors,
       );
     }
+    async function copy(targetSelectors: string[]) {
+      return page.evaluate((selectors) => Object.fromEntries(selectors.map((selector) => [
+        selector,
+        (document.querySelector<HTMLElement>(selector)?.innerText ?? "")
+          .replace(/Join (?:the expert waitlist|the waitlist|waitlist)/g, "Join rEcruit Waitlist")
+          .replace("Select expertise", "Select an expertise")
+          .replace(/\s+/g, " ").trim(),
+      ])), targetSelectors);
+    }
     await page.goto(original);
     const source = await measure();
+    const copySelectors = [".hero", "#experts", "#team", ".footer"];
+    const sourceCopy = await copy(copySelectors);
     await page.screenshot({
       path: `test-results/source-${width}.png`,
       fullPage: true,
     });
     await page
+      .locator(".coming-soon")
       .getByRole("button", { name: "Join the expert waitlist" })
       .click();
     const sourceModal = await measure(modalSelectors);
+    const sourceFormCopy = await copy([".waitlist-header", ".waitlist-form"]);
     await page.goto("/");
     const converted = await measure();
+    expect(await copy(copySelectors)).toEqual(sourceCopy);
     for (const family of ["DM Sans", "Space Grotesk"]) {
       expect(
         await page.evaluate(
@@ -100,7 +120,14 @@ for (const width of [1440, 768, 390]) {
       expect
         .soft(converted[selector].fontSize, `${selector}: font size`)
         .toBe(source[selector].fontSize);
-      for (const key of ["x", "y", "width", "height"] as const)
+      for (const key of ["weight", "lineHeight", "tracking", "background"] as const) {
+        expect.soft(converted[selector][key], `${selector}: ${key}`).toBe(source[selector][key]);
+      }
+      // Footer spacing now follows the client's later alignment request.
+      const geometryKeys = [".footer", ".footer-grid", ".copy"].includes(selector)
+        ? (["x", "width"] as const)
+        : (["x", "y", "width", "height"] as const);
+      for (const key of geometryKeys)
         expect
           .soft(
             Math.abs(converted[selector][key] - source[selector][key]),
@@ -123,10 +150,12 @@ for (const width of [1440, 768, 390]) {
       "blur(3px)",
     );
     await page
-      .getByRole("button", { name: "Join the expert waitlist" })
+      .locator(".coming-soon")
+      .getByRole("button", { name: "Join rEcruit Waitlist" })
       .click();
     await expect(page.getByRole("dialog")).toBeVisible();
     const convertedModal = await measure(modalSelectors);
+    expect(await copy([".waitlist-header", ".waitlist-form"])).toEqual(sourceFormCopy);
     for (const selector of modalSelectors) {
       for (const key of ["x", "y", "width", "height"] as const) {
         expect
@@ -173,7 +202,8 @@ for (const width of [1440, 768, 390]) {
       "blur(3px)",
     );
     await page
-      .getByRole("button", { name: "Join the expert waitlist" })
+      .locator(".coming-soon")
+      .getByRole("button", { name: "Join rEcruit Waitlist" })
       .click();
     await expect(page.getByRole("dialog")).toBeVisible();
     await expect(
@@ -195,11 +225,11 @@ test("waitlist validates, submits exact payload, retries failures, and traps foc
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
   await page
-    .getByRole("button", { name: "Join waitlist", exact: true })
-    .filter({ visible: true })
+    .getByRole("button", { name: "Join rEcruit Waitlist", exact: true })
+    .first()
     .click();
   const dialog = page.getByRole("dialog");
-  await dialog.getByRole("button", { name: "Join the waitlist" }).click();
+  await dialog.getByRole("button", { name: "Join rEcruit Waitlist" }).click();
   expect(
     await page
       .locator("#waitlistForm")
@@ -229,7 +259,7 @@ test("waitlist validates, submits exact payload, retries failures, and traps foc
       ),
     });
   });
-  await dialog.getByRole("button", { name: "Join the waitlist" }).click();
+  await dialog.getByRole("button", { name: "Join rEcruit Waitlist" }).click();
   await expect(page.getByRole("status")).toContainText("We couldn’t submit");
   await dialog.getByRole("button", { name: "Try again" }).click();
   await expect(page.getByRole("status")).toContainText("You’re on the list");
@@ -294,7 +324,7 @@ test("preserves teaser search, filters, profile actions, and listing preview", a
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
   await page.locator(".footer-waitlist").click();
   await expect(
-    dialog.getByRole("heading", { name: "Get on the rEcruithq list." }),
+    dialog.getByRole("heading", { name: "Get on the rEcruit list." }),
   ).toBeVisible();
   await page.locator(".modal").click({ position: { x: 2, y: 2 } });
   await expect(dialog).toHaveCount(0);
@@ -304,7 +334,7 @@ test("does not show success without an email acknowledgement", async ({
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Join the expert waitlist" }).click();
+  await page.locator(".coming-soon").getByRole("button", { name: "Join rEcruit Waitlist" }).click();
   await page.getByLabel("Public alias", { exact: true }).fill("Atlas");
   await page.getByLabel("Email address").fill("atlas@example.com");
   await page.getByLabel("Your main area of expertise").selectOption("Design");
@@ -316,7 +346,7 @@ test("does not show success without an email acknowledgement", async ({
       body: "<html>App page</html>",
     }),
   );
-  await dialog.getByRole("button", { name: "Join the waitlist" }).click();
+  await dialog.getByRole("button", { name: "Join rEcruit Waitlist" }).click();
   await expect(dialog.getByRole("status")).toContainText("We couldn’t submit");
   await expect(page.getByLabel("Public alias", { exact: true })).toHaveValue(
     "Atlas",
@@ -337,7 +367,7 @@ test("unintended text entry into the spam trap does not block a genuine submissi
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Join the expert waitlist" }).click();
+  await page.locator(".coming-soon").getByRole("button", { name: "Join rEcruit Waitlist" }).click();
   await page.getByLabel("Public alias", { exact: true }).fill("Atlas");
   await page.getByLabel("Email address").fill("atlas@example.com");
   await page.getByLabel("Your main area of expertise").selectOption("Design");
@@ -361,7 +391,7 @@ test("unintended text entry into the spam trap does not block a genuine submissi
   });
   await page
     .getByRole("dialog")
-    .getByRole("button", { name: "Join the waitlist" })
+    .getByRole("button", { name: "Join rEcruit Waitlist" })
     .click();
   await expect(page.getByRole("status")).toContainText("You’re on the list");
 });
@@ -370,7 +400,7 @@ test("shows the server validation message for a rejected submission", async ({
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Join the expert waitlist" }).click();
+  await page.locator(".coming-soon").getByRole("button", { name: "Join rEcruit Waitlist" }).click();
   await page.getByLabel("Public alias", { exact: true }).fill("Atlas");
   await page.getByLabel("Email address").fill("atlas@example.com");
   await page.getByLabel("Your main area of expertise").selectOption("Design");
@@ -386,7 +416,7 @@ test("shows the server validation message for a rejected submission", async ({
   );
   await page
     .getByRole("dialog")
-    .getByRole("button", { name: "Join the waitlist" })
+    .getByRole("button", { name: "Join rEcruit Waitlist" })
     .click();
   await expect(page.getByRole("status")).toContainText(
     "Refresh the page and try again.",
