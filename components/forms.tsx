@@ -101,7 +101,7 @@ export function WaitlistForm() {
         </p>
         <div className="form-grid">
           <div>
-            <label htmlFor="waitAlias">Public alias</label>
+            <label htmlFor="waitAlias">Alias</label>
             <input
               id="waitAlias"
               name="alias"
@@ -133,13 +133,6 @@ export function WaitlistForm() {
             </select>
           </div>
         </div>
-        <div className="privacy-note">
-          <span aria-hidden="true">♧</span>
-          <span>
-            Use an alias instead of your real name. We’ll use your email to
-            contact you about rEcruit early access.
-          </span>
-        </div>
         <div className="form-actions">
           <button
             className="cta"
@@ -167,7 +160,7 @@ export function WaitlistForm() {
           </button>
         </div>
         <p className="waitlist-footnote">
-          No spam. Just updates about getting early access.
+         No spams. You'll get updates about rEcruit Early Access.
         </p>
       </form>
       {(status === "success" || status === "error") && (
@@ -221,7 +214,7 @@ export function ListExpertiseForm() {
       <form id="listForm" onSubmit={submit}>
         <div className="form-grid">
           <div>
-            <label htmlFor="alias">Public alias</label>
+            <label htmlFor="alias">Alias</label>
             <input
               id="alias"
               name="alias"

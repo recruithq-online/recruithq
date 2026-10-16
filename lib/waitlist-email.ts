@@ -73,7 +73,7 @@ export function createWaitlistEmail({
           <h2 style="margin:0 0 28px;font-size:28px;line-height:1.3;letter-spacing:-0.6px;font-weight:600;color:${ink};overflow-wrap:anywhere;">Meet ${name}.</h2>
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;table-layout:fixed;">
             <tr><td style="padding:18px 0;border-top:1px solid ${brand};">
-              <p style="margin:0 0 7px;font-size:11px;letter-spacing:1px;font-weight:600;color:${ink};">PUBLIC ALIAS</p>
+              <p style="margin:0 0 7px;font-size:11px;letter-spacing:1px;font-weight:600;color:${ink};">ALIAS</p>
               <p style="margin:0;font-size:17px;line-height:1.6;color:${ink};word-wrap:break-word;overflow-wrap:anywhere;">${name}</p>
             </td></tr>
             <tr><td style="padding:18px 0;border-top:1px solid ${brand}26;">

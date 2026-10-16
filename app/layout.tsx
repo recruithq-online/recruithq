@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "rEcruit — Reputation-based expertise",
   description:
-    "Find trusted experts using work history, completed jobs, reviews and reputation — not just a CV.",
+    "Find reputable experts using work history and reviews from past hirers — not just a CV.",
 };
 
 export default function RootLayout({

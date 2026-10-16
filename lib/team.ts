@@ -10,7 +10,7 @@ export const team: TeamMember[] = [
   {
     id: "gemhunter",
     name: "gemhunter",
-    role: "Founder",
-    bio: "Building rEcruit as a marketplace where reputation and demonstrated expertise matter. Has worked in the industry for the last 10 years, with a background in creative management, product development, among others.",
+    role: "Chief rEcruiter ",
+    bio: " - Building the skills marketplace where reputation and demonstrated expertise matter with background in creative management,  product development and sustainable finance others.",
   },
 ];

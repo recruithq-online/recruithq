@@ -86,7 +86,7 @@ export function Footer() {
                   <path d="M21.4 3.1 2.98 10.2c-1.26.5-1.25 1.2-.23 1.5l4.7 1.47 1.8 5.55c.22.62.11.87.75.87.5 0 .72-.23 1-.5l2.4-2.33 4.98 3.67c.92.51 1.58.25 1.81-.85l3.16-14.88c.34-1.36-.52-1.98-1.65-1.6ZM8.18 12.82l10.92-6.89c.54-.33 1.04-.15.63.2l-8.82 7.97-.34 3.62-1.39-4.9-1-.31Z" />
                 </svg>
               </a>
-              <a href="mailto:askrecruithq@gmail.com" aria-label="company mail">
+              <a href="mailto:hello@recruithq.online" aria-label="company mail">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"

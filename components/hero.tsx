@@ -10,8 +10,7 @@ export function Hero() {
         </div>
         <h1>Hire people for what they can actually do.</h1>
         <p>
-          Find trusted experts using work history, completed jobs, reviews and
-          reputation — not just a CV.
+         Find reputable experts using work history and reviews from past hirers — not just a CV.
         </p>
         <SearchPathways />
         <section className="coming-soon" aria-label="Coming soon">
