@@ -35,7 +35,7 @@ export function Team() {
           <article className="person" key={member.id}>
             <OwlAvatar name={member.name} />
             <h3>{member.name}</h3>
-            <p>{member.role} · {member.bio}</p>
+            <p>{member.role} {member.bio}</p>
           </article>
         ))}
       </TeamCarousel>
