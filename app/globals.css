@@ -259,6 +259,18 @@
   .waitlist-cta:hover {
     background: #0b4bc4;
   }
+  .waitlist-disabled,
+  .cta:disabled {
+    cursor: not-allowed;
+    filter: blur(1px);
+    opacity: 0.65;
+  }
+  .waitlist-disabled:hover {
+    background: #155eef;
+  }
+  .cta:disabled:hover {
+    background: #2864f0;
+  }
   .waitlist-note {
     @apply text-xs text-[#667085] mt-3;
   }

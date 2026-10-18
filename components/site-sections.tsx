@@ -57,9 +57,10 @@ export function Footer() {
             <div className="footer-links flex flex-col gap-2">
               <a href="#top">Overview</a>
               <a href="#team">Team</a>
-              <WaitlistTrigger className="footer-waitlist">
-                Join rEcruit Waitlist
-              </WaitlistTrigger>
+              <a href="#">rEcruit Waitlist coming soon</a>
+              {/* <WaitlistTrigger className="footer-waitlist">
+                rEcruit Waitlist coming soon
+              </WaitlistTrigger> */}
             </div>
           </div>
           <div className="social footer-column">

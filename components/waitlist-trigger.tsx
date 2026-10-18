@@ -13,7 +13,8 @@ export function WaitlistTrigger({
   return (
     <button
       type="button"
-      className={className}
+      className={`${className} waitlist-disabled`}
+      disabled
       onClick={() => openModal({ type: "waitlist" })}
     >
       {children}

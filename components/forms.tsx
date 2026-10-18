@@ -137,7 +137,7 @@ export function WaitlistForm() {
           <button
             className="cta"
             type="submit"
-            disabled={status === "submitting" || status === "success"}
+            disabled
           >
             {status === "submitting" ? (
               "Submitting…"
