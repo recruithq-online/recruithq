@@ -14,6 +14,7 @@ export function Navbar() {
       <Brand />
       <div className="navlinks">
         <a href="#roadmap">Roadmap</a>
+        <a href="#whitepaper">Whitepaper</a>
         <a href="#team">Team</a>
         <a href="#contact">Contact</a>
       </div>
@@ -67,8 +68,8 @@ export function Footer() {
            <div className="footer-column">
             <h3>Resources</h3>
             <div className="footer-links flex flex-col gap-2">
-              <a href="#roadmap">Road Map</a>
-              <a href="#">whitepapper</a>
+              <a href="#roadmap">Roadmap</a>
+              <a href="#">Whitepapper</a>
             </div>
           </div>
           <div className="social footer-column">

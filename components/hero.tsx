@@ -29,7 +29,7 @@ export function Hero() {
               href="/rEcruit-Whitepaper-v1.pdf"
               download="rEcruit-Whitepaper-v1.pdf"
             >
-              Read whitepaper <span aria-hidden="true">↓</span>
+              Read Whitepaper <span aria-hidden="true">↓</span>
             </a>
           </div>
           <div className="waitlist-note">

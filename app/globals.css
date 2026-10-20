@@ -579,11 +579,8 @@
   }
   .footer-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(130px, 0.7fr) minmax(
-        180px,
-        1fr
-      );
-    gap: 36px;
+    grid-template-columns: minmax(0, 1.25fr) minmax(110px, 0.65fr) minmax(110px, 0.65fr) minmax(200px, 1fr);
+    gap: 28px;
     align-items: start;
     max-width: 1000px;
     margin: 0 auto;
@@ -596,7 +593,7 @@
     padding-top: 10px;
     min-width: 0;
   }
-  .footer-grid > div:nth-child(3) {
+  .footer-grid > .social {
     justify-self: end;
     min-width: 190px;
   }
@@ -854,7 +851,7 @@
     .footer-column {
       padding-top: 0;
     }
-    .footer-grid > div:nth-child(3) {
+    .footer-grid > .social {
       justify-self: start;
       min-width: 0;
     }
