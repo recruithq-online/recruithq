@@ -33,7 +33,7 @@ export function Hero() {
                 rel="noopener noreferrer"
                 aria-label="Read whitepaper (opens in a new tab)"
               >
-                Read whitepaper <span aria-hidden="true">↗</span>
+                Read Whitepaper <span aria-hidden="true">↗</span>
               </a>
               {/* <a
                 className="whitepaper-download"
