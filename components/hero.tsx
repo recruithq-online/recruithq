@@ -24,13 +24,25 @@ export function Hero() {
             <WaitlistTrigger>
               Join rEcruit Waitlist <span aria-hidden="true">→</span>
             </WaitlistTrigger>
-            <a
-              className="whitepaper-cta"
-              href="/rEcruit-Whitepaper-v1.pdf"
-              download="rEcruit-Whitepaper-v1.pdf"
-            >
-              Read Whitepaper <span aria-hidden="true">↓</span>
-            </a>
+            <div className="whitepaper-actions" id="whitepaper">
+              {/* Replace this placeholder with your public Notion whitepaper URL. */}
+              <a
+                className="whitepaper-cta"
+                href="https://recruithq.notion.site/rEcruit-Whitepaper-v1-0-4d352d5b58ed82d2ab9c01468d2e5e6c"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Read whitepaper (opens in a new tab)"
+              >
+                Read whitepaper <span aria-hidden="true">↗</span>
+              </a>
+              {/* <a
+                className="whitepaper-download"
+                href="/rEcruit-Whitepaper-v1.pdf"
+                download="rEcruit-Whitepaper-v1.pdf"
+              >
+                Download PDF <span aria-hidden="true">↓</span>
+              </a> */}
+            </div>
           </div>
           <div className="waitlist-note">
             For experts who want to be among the first to join rEcruit.

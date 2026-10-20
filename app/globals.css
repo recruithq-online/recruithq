@@ -254,9 +254,26 @@
   }
   .coming-soon-actions {
     display: flex;
+    align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
     gap: 12px;
+  }
+  .whitepaper-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    scroll-margin-top: 130px;
+  }
+  .whitepaper-download {
+    padding: 4px 8px;
+    color: var(--muted);
+    font-size: 12px;
+    text-underline-offset: 3px;
+  }
+  .whitepaper-download:hover {
+    color: var(--ink);
   }
   .whitepaper-cta {
     display: inline-flex;

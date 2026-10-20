@@ -69,7 +69,7 @@ export function Footer() {
             <h3>Resources</h3>
             <div className="footer-links flex flex-col gap-2">
               <a href="#roadmap">Roadmap</a>
-              <a href="#">Whitepapper</a>
+              <a href="#whitepaper">Whitepaper</a>
             </div>
           </div>
           <div className="social footer-column">
