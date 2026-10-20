@@ -252,6 +252,29 @@
   .coming-soon p {
     @apply text-[#667085] leading-[1.6] max-w-[560px] mt-0 mx-auto mb-5;
   }
+  .coming-soon-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .whitepaper-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 0 20px;
+    border: 1px solid #155eef;
+    border-radius: 12px;
+    color: #155eef;
+    background: #fff;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .whitepaper-cta:hover {
+    background: #edf3ff;
+  }
   .waitlist-cta {
     @apply min-h-12 px-5 py-0 border-0 rounded-xl bg-[#155eef] text-white font-bold cursor-pointer;
     box-shadow: 0 8px 20px #155eef22;
@@ -282,6 +305,151 @@
   }
   .section-head h2 {
     @apply mt-0 mx-0 mb-1 text-[30px] font-bold tracking-[-.045em];
+  }
+  #roadmap {
+    scroll-margin-top: 92px;
+    padding-block: 52px;
+  }
+  .roadmap-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+  .roadmap-update {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .roadmap-intro {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .roadmap-intro strong,
+  .roadmap-tagline {
+    color: var(--blue2);
+  }
+  .roadmap-phases {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .roadmap-phase {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .roadmap-phase::before {
+    content: "";
+    position: absolute;
+    top: 16px;
+    left: 0;
+    right: -20px;
+    height: 3px;
+    background: #cbd5f6;
+  }
+  .roadmap-phase:last-child::before {
+    right: 0;
+  }
+  .roadmap-achieved::before {
+    background: var(--blue2);
+  }
+  .roadmap-marker {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 16px;
+    border: 2px solid #cbd5f6;
+    border-radius: 50%;
+    background: var(--bg);
+    font-weight: 700;
+  }
+  .roadmap-achieved .roadmap-marker {
+    color: #fff;
+    border-color: var(--blue2);
+    background: var(--blue2);
+  }
+  .roadmap-current .roadmap-marker {
+    color: var(--blue2);
+    border-color: var(--blue2);
+    box-shadow: 0 0 0 4px #2864f020;
+  }
+  .roadmap-card {
+    flex: 1;
+    padding: 18px 16px;
+    border: 1px solid transparent;
+    border-top: 3px solid #cbd5f6;
+    background: #f7f8fa;
+  }
+  .roadmap-achieved .roadmap-card,
+  .roadmap-current .roadmap-card {
+    border-top-color: var(--blue2);
+    background: #eef2ff;
+  }
+  .roadmap-current .roadmap-card {
+    border-color: var(--blue2);
+  }
+  .roadmap-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .roadmap-phase-label {
+    letter-spacing: 0.1em;
+  }
+  .roadmap-status {
+    padding: 3px 6px;
+    border: 1px solid #cbd5f6;
+    border-radius: 20px;
+    background: var(--bg);
+    letter-spacing: 0.04em;
+  }
+  .roadmap-achieved .roadmap-status {
+    color: #fff;
+    background: var(--blue2);
+    border-color: var(--blue2);
+  }
+  .roadmap-current .roadmap-status {
+    color: var(--blue2);
+    border-color: var(--blue2);
+  }
+  .roadmap-timing {
+    margin-left: auto;
+    white-space: nowrap;
+  }
+  .roadmap-card h3 {
+    margin: 8px 0 12px;
+    font-size: 17px;
+  }
+  .roadmap-card ul {
+    margin: 0;
+    padding-left: 15px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .roadmap-card li + li {
+    margin-top: 7px;
+  }
+  .roadmap-card li::marker {
+    color: var(--blue2);
+  }
+  .roadmap-tagline {
+    margin: 28px 0 0;
+    font-size: 14px;
+    font-weight: 700;
   }
   .row {
     @apply flex justify-between items-center gap-4;
@@ -647,10 +815,26 @@
   }
   @media (max-width: 800px) {
     .nav {
-      height: 66px;
+      height: auto;
+      min-height: 66px;
+      flex-wrap: wrap;
+      padding-block: 10px;
     }
     .navlinks {
-      display: none;
+      order: 3;
+      width: 100%;
+      justify-content: center;
+      margin: 8px 0 0;
+    }
+    #roadmap {
+      scroll-margin-top: 130px;
+    }
+    .roadmap-phases {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 24px;
+    }
+    .roadmap-phase:nth-child(2)::before {
+      right: 0;
     }
     .hero {
       padding-top: 58px;
@@ -692,6 +876,32 @@
     }
   }
   @media (max-width: 560px) {
+    .roadmap-phases {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .roadmap-phase {
+      padding-left: 48px;
+      padding-bottom: 20px;
+    }
+    .roadmap-phase::before,
+    .roadmap-phase:nth-child(2)::before,
+    .roadmap-phase:last-child::before {
+      top: 16px;
+      left: 16px;
+      right: auto;
+      width: 3px;
+      height: 100%;
+    }
+    .roadmap-phase:last-child::before {
+      display: none;
+    }
+    .roadmap-marker {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
+    }
     .team-carousel-track {
       grid-template-columns: 1fr;
     }
@@ -860,6 +1070,26 @@
   [data-theme="dark"] .nav {
     background: #101a2ded;
     border-color: var(--line);
+  }
+  [data-theme="dark"] .whitepaper-cta {
+    color: #a9c3ff;
+    border-color: #8eafff;
+    background: #141f32;
+  }
+  [data-theme="dark"] .whitepaper-cta:hover {
+    background: #243654;
+  }
+  [data-theme="dark"] .roadmap-card {
+    background: #141f32;
+  }
+  [data-theme="dark"] :is(.roadmap-achieved, .roadmap-current) .roadmap-card {
+    background: #1b2940;
+  }
+  [data-theme="dark"] :is(.roadmap-intro strong, .roadmap-tagline, .roadmap-current .roadmap-marker, .roadmap-current .roadmap-status) {
+    color: #a9c3ff;
+  }
+  [data-theme="dark"] .roadmap-card li::marker {
+    color: #a9c3ff;
   }
   [data-theme="dark"] :is(.hero, .footer) {
     background: var(--bg);

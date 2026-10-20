@@ -20,9 +20,18 @@ export function Hero() {
             We’re building a better way to discover expertise through reputation
             and proof of work. Join the waitlist to be part of what’s next.
           </p>
-          <WaitlistTrigger>
-            Join rEcruit Waitlist <span aria-hidden="true">→</span>
-          </WaitlistTrigger>
+          <div className="coming-soon-actions">
+            <WaitlistTrigger>
+              Join rEcruit Waitlist <span aria-hidden="true">→</span>
+            </WaitlistTrigger>
+            <a
+              className="whitepaper-cta"
+              href="/rEcruit-Whitepaper-v1.pdf"
+              download="rEcruit-Whitepaper-v1.pdf"
+            >
+              Read whitepaper <span aria-hidden="true">↓</span>
+            </a>
+          </div>
           <div className="waitlist-note">
             For experts who want to be among the first to join rEcruit.
           </div>

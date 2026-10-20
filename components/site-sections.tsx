@@ -13,6 +13,7 @@ export function Navbar() {
     >
       <Brand />
       <div className="navlinks">
+        <a href="#roadmap">Roadmap</a>
         <a href="#team">Team</a>
         <a href="#contact">Contact</a>
       </div>
@@ -61,6 +62,13 @@ export function Footer() {
               {/* <WaitlistTrigger className="footer-waitlist">
                 rEcruit Waitlist coming soon
               </WaitlistTrigger> */}
+            </div>
+          </div>
+           <div className="footer-column">
+            <h3>Resources</h3>
+            <div className="footer-links flex flex-col gap-2">
+              <a href="#roadmap">Road Map</a>
+              <a href="#">whitepapper</a>
             </div>
           </div>
           <div className="social footer-column">
