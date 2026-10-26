@@ -160,7 +160,7 @@ export function WaitlistForm() {
           </button>
         </div>
         <p className="waitlist-footnote">
-         No spams. You'll get updates about rEcruit Early Access.
+         No spams. You’ll get updates about rEcruit Early Access.
         </p>
       </form>
       {(status === "success" || status === "error") && (

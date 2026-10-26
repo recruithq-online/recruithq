@@ -6,10 +6,12 @@ export function Modal({
   children,
   onClose,
   labelledBy,
+  variant = "default",
 }: {
   children: React.ReactNode;
   onClose: () => void;
   labelledBy: string;
+  variant?: "default" | "marketplace";
 }) {
   const sheet = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -62,13 +64,13 @@ export function Modal({
   }, [onClose]);
   return (
     <div
-      className="modal"
+      className={variant === "marketplace" ? "mp-modal-backdrop" : "modal"}
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
       <div
-        className="sheet"
+        className={variant === "marketplace" ? "marketplace mp-modal-sheet" : "sheet"}
         ref={sheet}
         role="dialog"
         aria-modal="true"

@@ -1,51 +1,52 @@
 # rEcruit
 
-Conversion of `recruithq-site-4-6.html` to Next.js App Router, TypeScript, React, and Tailwind CSS 4.
+A frontend marketplace MVP based on `index-6.html`, built inside the existing Next.js App Router application with React, TypeScript, and Tailwind CSS 4.
 
 ## Run
 
-Requires Node.js 20.9 or newer.
+Requires Node.js 20.9 or newer. Run `npm install`, then `npm run dev`, and open http://localhost:3000. For production, run `npm run build` then `npm start`.
+
+## Current frontend
+
+The application contains marketplace screens and the restored Team section. The old Roadmap, Whitepaper, Coming Soon, and waitlist sections and navigation links have been removed from the live UI. `/early-access` redirects to `/`. The header follows the `index-6.html` navbar: sticky single-row layout, blue rE mark, Explore/Hire/List expertise links, Sign in, and Get started. Signed-in sessions expose Messages and Dashboard. On mobile the links and Sign in control hide as in the reference; Get started remains available, or Dashboard when signed in. Team sits alongside Explore, Hire, and List expertise and follows their mobile visibility. The light/dark toggle stays in the navbar on desktop and mobile. The original Team section is restored above the footer. Marketplace destinations and contact/social links remain in the footer.
+
+- `/`: overview, pathways, and featured sample experts.
+- `/marketplace/explore`: search, category filters, reputation/rate sorting, and empty states.
+- `/marketplace/profile/1`: example expert profile, hiring conversation, and evidence submissions.
+- `/marketplace/list`: validated profile creation with a starting reputation of 50.
+- `/marketplace/hire`: company/personal hiring, fee previews, and local opportunity posting.
+- `/marketplace/work`: role-specific dashboards, applications, acceptance, delivery, changes, and completion.
+- `/marketplace/messages`, `/marketplace/reputation`, `/marketplace/settings`, `/marketplace/about`: local conversations, review simulation, account preferences, sample wallet addresses, and product explanation.
+
+Sign in using `hirer@recruit.test` or `worker@recruit.test`, both with password `Test1234!`. The sign-in dialog can fill either account and shows inline validation. All marketplace dialogs have a dedicated padded surface, an inset close button, keyboard focus management, and a scrollable layout for small screens. Light and dark themes retain the saved browser preference.
+
+Switch accounts to try both sides of a job: post as hirer, apply as worker, accept as hirer, deliver as worker, and review as hirer. Personal hiring requires both accounts to add sample wallet addresses before simulating payment. No wallet is connected and no funds move. Company hiring shows a separate 2.5% fee; personal hiring adds 5% to the agreed job price. Fee arithmetic uses integer cents.
+
+## Implementation
+
+- `app/layout.tsx`: shared marketplace provider, header, content, and footer.
+- `components/marketplace/`: reusable screens, header, dialog forms, local state, and scoped CSS.
+- `lib/marketplace.ts`: domain types, sample profiles, fee calculations, and validation helpers.
+- `components/modal.tsx`: shared focus trapping, Escape/backdrop dismissal, scroll locking, focus restoration, and an isolated marketplace surface variant.
+- `components/site-sections.tsx`: footer branding, contact links, and current marketplace destinations.
+- `app/api/waitlist/route.ts`, `lib/waitlist.ts`, `lib/waitlist-email.ts`: retained email handling, unchanged by the UI cleanup.
+
+Marketplace state survives Next.js client navigation and test-account switching within the tab and resets on refresh. Marketplace interactions do not call APIs. Evidence forms retain filenames only. Both test accounts can try the labelled review simulation: approved Vouches and Refutes affect local scores; pending or rejected evidence does not. Real accounts, durable profiles/jobs/messages, secure evidence uploads, reviewer access, notifications, and payment processing require backend integration.
+
+## Checks
 
 ```sh
-npm install
-npm run dev
+npm run typecheck
+npm run lint
+npm run build -- --webpack
+npm run test:e2e
 ```
 
-Open http://localhost:3000. For production, run `npm run build` then `npm start`.
-
-## Structure
-
-- `app/`: route, root layout, metadata, design tokens, and global styles.
-- `components/`: navigation, hero, directory, cards, profiles, forms, dialog, and footer.
-- `components/experience-provider.tsx`: shared search, demo profile state, dialog, and toast state. Static sections remain Server Components.
-- `lib/experts.ts`: typed original expert profiles and filter options.
-- `lib/team.ts`: the founder profile and complete bio from the approved HTML.
-- `components/team-carousel.tsx`: reusable team container; controls are hidden for the single founder in this design.
-- `app/logo.jpeg`: retained official raster logo reference.
-- `components/brand.tsx`: the navigation uses normal text for rEcruit, with a blue E.
-- `components/brand-logo.tsx`: transparent vector owl used in the footer and join modal.
-- `app/owl.jpeg`: retained original owl reference image.
-- `components/owl-avatar.tsx`: founder’s owl in a suit and blue tie, using the approved HTML’s vector artwork.
-- `components/theme-toggle.tsx`: light/dark switch with system preference detection and a saved browser preference.
-- `app/api/waitlist/route.ts`: server-side Resend email delivery for waitlist submissions.
-- `lib/waitlist.ts`: expertise options shared by the form and server validation.
-- `lib/waitlist-email.ts`: responsive branded HTML email and its plain-text fallback.
-- `.env.example`: required server-side email settings.
-- `tests/site.spec.ts`: source layout comparisons and browser interaction checks.
-
-Tailwind utilities cover layouts, spacing, typography, and reusable component styles through `@apply`. Light mode matches the latest HTML's plain white backgrounds, blue accents, DM Sans body text, and Space Grotesk headings. It preserves the source section order, typography, spacing, breakpoints, transitions, and teaser blur. The explicit client overrides are “Join rEcruit Waitlist” on waitlist buttons and “Select an expertise” in the form. Tailwind Preflight is omitted to preserve native form defaults.
-
-The theme defaults to the visitor's system preference. The navigation toggle saves the selection in local storage, and a small initialization script applies it before rendering to avoid a theme flash. Dark mode adapts backgrounds, panels, text, borders, and forms. Navigation and footer logos have no background in either theme. The navigation text changes from dark to light while its capital E stays blue; the footer owl stays blue. The join modal uses the transparent vector owl with no background, border, or shadow. The favicon uses the same transparent vector owl (`app/icon.svg`).
-
-## Preserved behavior and assets
-
-The marketplace preview intentionally remains blurred with pointer interactions disabled, as in the supplied HTML. Its search, skill filters, expert dialogs, vouches, refute acknowledgements, hire acknowledgement, and expertise preview still have React implementations. Those demo actions remain browser-local and do not create real hires, publish profiles, or persist reputation changes.
-
-Fonts use the exact Google Fonts request from the HTML. Loading them requires an internet connection; builds do not fetch fonts. The navigation displays rEcruit as text with a blue E, and the transparent owl appears in the footer. The founder card uses the suited owl from the approved HTML. Contact links match the supplied HTML, including X, Telegram, and email.
-
-Dialogs support initial focus, focus trapping, Escape, backdrop dismissal, scroll locking, and returning focus to the trigger.
+Browser tests require a completed build and Google Chrome. They run a local production server on port 3107. `tests/design-reference.spec.ts` compares marketplace content geometry and typography with `index-6.html` at 390px, 768px, and 1440px. Marketplace/theme checks cover 320px through desktop widths, routing, validation, account switching, conversations, evidence review, and both hiring lifecycles. `tests/modal-layout.spec.ts` checks modal insets, viewport fit, scrolling, inline validation, and keyboard behavior, including the reported 638×669 layout and 320×568 phones. `tests/site.spec.ts` checks that legacy sections are absent and the old URL redirects. Email tests mock delivery and never send a live email. Screenshots and traces are written to ignored `test-results/`.
 
 ## Waitlist submissions
+
+The existing waitlist email implementation and server configuration are retained unchanged. The public waitlist UI has been removed. New marketplace interactions do not use this endpoint; the delivery details below describe the retained email code.
 
 The form posts to `/api/waitlist`. The server validates the submission and calls the [Resend Email API](https://resend.com/docs/api-reference/emails/send-email) to email the public alias, email address, and expertise to your admin inbox. The notification's Reply-To is the submitter's email address. The recipient and sender come exclusively from server configuration.
 
@@ -70,34 +71,3 @@ The form only shows success after the API returns an accepted Resend email ID; a
 If a submission does not arrive, check the terminal running Next.js for `[waitlist]` messages. They distinguish missing settings, blocked spam-trap submissions, provider rejection, and network failures. Rejection logs include Resend’s explanation, with API credentials and email addresses redacted; visitors receive a generic retry message. Successful sends log an email ID that can be checked in the Resend dashboard. Restart `npm run dev` after changing environment settings, then refresh the browser. In Gmail, also check Spam and All Mail for messages from `onboarding@resend.dev`.
 
 A repeated `400` with a honeypot warning means the hidden `bot-field` was filled before the request reached Resend. That field is read-only and includes password-manager ignore hints to prevent accidental text entry and reduce autofill interference. The server still rejects nonempty values, and the form now displays validation messages for rejected submissions. Refresh any form left open before this fix.
-
-## Where the blur is applied
-
-The `.product-faded` rule in `app/globals.css` uses:
-
-```css
-.product-faded {
-  filter: blur(3px);
-  opacity: 0.34;
-  pointer-events: none;
-  user-select: none;
-  transition: opacity 0.25s;
-}
-```
-
-`components/search-pathways.tsx` applies it to the search/pathway area. `components/expert-directory.tsx` applies it to the expert directory. Remove `product-faded` from both elements to show those areas clearly and enable clicks. Changing only `filter` leaves the fade and disabled pointer interactions in place. The navbar's separate `backdrop-filter: blur(16px)` blurs the background behind the navigation bar.
-
-## Checks
-
-```sh
-npm run typecheck
-npm run lint
-npm run build
-npm run test:e2e
-```
-
-If this environment prevents Turbopack from binding its worker port, use `npm run build -- --webpack`.
-
-Browser tests start the production server and require a completed build and Google Chrome installed. They compare the original and converted page at 1440px, 768px, and 390px, checking section geometry, typography, exact copy (with the client overrides), overflow, cards, and dialogs. Theme tests cover light/dark rendering at 320px, 390px, 768px, and 1440px, system preferences, and persistence after reload. They also exercise waitlist validation/retry/success, focus trapping, search, filters, vouch updates, refute notices, hire acknowledgements, and safe profile previews. Server tests verify the exact Resend request, fixed admin recipient, validation, honeypot, missing configuration, and provider/network failures. The demo tests temporarily remove the pointer gate only in the browser test, leaving the shipped coming-soon design intact.
-
-Source comparison tests require `recruithq-site-4-6.html` at the project root; they are explicitly skipped if that reference is absent. Responsive rendering, form, and email-handler tests still run. Tests use their own server on port 3107 to avoid reusing a running development server. Screenshots and failure traces are written to the ignored `test-results/` directory.

@@ -1,8 +1,9 @@
+import Link from "next/link";
 import { BrandLogo, type BrandVariant } from "./brand-logo";
 
-export function Brand({ variant = "wordmark" }: { variant?: BrandVariant }) {
+export function Brand({ variant = "wordmark", href = "#top" }: { variant?: BrandVariant; href?: string }) {
   return (
-    <a className="brand" href="#top" aria-label="rEcruit home">
+    <Link className="brand" href={href} aria-label="rEcruit home">
       {variant === "owl" ? (
         <BrandLogo variant="owl" />
       ) : (
@@ -10,6 +11,6 @@ export function Brand({ variant = "wordmark" }: { variant?: BrandVariant }) {
           r<span className="text-[#0828cb]">E</span>cruit
         </span>
       )}
-    </a>
+    </Link>
   );
 }

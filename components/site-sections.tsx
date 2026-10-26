@@ -1,30 +1,9 @@
 import { Brand } from "./brand";
-import { WaitlistTrigger } from "./waitlist-trigger";
+import Link from "next/link";
 import { team } from "@/lib/team";
 import { TeamCarousel } from "./team-carousel";
-import { ThemeToggle } from "./theme-toggle";
+export { MarketplaceNavbar as Navbar } from "./marketplace/chrome";
 import { OwlAvatar } from "./owl-avatar";
-
-export function Navbar() {
-  return (
-    <nav
-      className="nav sticky top-0 z-20 flex items-center justify-between"
-      aria-label="Main navigation"
-    >
-      <Brand />
-      <div className="navlinks">
-        <a href="#roadmap">Roadmap</a>
-        <a href="#whitepaper">Whitepaper</a>
-        <a href="#team">Team</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div className="nav-actions flex items-center gap-2">
-        <ThemeToggle />
-        <WaitlistTrigger>Join rEcruit Waitlist</WaitlistTrigger>
-      </div>
-    </nav>
-  );
-}
 
 export function Team() {
   return (
@@ -57,19 +36,20 @@ export function Footer() {
           <div className="footer-column">
             <h3>Explore</h3>
             <div className="footer-links flex flex-col gap-2">
-              <a href="#top">Overview</a>
-              <a href="#team">Team</a>
-              <a href="#">Waitlist Coming Soon</a>
-              {/* <WaitlistTrigger className="footer-waitlist">
-                rEcruit Waitlist coming soon
-              </WaitlistTrigger> */}
+              <Link href="/">Overview</Link>
+              <Link href="/marketplace/explore">Explore expertise</Link>
+              <Link href="/marketplace/hire">Hire</Link>
+              <Link href="/marketplace/list">List expertise</Link>
             </div>
           </div>
            <div className="footer-column">
-            <h3>Resources</h3>
+            <h3>Workspace</h3>
             <div className="footer-links flex flex-col gap-2">
-              <a href="#roadmap">Roadmap</a>
-              <a href="#whitepaper">Whitepaper</a>
+              <Link href="/marketplace/work">Dashboard</Link>
+              <Link href="/marketplace/messages">Messages</Link>
+              <Link href="/marketplace/reputation">Reputation</Link>
+              <Link href="/marketplace/settings">Settings</Link>
+              <Link href="/marketplace/about">About rEcruit</Link>
             </div>
           </div>
           <div className="social footer-column">
@@ -126,8 +106,8 @@ export function Footer() {
           </div>
         </div>
         <div className="copy">
-          © 2026 rEcruit. Building a marketplace where reputation and proof of
-          work matter.
+          <p>© 2026 rEcruit. Building a marketplace where reputation and proof of
+          work matter.</p>
         </div>
       </div>
     </footer>

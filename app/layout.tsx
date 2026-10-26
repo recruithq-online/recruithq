@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Navbar, Footer, Team } from "@/components/site-sections";
+import { MarketplaceProvider } from "@/components/marketplace/provider";
+import { MarketplaceShell } from "@/components/marketplace/shell";
 
 export const metadata: Metadata = {
   title: "rEcruit — Beyond CVs. Built on Reputation",
@@ -36,7 +39,14 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+          <MarketplaceProvider>
+            <Navbar />
+            <MarketplaceShell>{children}</MarketplaceShell>
+            <Team />
+            <Footer />
+          </MarketplaceProvider>
+      </body>
     </html>
   );
 }
