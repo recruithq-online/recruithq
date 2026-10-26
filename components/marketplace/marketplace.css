@@ -800,6 +800,7 @@
   border-bottom: 1px solid var(--line);
 }
 .marketplace .mp-site-nav {
+  position: relative;
   max-width: 1180px;
   margin: auto;
   padding: 0 22px;
@@ -830,6 +831,7 @@
   letter-spacing: -1px;
 }
 .marketplace .mp-site-blue { color: var(--blue); }
+.marketplace .mp-site-menu { display: contents; }
 .marketplace .mp-site-links {
   display: flex;
   gap: 24px;
@@ -839,6 +841,7 @@
 }
 .marketplace .mp-site-links a:hover { color: var(--blue); }
 .marketplace .mp-site-actions { display: flex; gap: 8px; align-items: center; }
+.marketplace .mp-site-menu-toggle { display: none; }
 .marketplace .mp-site-auth { color: #475467; }
 [data-theme="dark"] .marketplace.mp-site-header { background: #141f32ed; }
 [data-theme="dark"] .marketplace :is(.mp-site-links, .mp-site-auth) { color: var(--muted); }
@@ -850,7 +853,36 @@
 }
 @media (max-width: 620px) {
   .marketplace .mp-site-nav { height: 64px; padding: 0 16px; }
-  .marketplace .mp-site-links { display: none; }
+  .marketplace .mp-site-menu-toggle {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    padding: 9px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--navy);
+    cursor: pointer;
+  }
+  .marketplace .mp-site-menu-toggle svg { width: 20px; height: 20px; }
+  .marketplace .mp-site-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 14px 16px 16px;
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+    box-shadow: 0 12px 20px #1018281a;
+  }
+  .marketplace .mp-site-nav.mp-menu-open .mp-site-menu { display: grid; gap: 14px; }
+  .marketplace .mp-site-links { display: grid; gap: 0; }
+  .marketplace .mp-site-links a { padding: 11px 4px; }
+  .marketplace .mp-site-actions { flex-wrap: wrap; }
+  [data-theme="dark"] .marketplace .mp-site-menu { background: #141f32; }
   .marketplace .mp-site-brand { font-size: 22px; }
   .marketplace .mp-site-auth { display: none; }
   .marketplace .mp-site-actions .mp-btn { padding: 10px 12px; }

@@ -22,8 +22,16 @@ test("source navbar routes and authenticated controls work", async ({ page }) =>
   await expect(nav.getByRole("link", { name: "Dashboard", exact: true })).toBeVisible();
   for (const width of [320, 390, 638, 768, 900, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    await expect(nav.getByRole("link", { name: "Dashboard", exact: true })).toBeVisible();
+    if (width <= 620) {
+      await nav.getByRole("button", { name: "Open navigation menu" }).click();
+      await expect(nav.getByRole("link", { name: "Dashboard", exact: true })).toBeVisible();
+    } else {
+      await expect(nav.getByRole("link", { name: "Dashboard", exact: true })).toBeVisible();
+    }
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    if (width <= 620) {
+      await nav.getByRole("button", { name: "Close navigation menu" }).click();
+    }
   }
   await page.locator(".footer").getByRole("link", { name: "Settings", exact: true }).click();
   await page.getByRole("main").getByRole("button", { name: "Sign out", exact: true }).click();
@@ -36,19 +44,25 @@ for (const width of [320, 390, 768, 1440]) {
     await page.goto("/");
     const nav = page.getByRole("navigation", { name: "Marketplace demo" });
     await expect(nav).toHaveCSS("height", width <= 620 ? "64px" : "72px");
-    await expect(nav.getByRole("link", { name: "Get started" })).toBeVisible();
+    const menuButton = nav.getByRole("button", { name: "Open navigation menu" });
     if (width <= 620) {
+      await expect(menuButton).toBeVisible();
       await expect(nav.getByRole("link", { name: "Explore", exact: true })).toBeHidden();
-      await expect(nav.getByRole("button", { name: "Sign in", exact: true })).toBeHidden();
-    } else await expect(nav.getByRole("link", { name: "Explore", exact: true })).toBeVisible();
+      await menuButton.click();
+      await expect(nav.getByRole("button", { name: "Close navigation menu" })).toHaveAttribute("aria-expanded", "true");
+      await expect(nav.getByRole("link", { name: "Explore", exact: true })).toBeVisible();
+    } else {
+      await expect(menuButton).toBeHidden();
+      await expect(nav.getByRole("link", { name: "Explore", exact: true })).toBeVisible();
+    }
+    await expect(nav.getByRole("link", { name: "Get started" })).toBeVisible();
     await expect(nav.getByRole("button", { name: "Switch to dark mode" })).toBeVisible();
     const team = nav.locator(".mp-site-links").getByRole("link", { name: "Team", exact: true });
-    if (width <= 620) await expect(team).toBeHidden();
-    else {
-      await team.click();
-      await expect(page).toHaveURL(/#team$/);
-      await expect(page.locator("#team .person")).toBeVisible();
-    }
+    await expect(team).toBeVisible();
+    await team.click();
+    await expect(page).toHaveURL(/#team$/);
+    if (width <= 620) await expect(nav.getByRole("button", { name: "Open navigation menu" })).toHaveAttribute("aria-expanded", "false");
+    await expect(page.locator("#team .person")).toBeVisible();
     await page.evaluate(() => window.scrollTo(0, 700));
     expect((await nav.boundingBox())!.y).toBe(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
