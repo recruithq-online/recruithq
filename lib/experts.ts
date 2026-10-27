@@ -25,7 +25,7 @@ export interface Expert {
   reviews: [string, string][];
 }
 
-// Original demo profiles, preserved verbatim from the supplied HTML.
+// Original sample profiles, preserved verbatim from the supplied HTML.
 export const initialExperts: Expert[] = [
   {
     id: 1,

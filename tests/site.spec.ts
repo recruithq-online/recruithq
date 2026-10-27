@@ -5,11 +5,11 @@ test("marketplace has no old early-access sections or waitlist controls", async 
   await expect(page.locator("#roadmap, #whitepaper, .coming-soon, .waitlist-cta")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /roadmap|whitepaper|waitlist/i })).toHaveCount(0);
   await expect(page.getByRole("button", { name: /waitlist/i })).toHaveCount(0);
-  await expect(page.getByRole("navigation", { name: "Marketplace demo" })).toHaveCount(1);
+  await expect(page.getByRole("navigation", { name: "Marketplace" })).toHaveCount(1);
   await expect(page.locator("#team .person")).toHaveCount(1);
-  await expect(page.getByRole("navigation", { name: "Marketplace demo" }).getByRole("link", { name: "Team", exact: true })).toHaveAttribute("href", "#team");
+  await expect(page.getByRole("navigation", { name: "Marketplace" }).getByRole("link", { name: "Team", exact: true })).toHaveAttribute("href", "#team");
   await expect(page.locator(".footer")).toContainText("Explore expertise");
-  await expect(page.locator(".footer")).toContainText("Dashboard");
+  await expect(page.locator(".footer")).not.toContainText("Dashboard");
   await expect(page.getByRole("link", { name: "company mail" })).toHaveAttribute("href", "mailto:support@recruithq.online");
 });
 

@@ -1,6 +1,6 @@
 export type Role = "hirer" | "worker";
 export type HiringRoute = "Hiring for company" | "Hiring for myself";
-export interface DemoAccount {
+export interface MarketplaceAccount {
   email: string;
   password: string;
   alias: string;
@@ -63,7 +63,7 @@ export interface Wallet {
   network: string;
   address: string;
 }
-export const accounts: DemoAccount[] = [{
+export const accounts: MarketplaceAccount[] = [{
   email: "hirer@recruit.test",
   password: "Test1234!",
   alias: "TestHirer",

@@ -3,12 +3,14 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type Dispatch, type SetStateAction, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { Modal } from "@/components/modal";
-import { accounts, aliasKey, initialMarketplaceExperts, routeTo, type DemoAccount, type MarketplaceExpert, type Opportunity, type Submission, type Conversation, type Wallet, type HiringRoute } from "@/lib/marketplace";
+import { accounts, aliasKey, initialMarketplaceExperts, routeTo, type MarketplaceAccount, type MarketplaceExpert, type Opportunity, type Submission, type Conversation, type Wallet, type HiringRoute, type Role } from "@/lib/marketplace";
 import { AuthForm, ContactForm, FeedbackForm } from "./dialogs";
 import "./marketplace.css";
 type Setter<T> = Dispatch<SetStateAction<T>>;
 type Dialog = {
   type: "auth";
+} | {
+  type: "signup";
 } | {
   type: "contact";
   expertId: number;
@@ -36,8 +38,9 @@ interface MarketplaceState {
     apps: boolean;
     msgs: boolean;
   }>>;
-  session: DemoAccount | null;
+  session: MarketplaceAccount | null;
   signIn: (email: string, password: string) => boolean;
+  signUp: (alias: string, email: string, password: string, role: Role) => void;
   signOut: () => void;
   activeChat: number | null;
   setActiveChat: Setter<number | null>;
@@ -71,7 +74,7 @@ export function MarketplaceProvider({
     apps: boolean;
     msgs: boolean;
   }>>({});
-  const [session, setSession] = useState<DemoAccount | null>(null);
+  const [session, setSession] = useState<MarketplaceAccount | null>(null);
   const [activeChat, setActiveChat] = useState<number | null>(null);
   const [dialog, setDialog] = useState<Dialog>(null);
   const [notice, setNotice] = useState<{
@@ -84,7 +87,7 @@ export function MarketplaceProvider({
     return () => clearTimeout(timer);
   }, [notice]);
   const sequence = useRef(100);
-  const pending = useRef<((account: DemoAccount) => void) | null>(null);
+  const pending = useRef<((account: MarketplaceAccount) => void) | null>(null);
   const nextId = () => ++sequence.current;
   const closeDialog = useCallback(() => {
     setDialog(null);
@@ -111,16 +114,30 @@ export function MarketplaceProvider({
     const continuation = pending.current;
     pending.current = null;
     setDialog(null);
-    toast(`Demo session: ${account.alias} (${account.role}). No real authentication occurred.`);
+    toast(`Signed in as ${account.alias} (${account.role}). This is a local session only.`);
     if (continuation) continuation(account);else router.push(routeTo("work"));
     return true;
+  }
+  function signUp(alias: string, email: string, password: string, role: Role) {
+    const account: MarketplaceAccount = {
+      alias: alias.trim(),
+      email: email.trim().toLowerCase(),
+      password,
+      role,
+    };
+    setSession(account);
+    const continuation = pending.current;
+    pending.current = null;
+    setDialog(null);
+    toast(`Temporary account created for ${account.alias}. It is only available in this browser session.`);
+    if (continuation) continuation(account);else router.push(routeTo("work"));
   }
   function signOut() {
     setSession(null);
     closeDialog();
     setActiveChat(null);
     router.push("/");
-    toast("Demo session signed out. Browser-local sample data is retained until refresh.");
+    toast("Signed out. Browser-local sample data is retained until refresh.");
   }
   function contact(expertId: number) {
     requireAccount(() => setDialog({
@@ -138,7 +155,7 @@ export function MarketplaceProvider({
     }
     openJobChat(job, session, other);
   }
-  function openJobChat(job: Opportunity, account: DemoAccount, other?: string) {
+  function openJobChat(job: Opportunity, account: MarketplaceAccount, other?: string) {
     const recipient = other ?? (job.by === account.alias ? job.worker ?? job.applicants[0] : job.by);
     if (!recipient || aliasKey(recipient) === aliasKey(account.alias)) {
       toast("No one to message yet.");
@@ -173,6 +190,7 @@ export function MarketplaceProvider({
     setPreferences,
     session,
     signIn,
+    signUp,
     signOut,
     activeChat,
     setActiveChat,
@@ -189,7 +207,7 @@ export function MarketplaceProvider({
     {dialog && <Modal variant="marketplace" key={dialog.type} onClose={closeDialog} labelledBy="marketplace-dialog-title">
       <div className="mp-dialog">
       <button type="button" className="mp-dialog-close" onClick={closeDialog} aria-label="Close dialog">×</button>
-      {dialog.type === "auth" && <AuthForm />}
+      {(dialog.type === "auth" || dialog.type === "signup") && <AuthForm initialMode={dialog.type} />}
       {dialog.type === "contact" && selected && <ContactForm expert={selected} />}
       {dialog.type === "feedback" && selected && <FeedbackForm expert={selected} kind={dialog.kind} />}
       </div>
@@ -202,7 +220,7 @@ export function MarketplaceProvider({
     </div>}
   </Context.Provider>;
 }
-export function DemoGate({
+export function AccountGate({
   children
 }: {
   children: ReactNode;
@@ -212,9 +230,9 @@ export function DemoGate({
     requireAccount
   } = useMarketplace();
   return session ? children : <div className="mp-panel">
-    <h2>Try your demo workspace</h2>
-    <p className="mp-intro">Choose the hirer or worker test account to explore this screen. No real account is created.</p>
-    <button className="mp-btn mp-primary" onClick={() => requireAccount(() => {})}>Sign in to demo</button>
+    <h2>Sign in to your workspace</h2>
+    <p className="mp-intro">Sign in with an existing account or create a temporary account to continue.</p>
+    <button className="mp-btn mp-primary" onClick={() => requireAccount(() => {})}>Sign in to continue</button>
   </div>;
 }
 export function RouteOptions({

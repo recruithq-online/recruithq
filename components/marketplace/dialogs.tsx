@@ -2,32 +2,55 @@
 
 import { useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { accounts, aliasKey, routeTo, type MarketplaceExpert, type HiringRoute } from "@/lib/marketplace";
+import { accounts, aliasKey, routeTo, type MarketplaceExpert, type HiringRoute, type Role } from "@/lib/marketplace";
 import { RouteOptions, useMarketplace } from "./provider";
 import { Field, TextArea } from "./ui";
-export function AuthForm() {
-  const { signIn, closeDialog } = useMarketplace();
+export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
+  const { signIn, signUp, closeDialog } = useMarketplace();
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
+  const confirmPasswordInput = useRef<HTMLInputElement>(null);
+  const [mode, setMode] = useState<"auth" | "signup">(initialMode);
+  const [alias, setAlias] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState<Role>("worker");
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
   function submit(event: FormEvent) {
     event.preventDefault();
     if (!email.trim() || !emailInput.current?.validity.valid) {
-      setError("Enter the email from one of the test accounts above.");
+      setError("Enter a valid email address.");
       emailInput.current?.focus();
       return;
     }
+    if (mode === "signup") {
+      if (!alias.trim()) {
+        setError("Enter the public alias you want to use.");
+        return;
+      }
+      if (password.length < 8) {
+        setError("Choose a password with at least 8 characters.");
+        passwordInput.current?.focus();
+        return;
+      }
+      if (password !== confirmPassword) {
+        setError("Passwords do not match.");
+        confirmPasswordInput.current?.focus();
+        return;
+      }
+      signUp(alias, email, password, role);
+      return;
+    }
     if (!password) {
-      setError("Enter the test password, or use Fill above.");
+      setError("Enter the account password, or select a sample account above.");
       passwordInput.current?.focus();
       return;
     }
     if (!signIn(email, password)) {
-      setError("That email and password don't match a test account. Use Fill above.");
+      setError("That email and password don't match. Select a sample account above.");
       setPassword("");
       passwordInput.current?.focus();
     }
@@ -35,43 +58,81 @@ export function AuthForm() {
 
   return (
     <>
-      <h2 id="marketplace-dialog-title">Sign in to rEcruit</h2>
-      <p className="mp-intro">Try the hirer or worker demo below. No real account is needed. Please don’t enter real credentials.</p>
-      <div className="mp-demo-accounts">
-        {accounts.map(account => (
-          <div className="mp-demo-account" key={account.email}>
-            <div className="mp-account-details">
-              <strong>{account.role === "hirer" ? "Hirer" : "Worker"} account</strong>
-              <span>{account.email}</span>
-              <span>Password: <code>{account.password}</code></span>
-            </div>
-            <button type="button" className="mp-btn mp-secondary mp-small" onClick={() => {
-              setEmail(account.email);
-              setPassword(account.password);
-              setError("");
-            }}>
-              Fill<span className="sr-only"> {account.role} account</span>
-            </button>
+      <h2 id="marketplace-dialog-title">{mode === "signup" ? "Create an account" : "Sign in to rEcruit"}</h2>
+      {mode === "signup" ? (
+        <p className="mp-intro">This creates a temporary account for this browser session only. It is not saved and will be lost when you refresh.</p>
+      ) : (
+        <>
+          <p className="mp-intro">Use a sample hirer or worker account below. Please don’t enter your personal credentials.</p>
+          <div className="mp-sample-accounts">
+            {accounts.map(account => (
+              <div className="mp-sample-account" key={account.email}>
+                <div className="mp-account-details">
+                  <strong>{account.role === "hirer" ? "Hirer" : "Worker"} account</strong>
+                  <span>{account.email}</span>
+                  <span>Password: <code>{account.password}</code></span>
+                </div>
+                <button type="button" className="mp-btn mp-secondary mp-small" onClick={() => {
+                  setEmail(account.email);
+                  setPassword(account.password);
+                  setError("");
+                }}>
+                  Fill<span className="sr-only"> {account.role} account</span>
+                </button>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
       <form onSubmit={submit} noValidate>
+        {mode === "signup" && (
+          <>
+            <div className="mp-group">
+              <label htmlFor="alias">Public alias</label>
+              <input id="alias" className="mp-field" required autoComplete="nickname" value={alias} onChange={event => setAlias(event.target.value)} />
+            </div>
+            <div className="mp-group">
+              <label htmlFor="role">I want to</label>
+              <select id="role" className="mp-field" value={role} onChange={event => {
+                if (event.target.value === "hirer" || event.target.value === "worker") {
+                  setRole(event.target.value);
+                }
+              }}>
+                <option value="worker">Offer my expertise</option>
+                <option value="hirer">Hire expertise</option>
+              </select>
+            </div>
+          </>
+        )}
         <div className="mp-group">
-          <label htmlFor="demo-email">Email</label>
-          <input ref={emailInput} id="demo-email" className="mp-field" type="email" required autoComplete="off" aria-describedby={error ? "demo-auth-error" : undefined} value={email} onChange={event => setEmail(event.target.value)} />
+          <label htmlFor="email">Email</label>
+          <input ref={emailInput} id="email" className="mp-field" type="email" required autoComplete="off" aria-describedby={error ? "auth-error" : undefined} value={email} onChange={event => setEmail(event.target.value)} />
         </div>
         <div className="mp-group">
-          <label htmlFor="demo-password">Password</label>
-          <input ref={passwordInput} id="demo-password" className="mp-field" type={show ? "text" : "password"} required autoComplete="off" aria-describedby={error ? "demo-auth-error" : undefined} value={password} onChange={event => setPassword(event.target.value)} />
+          <label htmlFor="password">Password</label>
+          <input ref={passwordInput} id="password" className="mp-field" type={show ? "text" : "password"} required autoComplete={mode === "signup" ? "new-password" : "off"} aria-describedby={error ? "auth-error" : undefined} value={password} onChange={event => setPassword(event.target.value)} />
         </div>
+        {mode === "signup" && (
+          <div className="mp-group">
+            <label htmlFor="confirm-password">Confirm password</label>
+            <input ref={confirmPasswordInput} id="confirm-password" className="mp-field" type={show ? "text" : "password"} required autoComplete="new-password" aria-describedby={error ? "auth-error" : undefined} value={confirmPassword} onChange={event => setConfirmPassword(event.target.value)} />
+          </div>
+        )}
         <label className="mp-checkbox">
           <input type="checkbox" checked={show} onChange={event => setShow(event.target.checked)} />Show password
         </label>
-        {error && <p id="demo-auth-error" role="alert" className="mp-error">{error}</p>}
+        {error && <p id="auth-error" role="alert" className="mp-error">{error}</p>}
         <div className="mp-modalactions">
           <button type="button" className="mp-btn mp-secondary" onClick={closeDialog}>Cancel</button>
-          <button className="mp-btn mp-primary">Sign in</button>
+          <button className="mp-btn mp-primary">{mode === "signup" ? "Create account" : "Sign in"}</button>
         </div>
+        <p className="mp-auth-switch">
+          {mode === "signup" ? "Already have an account?" : "New to rEcruit?"}
+          <button type="button" className="mp-btn mp-ghost mp-small" onClick={() => {
+            setMode(mode === "signup" ? "auth" : "signup");
+            setError("");
+          }}>{mode === "signup" ? "Sign in" : "Sign up"}</button>
+        </p>
       </form>
     </>
   );
@@ -118,11 +179,11 @@ export function ContactForm({
     setActiveChat(id);
     closeDialog();
     router.push(routeTo("messages"));
-    toast("Demo conversation created in this browser. No message has been delivered.");
+    toast("Conversation created in this browser. No message has been delivered.");
   }
   return <>
     <h2 id="marketplace-dialog-title">Start a hiring conversation</h2>
-    <p className="mp-intro">Connect with <b>{expert.alias}</b>. Company hiring happens off-platform with a separate 2.5% company fee. Personal hiring adds 5% to the hirer checkout. This is a local demo.</p>
+    <p className="mp-intro">Connect with <b>{expert.alias}</b>. Company hiring happens off-platform with a separate 2.5% company fee. Personal hiring adds 5% to the hirer checkout. This conversation is stored in this browser only.</p>
     <form onSubmit={submit}>
       <div className="mp-group">
         <label htmlFor="contact-route">Hiring route</label>
@@ -182,7 +243,7 @@ export function FeedbackForm({
       status: "Pending Review"
     }, ...current]);
     closeDialog();
-    toast("Demo evidence submitted for review. Reputation score unchanged.");
+    toast(" evidence submitted for review. Reputation score unchanged.");
   }
   return <>
     <h2 id="marketplace-dialog-title">{kind === "vouch" ? "Vouch for" : "Refute a claim about"} {expert.alias}</h2>

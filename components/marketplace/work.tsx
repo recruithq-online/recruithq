@@ -3,16 +3,16 @@
 import Link from "next/link";
 import { type FormEvent } from "react";
 import { fees, money, routeTo, type Opportunity } from "@/lib/marketplace";
-import { DemoGate, useMarketplace } from "./provider";
-import { Empty, Field, Page, PageHeading } from "./ui";
+import { AccountGate, useMarketplace } from "./provider";
+import { Empty, Field, Page, WorkspacePageHeading } from "./ui";
 import { OpportunityCard } from "./hiring";
 export function Work() {
   return <Page>
-    <PageHeading eyebrow="Your workspace" title="Dashboard">Your jobs, conversations, and simulated payments.</PageHeading>
+    <WorkspacePageHeading eyebrow="Your workspace" title="Dashboard">Your jobs, conversations, and simulated payments.</WorkspacePageHeading>
     <div className="mp-stack">
-      <DemoGate>
+      <AccountGate>
         <Dashboard />
-      </DemoGate>
+      </AccountGate>
     </div>
   </Page>;
 }
@@ -43,7 +43,7 @@ function Dashboard() {
       worker: alias,
       status: "In progress"
     });
-    toast(`Demo: ${alias} accepted. Work is in progress.`);
+    toast(`${alias} accepted. Work is in progress.`);
   }
   function deliver(event: FormEvent<HTMLFormElement>, job: Opportunity) {
     event.preventDefault();
@@ -57,7 +57,7 @@ function Dashboard() {
       delivery: note,
       status: "Delivered"
     });
-    toast("Demo delivery recorded. Waiting for hirer review.");
+    toast("Delivery recorded. Waiting for hirer review.");
   }
   function review(job: Opportunity, approve: boolean) {
     if (session?.role !== "hirer" || job.by !== me || job.status !== "Delivered") return;
@@ -65,30 +65,30 @@ function Dashboard() {
       patch(job, {
         status: "In progress"
       });
-      toast("Demo: changes requested.");
+      toast("Changes requested.");
       return;
     }
     if (job.type === "Hiring for myself") {
       if (!job.worker || !wallets[job.worker]) {
-        toast("The worker must add a demo payout wallet in Settings first.");
+        toast("The worker must add a payout wallet in Settings first.");
         return;
       }
       if (!wallets[me]) {
-        toast("Add a demo funding wallet in Settings first.");
+        toast("Add a funding wallet in Settings first.");
         return;
       }
     }
     patch(job, {
       status: "Completed"
     });
-    toast(job.type === "Hiring for myself" ? `Simulated payment: ${money(fees(job.budget, job.type).total)} total. No money moved.` : "Demo work marked complete. Company payment remains off-platform.");
+    toast(job.type === "Hiring for myself" ? `Simulated payment: ${money(fees(job.budget, job.type).total)} total. No money moved.` : "Work marked complete. Company payment remains off-platform.");
   }
   function apply(job: Opportunity) {
     if (session?.role !== "worker" || job.status !== "Open" || job.applicants.includes(me)) return;
     patch(job, {
       applicants: [...job.applicants, me]
     });
-    toast("Demo application recorded locally.");
+    toast("Application recorded locally.");
   }
   const completed = mine.filter(o => o.status === "Completed"),
     active = mine.filter(o => ["In progress", "Delivered"].includes(o.status));
@@ -105,7 +105,7 @@ function Dashboard() {
     </div>{!hirer && !wallets[me] && <div className="mp-panel">
       <h2>Add a payout wallet</h2>
       <p className="mp-intro">Use a sample address to try the payment simulation.</p>
-      <Link className="mp-btn mp-secondary" href={routeTo("settings")}>Add demo wallet →</Link>
+      <Link className="mp-btn mp-secondary" href={routeTo("settings")}>Add wallet →</Link>
     </div>}<div className="mp-grid">{[[hirer ? mine.filter(o => o.status === "Open").length : money(earned), hirer ? "Open jobs" : "Simulated earnings"], [active.length, "Active jobs"], [hirer ? completed.length : open.length, hirer ? "Completed" : "Open jobs to apply for"]].map(([value, label]) => <div className="mp-panel" key={label}>
         <div className="mp-score">{value}</div>
         <div className="mp-muted">{label}</div>
@@ -118,7 +118,7 @@ function Dashboard() {
               <button className="mp-btn mp-primary mp-small" onClick={() => accept(job, alias)}>Accept</button>
             </div>
           </div>
-        </div>) : <p className="mp-note">No applicants yet. Switch to the worker demo account to apply.</p>)}{job.status === "In progress" && <p className="mp-note">In progress with <b>{job.worker}</b>. Waiting for delivery.</p>}{job.status === "Delivered" && <>
+        </div>) : <p className="mp-note">No applicants yet. A worker can apply for this job.</p>)}{job.status === "In progress" && <p className="mp-note">In progress with <b>{job.worker}</b>. Waiting for delivery.</p>}{job.status === "Delivered" && <>
           <div className="mp-feedback">
             <div className="mp-muted">Delivery from {job.worker}</div>
             <p>{job.delivery}</p>
@@ -126,13 +126,13 @@ function Dashboard() {
           <div className="mp-actions" style={{
             marginTop: 14
           }}>
-            <button className="mp-btn mp-primary" onClick={() => review(job, true)}>{job.type === "Hiring for myself" ? `Simulate approval & pay ${money(fees(job.budget, job.type).total)}` : "Mark complete (demo)"}</button>
+            <button className="mp-btn mp-primary" onClick={() => review(job, true)}>{job.type === "Hiring for myself" ? `Simulate approval & pay ${money(fees(job.budget, job.type).total)}` : "Mark complete"}</button>
             <button className="mp-btn mp-secondary" onClick={() => review(job, false)}>Request changes</button>
           </div>
         </>}</> : <>{job.status === "In progress" && <form onSubmit={e => deliver(e, job)}>
           <Field name="note" label="Delivery note or link" maxLength={300} placeholder="What you delivered" />
-          <button className="mp-btn mp-primary mp-fullbutton">Mark delivered (demo)</button>
-        </form>}{job.status === "Delivered" && <p className="mp-note">Delivered. Waiting for the hirer to approve.</p>}</>}{job.status === "Completed" && <p className="mp-note">Completed with {hirer ? job.worker : job.by}. {job.type === "Hiring for myself" ? `Simulated worker payment: ${money(Math.round(job.budget * 100))}. No funds transferred.` : "Payment is handled off-platform; platform billing is not connected."}</p>}{job.worker && <button className="mp-btn mp-secondary mp-small" onClick={() => jobChat(job)}>Message {hirer ? "worker" : "hirer"}</button>}</OpportunityCard>) : <Empty title={hirer ? "No jobs yet" : "No active work"}>{hirer ? "Post a job to start receiving demo applicants." : "Apply for a job below; the hirer accepts you to start."}</Empty>}{!hirer && <>{applied.length > 0 && <>
+          <button className="mp-btn mp-primary mp-fullbutton">Mark delivered</button>
+        </form>}{job.status === "Delivered" && <p className="mp-note">Delivered. Waiting for the hirer to approve.</p>}</>}{job.status === "Completed" && <p className="mp-note">Completed with {hirer ? job.worker : job.by}. {job.type === "Hiring for myself" ? `Simulated worker payment: ${money(Math.round(job.budget * 100))}. No funds transferred.` : "Payment is handled off-platform; platform billing is not connected."}</p>}{job.worker && <button className="mp-btn mp-secondary mp-small" onClick={() => jobChat(job)}>Message {hirer ? "worker" : "hirer"}</button>}        </OpportunityCard>) : <Empty title={hirer ? "No jobs yet" : "No active work"}>{hirer ? "Post a job to start receiving applications." : "Apply for a job below; the hirer accepts you to start."}</Empty>}{!hirer && <>{applied.length > 0 && <>
         <h2>Applied</h2>{applied.map(job => <OpportunityCard key={job.id} job={job}>
           <p className="mp-note">Applied. Waiting for the hirer to accept.</p>
         </OpportunityCard>)}</>}<h2>Open jobs</h2>{open.length ? open.map(job => <OpportunityCard key={job.id} job={job}>

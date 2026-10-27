@@ -43,7 +43,7 @@ export default function RootLayout({
           <MarketplaceProvider>
             <Navbar />
             <MarketplaceShell>{children}</MarketplaceShell>
-            <Team />
+            {/* // <Team /> */}
             <Footer />
           </MarketplaceProvider>
       </body>

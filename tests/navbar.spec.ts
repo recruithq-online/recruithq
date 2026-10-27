@@ -1,10 +1,29 @@
 import { test, expect } from "@playwright/test";
 
+test("sign up creates a temporary session and opens the dashboard", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Sign up", exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByRole("heading", { name: "Create an account" })).toBeVisible();
+  await expect(dialog).toContainText("temporary account for this browser session only");
+  await dialog.getByLabel("Public alias").fill("NewWorker");
+  await dialog.getByLabel("Email").fill("new-worker@example.test");
+  await dialog.getByLabel("Password", { exact: true }).fill("Temporary123!");
+  await dialog.getByLabel("Confirm password").fill("Temporary123!");
+  await dialog.getByRole("button", { name: "Create account" }).click();
+  await expect(page).toHaveURL(/\/marketplace\/work$/);
+  await expect(page.getByRole("button", { name: "Go back" })).toBeVisible();
+  await expect(page.locator(".footer").getByRole("heading", { name: "Workspace" })).toBeVisible();
+});
+
 test("source navbar routes and authenticated controls work", async ({ page }) => {
   await page.goto("/");
-  const nav = page.getByRole("navigation", { name: "Marketplace demo" });
+  const nav = page.getByRole("navigation", { name: "Marketplace" });
   await expect(nav.getByRole("link", { name: "Messages", exact: true })).toHaveCount(0);
   await expect(nav.getByRole("link", { name: "Dashboard", exact: true })).toHaveCount(0);
+  await expect(page.locator(".footer").getByRole("heading", { name: "Workspace" })).toHaveCount(0);
+  await expect(page.locator(".footer-grid")).not.toHaveClass(/footer-grid-authenticated/);
+  expect(await page.locator(".footer-grid").evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(" ").length)).toBe(3);
   await nav.getByRole("link", { name: "Get started" }).click();
   await expect(page).toHaveURL(/\/marketplace\/list$/);
   await page.goto("/marketplace/profile/1");
@@ -14,8 +33,18 @@ test("source navbar routes and authenticated controls work", async ({ page }) =>
   await dialog.getByRole("button", { name: "Sign in", exact: true }).click();
   await expect(dialog.getByRole("heading")).toHaveText("Start a hiring conversation");
   await dialog.getByRole("button", { name: "Close dialog" }).click();
+  await expect(page.locator(".footer").getByRole("heading", { name: "Workspace" })).toBeVisible();
+  await expect(page.locator(".footer").getByRole("link", { name: "Dashboard", exact: true })).toBeVisible();
+  await expect(page.locator(".footer-grid")).toHaveClass(/footer-grid-authenticated/);
+  expect(await page.locator(".footer-grid").evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(" ").length)).toBe(4);
   await expect(nav.getByRole("link", { name: "Messages", exact: true })).toBeVisible();
   await nav.getByRole("link", { name: "Dashboard", exact: true }).click();
+  await expect(page).toHaveURL(/\/marketplace\/work$/);
+  await expect(page.getByRole("button", { name: "Go back" })).toBeVisible();
+  await nav.getByRole("link", { name: "Messages", exact: true }).click();
+  await expect(page).toHaveURL(/\/marketplace\/messages$/);
+  await expect(page.getByRole("button", { name: "Go back" })).toBeVisible();
+  await page.getByRole("button", { name: "Go back" }).click();
   await expect(page).toHaveURL(/\/marketplace\/work$/);
   await nav.getByRole("link", { name: "rEcruit home" }).click();
   await expect(page).toHaveURL(/\/$/);
@@ -36,13 +65,14 @@ test("source navbar routes and authenticated controls work", async ({ page }) =>
   await page.locator(".footer").getByRole("link", { name: "Settings", exact: true }).click();
   await page.getByRole("main").getByRole("button", { name: "Sign out", exact: true }).click();
   await expect(nav.getByRole("link", { name: "Dashboard", exact: true })).toHaveCount(0);
+  await expect(page.locator(".footer").getByRole("heading", { name: "Workspace" })).toHaveCount(0);
 });
 
 for (const width of [320, 390, 768, 1440]) {
   test(`source navbar stays visible and fits at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/");
-    const nav = page.getByRole("navigation", { name: "Marketplace demo" });
+    const nav = page.getByRole("navigation", { name: "Marketplace" });
     await expect(nav).toHaveCSS("height", width <= 620 ? "64px" : "72px");
     const menuButton = nav.getByRole("button", { name: "Open navigation menu" });
     if (width <= 620) {

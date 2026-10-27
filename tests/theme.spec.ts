@@ -13,7 +13,7 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(page.locator(".mp-site-brand")).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: `test-results/light-${width}.png`, fullPage: true });
-    await page.getByRole("navigation", { name: "Marketplace demo" }).getByRole("button", { name: "Switch to dark mode" }).click();
+    await page.getByRole("navigation", { name: "Marketplace" }).getByRole("button", { name: "Switch to dark mode" }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
     await expect(page.locator("body")).toHaveCSS("background-color", "rgb(12, 19, 33)");
     await expect(page.locator(".mp-hero h1")).toHaveCSS("color", "rgb(237, 242, 255)");

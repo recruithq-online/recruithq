@@ -2,15 +2,15 @@
 
 import { useState, type FormEvent } from "react";
 import { walletPatterns, type Submission } from "@/lib/marketplace";
-import { DemoGate, useMarketplace } from "./provider";
-import { Empty, Field, Page, PageHeading, TextArea } from "./ui";
+import { AccountGate, useMarketplace } from "./provider";
+import { Empty, Field, Page, PageHeading, TextArea, WorkspacePageHeading } from "./ui";
 export function Messages() {
   return <Page>
-    <PageHeading eyebrow="Work together" title="Messages">Discuss scope, timelines, delivery, and feedback. Demo messages stay in this browser tab and are never delivered to anyone.</PageHeading>
+    <WorkspacePageHeading eyebrow="Work together" title="Messages">Discuss scope, timelines, delivery, and feedback. Messages stay in this browser tab and are not delivered to anyone.</WorkspacePageHeading>
     <div className="mp-stack">
-      <DemoGate>
+      <AccountGate>
         <MessageWorkspace />
-      </DemoGate>
+      </AccountGate>
     </div>
   </Page>;
 }
@@ -46,7 +46,7 @@ function MessageWorkspace() {
     } : c));
     event.currentTarget.reset();
     setError("");
-    toast("Demo message added locally. No message was sent to a server or recipient.");
+    toast("Message added locally. Nothing was sent to a server or recipient.");
   }
   return <div className="mp-cols">
     <div className="mp-panel">
@@ -61,7 +61,7 @@ function MessageWorkspace() {
         </span>
       </button>) : <p className="mp-subtext">No conversations yet. Start one from an expert profile or opportunity.</p>}</div>{selected ? <div className="mp-panel">
       <h2>{selected.parts.find(p => p !== session.alias)}</h2>{selected.route && <span className="mp-badge">{selected.route}</span>}<p className="mp-muted">{selected.topic}</p>
-      <div className="mp-chatlog" role="log" aria-label="Demo conversation">{selected.items.length ? selected.items.map((item, index) => <div className="mp-feedback" key={index}>
+      <div className="mp-chatlog" role="log" aria-label="Conversation">{selected.items.length ? selected.items.map((item, index) => <div className="mp-feedback" key={index}>
           <div className="mp-muted">{item.by} · {item.time}</div>
           <p>{item.text}</p>
         </div>) : <p className="mp-subtext">Say hello to start this conversation.</p>}</div>
@@ -69,7 +69,7 @@ function MessageWorkspace() {
         <div className="mp-formgrid">
           <TextArea label="Message" name="text" placeholder="Write a message…" />
           <Field label="Your alias" name="by" readOnly value={session.alias} />
-          <button className="mp-btn mp-primary">Send demo message →</button>
+          <button className="mp-btn mp-primary">Send message →</button>
         </div>{error && <p className="mp-error" role="alert">{error}</p>}</form>
     </div> : <Empty title="Your messages">Select a conversation or start one from a profile or job.</Empty>}</div>;
 }
@@ -77,9 +77,9 @@ export function Reputation() {
   return <Page>
     <PageHeading eyebrow="Evidence before impact" title="Reputation review">Every new profile starts at 50/100. Pending evidence does not affect scores. Only approved Vouches or Refutes change reputation.</PageHeading>
     <div className="mp-stack">
-      <DemoGate>
+      <AccountGate>
         <ReviewQueue />
-      </DemoGate>
+      </AccountGate>
     </div>
   </Page>;
 }
@@ -109,28 +109,28 @@ function ReviewQueue() {
       refutes: e.refutes + (submission.type === "refute" ? 1 : 0),
       score: Math.max(0, Math.min(100, e.score + (submission.type === "vouch" ? 1 : -2)))
     } : e));
-    toast(approve ? "Demo review approved. Local reputation updated." : "Demo review rejected. Reputation score unchanged.");
+    toast(approve ? "Review approved. Local reputation updated." : "Review rejected. Reputation score unchanged.");
   }
   return <div className="mp-panel">
     <h2>Evidence review queue</h2>
-    <p className="mp-intro">Review simulation: either test account may try approval or rejection. A production service needs authorised reviewers and secure evidence storage. Demo filenames are shown below; file contents are not retained.</p>{submissions.length ? submissions.map(s => <div className="mp-feedback" key={s.id}>
+    <p className="mp-intro">Review submitted evidence and choose whether to approve or reject it. File names are shown below; file contents are not retained.</p>{submissions.length ? submissions.map(s => <div className="mp-feedback" key={s.id}>
       <div className="mp-feedbacktop">
         <span className={s.type === "vouch" ? "mp-green" : "mp-red"}>{s.type === "vouch" ? "Vouch" : "Refute"} · {s.status}</span>
         <span className="mp-muted">{experts.find(e => e.id === s.expertId)?.alias ?? "Expert"}</span>
       </div>
       <p>{s.text}</p>
       <p className="mp-note">Submitted by {s.by} · Proof: {s.files.join(", ")}</p>{s.status === "Pending Review" && <div className="mp-actions">
-        <button className="mp-btn mp-primary" onClick={() => review(s, true)}>Approve (demo)</button>
-        <button className="mp-btn mp-secondary" onClick={() => review(s, false)}>Reject (demo)</button>
-      </div>}</div>) : <Empty title="No submissions yet">Submitted Vouches and Refutes appear here for demo review.</Empty>}</div>;
+        <button className="mp-btn mp-primary" onClick={() => review(s, true)}>Approve</button>
+        <button className="mp-btn mp-secondary" onClick={() => review(s, false)}>Reject</button>
+      </div>}</div>) : <Empty title="No submissions yet">Submitted Vouches and Refutes appear here for review.</Empty>}</div>;
 }
 export function Settings() {
   return <Page>
-    <PageHeading eyebrow="Your account" title="Settings">Account, notifications, and your payment wallet. Demo only: nothing leaves this browser tab.</PageHeading>
+    <PageHeading eyebrow="Your account" title="Settings">Manage account preferences and payment wallet details. Changes are stored in this browser only.</PageHeading>
     <div className="mp-stack">
-      <DemoGate>
+      <AccountGate>
         <AccountSettings />
-      </DemoGate>
+      </AccountGate>
     </div>
   </Page>;
 }
@@ -158,7 +158,7 @@ function AccountSettings() {
       network = String(data.get("network")),
       address = String(data.get("address")).trim();
     if (!walletPatterns[network]?.test(address)) {
-      setError(`Enter a valid ${network} address. Use a sample address for this demo.`);
+      setError(`Enter a valid ${network} address. Use a sample address.`);
       return;
     }
     setWallets(current => ({
@@ -170,7 +170,7 @@ function AccountSettings() {
     }));
     setError("");
     event.currentTarget.reset();
-    toast("Demo wallet address saved locally. No wallet was connected.");
+    toast("Wallet address saved locally. No wallet was connected.");
   }
   function savePreferences(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -182,7 +182,7 @@ function AccountSettings() {
         msgs: data.has("msgs")
       }
     }));
-    toast("Demo preferences saved. Notification delivery is not connected.");
+    toast("Preferences saved. Notification delivery is not connected.");
   }
   return <div className="mp-cols">
     <div className="mp-stack" style={{
@@ -205,7 +205,7 @@ function AccountSettings() {
             <input type="checkbox" name="apps" defaultChecked={prefs.apps} />Job application updates</label>
           <label className="mp-checkbox">
             <input type="checkbox" name="msgs" defaultChecked={prefs.msgs} />New message alerts</label>
-          <button className="mp-btn mp-primary">Save demo preferences</button>
+          <button className="mp-btn mp-primary">Save preferences</button>
         </form>
       </div>
     </div>
@@ -225,7 +225,7 @@ function AccountSettings() {
               delete next[me];
               return next;
             });
-            toast("Demo wallet removed.");
+            toast("Wallet removed.");
           }}>Remove wallet</button>
         </div> : <p className="mp-note">No wallet added yet.</p>}<form onSubmit={saveWallet} style={{
           marginTop: 14
@@ -234,12 +234,12 @@ function AccountSettings() {
             <label htmlFor="wallet-network">Network</label>
             <select id="wallet-network" className="mp-field" name="network">{Object.keys(walletPatterns).map(n => <option key={n}>{n}</option>)}</select>
           </div>
-          <Field label="Wallet address" name="address" placeholder="Paste a sample public address" />{error && <p role="alert" className="mp-error">{error}</p>}<button className="mp-btn mp-primary mp-fullbutton">{wallet ? "Replace demo wallet" : "Add demo wallet"}</button>
+          <Field label="Wallet address" name="address" placeholder="Paste a public address" />{error && <p role="alert" className="mp-error">{error}</p>}<button className="mp-btn mp-primary mp-fullbutton">{wallet ? "Replace wallet" : "Add wallet"}</button>
         </form>
       </div>
       <div className="mp-panel">
         <h2>Session</h2>
-        <p className="mp-intro">Signed in as {me} ({session.role} test account). Demo data resets when the page refreshes.</p>
+        <p className="mp-intro">Signed in as {me} ({session.role}). Account and sample data reset when the page refreshes.</p>
         <button className="mp-btn mp-secondary" onClick={signOut}>Sign out</button>
       </div>
     </div>

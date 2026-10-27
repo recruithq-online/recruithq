@@ -3,7 +3,7 @@ test.use({
   colorScheme: "light"
 });
 const workspace = (page: Page) => page.getByRole("navigation", {
-  name: "Marketplace demo"
+  name: "Marketplace"
 });
 async function go(page: Page, name: string) {
   const views: Record<string, string> = {
@@ -14,7 +14,7 @@ async function go(page: Page, name: string) {
 }
 async function signIn(page: Page, role: "hirer" | "worker") {
   await go(page, "Dashboard");
-  await page.getByRole("button", { name: "Sign in to demo", exact: true }).click();
+  await page.getByRole("button", { name: "Sign in to continue", exact: true }).click();
   const dialog = page.getByRole("dialog");
   await dialog.getByRole("button", {
     name: `Fill ${role} account`
@@ -90,7 +90,7 @@ test("search, sorting, empty state, direct profile links, and browser history", 
   await expect(page.getByText("Profile unavailable")).toBeVisible();
   expect((await page.goto("/marketplace/unknown"))?.status()).toBe(404);
 });
-test("profile validation and demo publication survive route navigation", async ({
+test("profile validation and publication survive route navigation", async ({
   page
 }) => {
   await page.goto("/marketplace/list");
@@ -101,12 +101,12 @@ test("profile validation and demo publication survive route navigation", async (
   await page.getByLabel("Starting rate").fill("42");
   await page.getByLabel("About your expertise").fill("I design accessible products for small teams.");
   await page.getByRole("button", {
-    name: "Publish demo profile"
+    name: "Publish profile"
   }).click();
   await expect(page.locator(".mp-error[role=alert]")).toContainText("alias is already taken");
   await page.getByLabel("Professional alias").fill("PixelNorth");
   await page.getByRole("button", {
-    name: "Publish demo profile"
+    name: "Publish profile"
   }).click();
   await expect(page.locator(".mp-profilehero h1")).toHaveText("PixelNorth");
   await expect(page.getByTestId("profile-score")).toHaveText("50/100");
@@ -165,7 +165,7 @@ test("sign-in validation, focus trap, and contact continue into local messages",
     exact: true
   }).fill("Hello Nova, can we discuss scope?");
   await page.getByRole("button", {
-    name: "Send demo message"
+    name: "Send message"
   }).click();
   await expect(page.getByRole("log")).toContainText("Hello Nova");
   await go(page, "Explore");
@@ -202,7 +202,7 @@ test("evidence validation, pending score, approval, rejection, and duplicates", 
   await go(page, "Reputation");
   await expect(page.getByText("Vouch · Pending Review")).toBeVisible();
   await page.getByRole("button", {
-    name: "Approve (demo)"
+    name: "Approve"
   }).click();
   await go(page, "Explore");
   await page.getByRole("link", {
@@ -241,7 +241,7 @@ test("evidence validation, pending score, approval, rejection, and duplicates", 
   }).click();
   await go(page, "Reputation");
   await page.getByRole("button", {
-    name: "Reject (demo)"
+    name: "Reject"
   }).click();
   await expect(page.getByText("Refute · Rejected")).toBeVisible();
 });
@@ -275,12 +275,12 @@ for (const route of ["Hiring for myself", "Hiring for company"]) {
       await go(page, "Settings");
       await page.getByLabel("Wallet address").fill("invalid");
       await page.getByRole("button", {
-        name: "Add demo wallet"
+        name: "Add wallet"
       }).click();
       await expect(page.locator(".mp-error[role=alert]")).toBeVisible();
       await page.getByLabel("Wallet address").fill("0x" + "1".repeat(40));
       await page.getByRole("button", {
-        name: "Add demo wallet"
+        name: "Add wallet"
       }).click();
     }
     await signOut(page);
@@ -316,14 +316,14 @@ for (const route of ["Hiring for myself", "Hiring for company"]) {
       await go(page, "Settings");
       await page.getByLabel("Wallet address").fill("0x" + "2".repeat(40));
       await page.getByRole("button", {
-        name: "Add demo wallet"
+        name: "Add wallet"
       }).click();
       await go(page, "Dashboard");
       await page.getByRole("button", {
         name: "Simulate approval"
       }).click();
     } else await page.getByRole("button", {
-      name: "Mark complete (demo)"
+      name: "Mark complete"
     }).click();
     await expect(page.locator("article .mp-badge")).toHaveText("Completed");
     expect(requests).toEqual([]);

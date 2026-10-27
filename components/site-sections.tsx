@@ -4,6 +4,7 @@ import { team } from "@/lib/team";
 import { TeamCarousel } from "./team-carousel";
 export { MarketplaceNavbar as Navbar } from "./marketplace/chrome";
 import { OwlAvatar } from "./owl-avatar";
+import { FooterGrid, FooterWorkspace } from "./marketplace/footer-workspace";
 
 export function Team() {
   return (
@@ -28,7 +29,7 @@ export function Footer() {
   return (
     <footer className="footer" id="contact">
       <div className="wrap">
-        <div className="footer-grid">
+        <FooterGrid>
           <div>
             <Brand variant="owl" />
             <p>Marketplace for reputation-based expertise.</p>
@@ -42,16 +43,7 @@ export function Footer() {
               <Link href="/marketplace/list">List expertise</Link>
             </div>
           </div>
-           <div className="footer-column">
-            <h3>Workspace</h3>
-            <div className="footer-links flex flex-col gap-2">
-              <Link href="/marketplace/work">Dashboard</Link>
-              <Link href="/marketplace/messages">Messages</Link>
-              <Link href="/marketplace/reputation">Reputation</Link>
-              <Link href="/marketplace/settings">Settings</Link>
-              <Link href="/marketplace/about">About rEcruit</Link>
-            </div>
-          </div>
+          <FooterWorkspace />
           <div className="social footer-column">
             <h3>Contact</h3>
             <p>Follow rEcruit or get in touch with the team.</p>
@@ -104,7 +96,7 @@ export function Footer() {
               </a>
             </div>
           </div>
-        </div>
+        </FooterGrid>
         <div className="copy">
           <p>© 2026 rEcruit. Building a marketplace where reputation and proof of
           work matter.</p>

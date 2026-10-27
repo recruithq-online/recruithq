@@ -45,7 +45,7 @@ export function MarketplaceHome() {
         <div className="mp-sectionhead">
           <div>
             <h2>Expertise worth discovering</h2>
-            <p>Sample profiles to demonstrate the rEcruit experience.</p>
+            <p>Sample profiles to nstrate the rEcruit experience.</p>
           </div>
           <Link className="mp-btn mp-secondary" href={routeTo("explore")}>Explore all expertise →</Link>
         </div>
@@ -141,14 +141,14 @@ export function CreateProfile() {
       feedback: []
     }, ...current]);
     router.push(routeTo(`profile/${id}`));
-    toast("Demo profile added in this browser tab. It is not published to a live marketplace.");
+    toast(" profile added in this browser tab. It is not published to a live marketplace.");
   }
   return <Page>
     <SignInPageHeading eyebrow="Make your work visible" title="List Your Expertise">Create a profile that tells clients what you do, how you work, and what makes you worth hiring.</SignInPageHeading>
     <div className="mp-cols mp-stack">
       <div className="mp-panel">
         <h2>Create your expertise profile</h2>
-        <p className="mp-intro">This interactive MVP stores your submitted profile in the current browser tab. Refreshing resets demo data.</p>
+        <p className="mp-intro">This interactive MVP stores your submitted profile in the current browser tab. Refreshing resets  data.</p>
         <form onSubmit={submit}>
           <div className="mp-formgrid">
             <Field label="Professional alias" name="alias" maxLength={32} placeholder="e.g. PixelNorth" />
@@ -167,7 +167,7 @@ export function CreateProfile() {
             <TextArea label="About your expertise" name="about" maxLength={500} placeholder="Describe your approach, experience, and the work you do best…" />
             <Field label="Portfolio or work link (optional)" name="portfolio" type="url" required={false} maxLength={200} full placeholder="https://" />
           </div>
-          <p className="mp-note">Use a professional alias. Do not enter private contact details or sensitive personal information.</p>{error && <p className="mp-error" role="alert">{error}</p>}<button className="mp-btn mp-primary mp-fullbutton">Publish demo profile →</button>
+          <p className="mp-note">Use a professional alias. Do not enter private contact details or sensitive personal information.</p>{error && <p className="mp-error" role="alert">{error}</p>}<button className="mp-btn mp-primary mp-fullbutton">Publish profile →</button>
         </form>
       </div>
       <aside className="mp-panel">
@@ -194,7 +194,7 @@ export function Profile({
   } = useMarketplace();
   const expert = experts.find(e => e.id === id);
   if (!expert) return <Page>
-    <Empty title="Profile unavailable">This demo profile may have been reset by a refresh. <Link href={routeTo("explore")}>Browse sample experts →</Link>
+    <Empty title="Profile unavailable">This profile may have been reset by a refresh. <Link href={routeTo("explore")}>Browse sample experts →</Link>
     </Empty>
   </Page>;
   const e: MarketplaceExpert = expert;
@@ -238,7 +238,7 @@ export function Profile({
               kind: "refute"
             })}>⚑ Refute</button>
           </div>
-          <p className="mp-note">New profiles start at 50/100. Attach proof to every Vouch or Refute. Only approved evidence changes reputation in this demo.</p>
+          <p className="mp-note">New profiles start at 50/100. Attach proof to every Vouch or Refute. Only approved evidence changes reputation in this .</p>
         </div>
       </div>
       <aside>
@@ -290,8 +290,8 @@ export function Profile({
 }
 export function About() {
   return <Page>
-    <PageHeading eyebrow="How rEcruit works" title="Beyond CVs. Built on Reputation.">rEcruit helps people find and hire expertise with more context than a CV alone. This MVP demonstrates the key journeys using local sample data.</PageHeading>
-    <div className="mp-grid mp-stack">{[["⌕", "1. Discover", "Search by category, skills, availability, and starting rate."], ["◎", "2. Evaluate", "Review profiles, portfolio links, feedback, and reputation signals."], ["↗", "3. Connect", "Start a demo hiring conversation and explore the work lifecycle."]].map(([icon, title, text]) => <article className="mp-panel" key={title}>
+    <PageHeading eyebrow="How rEcruit works" title="Beyond CVs. Built on Reputation.">rEcruit helps people find and hire expertise with more context than a CV alone. This MVP nstrates the key journeys using local sample data.</PageHeading>
+    <div className="mp-grid mp-stack">{[["⌕", "1. Discover", "Search by category, skills, availability, and starting rate."], ["◎", "2. Evaluate", "Review profiles, portfolio links, feedback, and reputation signals."], ["↗", "3. Connect", "Start a hiring conversation and explore the work lifecycle."]].map(([icon, title, text]) => <article className="mp-panel" key={title}>
         <div className="mp-icon">{icon}</div>
         <h2>{title}</h2>
         <p className="mp-intro">{text}</p>

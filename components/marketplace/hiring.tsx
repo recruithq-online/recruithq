@@ -17,7 +17,7 @@ export function FeeBreakdown({
   return <p className="mp-note" aria-live="polite">{company ? "Agreement value" : "Agreed job price / worker receives"}: <b>{money(cost.cents)}</b>
     <br />rEcruit fee ({cost.rate}%, {company ? "billed separately to company" : "added to hirer checkout"}): <b>{money(cost.fee)}</b>
     <br />Estimated {company ? "company" : "hirer"} total: <b>{money(cost.total)}</b>
-    <br />{company ? "Work and payment happen off-platform." : "Before any separately disclosed processing fee."} Demo only; no payment is collected.</p>;
+    <br />{company ? "Work and payment happen off-platform." : "Before any separately disclosed processing fee."}  only; no payment is collected.</p>;
 }
 export function OpportunityCard({
   job,
@@ -82,7 +82,7 @@ export function Hire() {
     setBudget(0);
     setRoute("Hiring for company");
     setError("");
-    toast("Demo opportunity posted in this browser tab. It is not a live job listing.");
+    toast("Opportunity posted in this browser tab. It is not a live job listing.");
   }
   function apply(job: Opportunity) {
     if (!session) {
@@ -97,10 +97,10 @@ export function Hire() {
       ...o,
       applicants: [...o.applicants, session.alias]
     } : o));
-    toast("Demo application recorded locally. No application was sent.");
+    toast(" application recorded locally. No application was sent.");
   }
   return <Page>
-    <PageHeading eyebrow="Two ways to work" title="Hire for the work you need">Choose the right route. Company hiring happens off-platform after rEcruit connects both sides; personal hiring demonstrates task agreement, delivery, and payment on rEcruit.</PageHeading>
+    <PageHeading eyebrow="Two ways to work" title="Hire for the work you need">Choose the right route. Company hiring happens off-platform after rEcruit connects both sides; personal hiring nstrates task agreement, delivery, and payment on rEcruit.</PageHeading>
     <div className="mp-pathways" style={{
       maxWidth: "none",
       margin: "24px 0"
@@ -147,8 +147,8 @@ export function Hire() {
       <h2>Open opportunities</h2>
       <div className="mp-grid">{opportunities.length ? opportunities.map(job => <OpportunityCard key={job.id} job={job}>
           <div className="mp-actions">
-            <button className="mp-btn mp-secondary" onClick={() => jobChat(job)}>Message hirer</button>{job.status === "Open" && session?.role === "worker" && <button className="mp-btn mp-primary" disabled={job.applicants.includes(session.alias)} onClick={() => apply(job)}>{job.applicants.includes(session.alias) ? "Applied (demo)" : "Apply →"}</button>}</div>
-        </OpportunityCard>) : <Empty title="No opportunities posted yet">Post a demo role or job using the form above.</Empty>}</div>
+            <button className="mp-btn mp-secondary" onClick={() => jobChat(job)}>Message hirer</button>{job.status === "Open" && session?.role === "worker" && <button className="mp-btn mp-primary" disabled={job.applicants.includes(session.alias)} onClick={() => apply(job)}>{job.applicants.includes(session.alias) ? "Applied ()" : "Apply →"}</button>}</div>
+        </OpportunityCard>) : <Empty title="No opportunities posted yet">Post a  role or job using the form above.</Empty>}</div>
       <Link className="mp-btn mp-secondary" href={routeTo("work")}>Go to dashboard →</Link>
     </div>
   </Page>;
