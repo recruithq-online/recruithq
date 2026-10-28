@@ -156,7 +156,7 @@ export function MarketplaceProvider({
     openJobChat(job, session, other);
   }
   function openJobChat(job: Opportunity, account: MarketplaceAccount, other?: string) {
-    const recipient = other ?? (job.by === account.alias ? job.worker ?? job.applicants[0] : job.by);
+    const recipient = other ?? (job.by === account.alias ? job.expect ?? job.applicants[0] : job.by);
     if (!recipient || aliasKey(recipient) === aliasKey(account.alias)) {
       toast("No one to message yet.");
       return;

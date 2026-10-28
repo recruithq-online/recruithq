@@ -12,7 +12,7 @@ async function go(page: Page, name: string) {
   };
   await page.locator(`a[href="/marketplace/${views[name]}"]:visible`).first().click();
 }
-async function signIn(page: Page, role: "hirer" | "worker") {
+async function signIn(page: Page, role: "hirer" | "expect") {
   await go(page, "Dashboard");
   await page.getByRole("button", { name: "Sign in to continue", exact: true }).click();
   const dialog = page.getByRole("dialog");
@@ -266,7 +266,7 @@ for (const route of ["Hiring for myself", "Hiring for company"]) {
       name: "Post opportunity"
     }).click();
     await signOut(page);
-    await signIn(page, "worker");
+    await signIn(page, "expect");
     await page.getByRole("button", {
       name: "Apply",
       exact: false
@@ -290,7 +290,7 @@ for (const route of ["Hiring for myself", "Hiring for company"]) {
       exact: true
     }).click();
     await signOut(page);
-    await signIn(page, "worker");
+    await signIn(page, "expect");
     await page.getByLabel("Delivery note or link").fill("First version ready.");
     await page.getByRole("button", {
       name: "Mark delivered"
@@ -301,7 +301,7 @@ for (const route of ["Hiring for myself", "Hiring for company"]) {
       name: "Request changes"
     }).click();
     await signOut(page);
-    await signIn(page, "worker");
+    await signIn(page, "expect");
     await page.getByLabel("Delivery note or link").fill("Revised version ready.");
     await page.getByRole("button", {
       name: "Mark delivered"

@@ -15,7 +15,7 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState<Role>("worker");
+  const [role, setRole] = useState<Role>("expect");
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
@@ -63,12 +63,12 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
         <p className="mp-intro">This creates a temporary account for this browser session only. It is not saved and will be lost when you refresh.</p>
       ) : (
         <>
-          <p className="mp-intro">Use a sample hirer or worker account below. Please don’t enter your personal credentials.</p>
+          <p className="mp-intro">Use a sample hirer or expect account below. Please don’t enter your personal credentials.</p>
           <div className="mp-sample-accounts">
             {accounts.map(account => (
               <div className="mp-sample-account" key={account.email}>
                 <div className="mp-account-details">
-                  <strong>{account.role === "hirer" ? "Hirer" : "Worker"} account</strong>
+                  <strong>{account.role === "hirer" ? "Hirer" : "Expect"} account</strong>
                   <span>{account.email}</span>
                   <span>Password: <code>{account.password}</code></span>
                 </div>
@@ -94,11 +94,11 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
             <div className="mp-group">
               <label htmlFor="role">I want to</label>
               <select id="role" className="mp-field" value={role} onChange={event => {
-                if (event.target.value === "hirer" || event.target.value === "worker") {
+                if (event.target.value === "hirer" || event.target.value === "expect") {
                   setRole(event.target.value);
                 }
               }}>
-                <option value="worker">Offer my expertise</option>
+                <option value="expect">Offer my expertise</option>
                 <option value="hirer">Hire expertise</option>
               </select>
             </div>

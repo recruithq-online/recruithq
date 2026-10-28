@@ -213,7 +213,7 @@ function AccountSettings() {
       marginTop: 0
     }}>
       <div className="mp-panel">
-        <h2>{session.role === "worker" ? "Payout" : "Funding"} wallet</h2>
+        <h2>{session.role === "expect" ? "Payout" : "Funding"} wallet</h2>
         <p className="mp-intro">Add a sample public address to explore the payment simulation. No wallet connection, transaction, or payment occurs.</p>{wallet ? <div className="mp-feedback">
           <b>{wallet.network}</b>
           <p>{wallet.address.slice(0, 6)}…{wallet.address.slice(-4)}</p>

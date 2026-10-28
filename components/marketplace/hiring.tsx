@@ -14,7 +14,7 @@ export function FeeBreakdown({
 }) {
   const cost = fees(budget, route),
     company = route === "Hiring for company";
-  return <p className="mp-note" aria-live="polite">{company ? "Agreement value" : "Agreed job price / worker receives"}: <b>{money(cost.cents)}</b>
+  return <p className="mp-note" aria-live="polite">{company ? "Agreement value" : "Agreed job price / expect receives"}: <b>{money(cost.cents)}</b>
     <br />rEcruit fee ({cost.rate}%, {company ? "billed separately to company" : "added to hirer checkout"}): <b>{money(cost.fee)}</b>
     <br />Estimated {company ? "company" : "hirer"} total: <b>{money(cost.total)}</b>
     <br />{company ? "Work and payment happen off-platform." : "Before any separately disclosed processing fee."}  only; no payment is collected.</p>;
@@ -89,8 +89,8 @@ export function Hire() {
       requireAccount(() => {});
       return;
     }
-    if (session.role !== "worker") {
-      toast("Use the worker test account to apply.");
+    if (session.role !== "expect") {
+      toast("Use the expect test account to apply.");
       return;
     }
     setOpportunities(current => current.map(o => o.id === job.id && o.status === "Open" && !o.applicants.includes(session.alias) ? {
@@ -114,13 +114,13 @@ export function Hire() {
       <div className="mp-panel">
         <div className="mp-icon">✓</div>
         <h2>Hiring for myself</h2>
-        <p className="mp-intro">Hire someone for a specific task. Agree the task, give instructions, and review delivery. The platform fee is added to the agreed price so the worker receives the full amount. Payment is simulated in this MVP.</p>
+        <p className="mp-intro">Hire someone for a specific task. Agree the task, give instructions, and review delivery. The platform fee is added to the agreed price so the expect receives the full amount. Payment is simulated in this MVP.</p>
         <span className="mp-badge">5% · Added to hirer checkout</span>
       </div>
     </div>
     <div className="mp-panel">
       <h2>Post an opportunity</h2>
-      <p className="mp-intro">Preview the platform fee before posting. Live payment collection is not connected. Use the hirer test account to post; switch to the worker account to apply.</p>
+      <p className="mp-intro">Preview the platform fee before posting. Live payment collection is not connected. Use the hirer test account to post; switch to the expect account to apply.</p>
       <form onSubmit={submit}>
         <div className="mp-formgrid">
           <div className="mp-group">
@@ -147,7 +147,7 @@ export function Hire() {
       <h2>Open opportunities</h2>
       <div className="mp-grid">{opportunities.length ? opportunities.map(job => <OpportunityCard key={job.id} job={job}>
           <div className="mp-actions">
-            <button className="mp-btn mp-secondary" onClick={() => jobChat(job)}>Message hirer</button>{job.status === "Open" && session?.role === "worker" && <button className="mp-btn mp-primary" disabled={job.applicants.includes(session.alias)} onClick={() => apply(job)}>{job.applicants.includes(session.alias) ? "Applied ()" : "Apply →"}</button>}</div>
+            <button className="mp-btn mp-secondary" onClick={() => jobChat(job)}>Message hirer</button>{job.status === "Open" && session?.role === "expect" && <button className="mp-btn mp-primary" disabled={job.applicants.includes(session.alias)} onClick={() => apply(job)}>{job.applicants.includes(session.alias) ? "Applied ()" : "Apply →"}</button>}</div>
         </OpportunityCard>) : <Empty title="No opportunities posted yet">Post a  role or job using the form above.</Empty>}</div>
       <Link className="mp-btn mp-secondary" href={routeTo("work")}>Go to dashboard →</Link>
     </div>

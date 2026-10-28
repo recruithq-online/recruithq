@@ -35,7 +35,7 @@ test("sign-in shows inline validation and retains keyboard behavior", async ({ p
   await dialog.getByRole("button", { name: "Sign in", exact: true }).click();
   await expect(dialog.getByRole("alert")).toContainText("Enter the email");
   await expect(dialog.getByLabel("Email", { exact: true })).toBeFocused();
-  await dialog.getByRole("button", { name: "Fill worker account" }).click();
+  await dialog.getByRole("button", { name: "Fill expect account" }).click();
   await dialog.getByLabel("Show password").check();
   await expect(dialog.getByLabel("Password", { exact: true })).toHaveAttribute("type", "text");
   await dialog.getByRole("button", { name: "Close dialog" }).focus();

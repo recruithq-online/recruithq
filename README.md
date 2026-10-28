@@ -18,9 +18,9 @@ The application contains marketplace screens and the restored Team section. The 
 - `/marketplace/work`: role-specific dashboards, applications, acceptance, delivery, changes, and completion.
 - `/marketplace/messages`, `/marketplace/reputation`, `/marketplace/settings`, `/marketplace/about`: local conversations, review simulation, account preferences, sample wallet addresses, and product explanation.
 
-Sign in using `hirer@recruit.test` or `worker@recruit.test`, both with password `Test1234!`. The sign-in dialog can fill either account and shows inline validation. All marketplace dialogs have a dedicated padded surface, an inset close button, keyboard focus management, and a scrollable layout for small screens. Light and dark themes retain the saved browser preference.
+Sign in using `hirer@recruit.test` or `expect@recruit.test`, both with password `Test1234!`. The sign-in dialog can fill either account and shows inline validation. All marketplace dialogs have a dedicated padded surface, an inset close button, keyboard focus management, and a scrollable layout for small screens. Light and dark themes retain the saved browser preference.
 
-Switch accounts to try both sides of a job: post as hirer, apply as worker, accept as hirer, deliver as worker, and review as hirer. Personal hiring requires both accounts to add sample wallet addresses before simulating payment. No wallet is connected and no funds move. Company hiring shows a separate 2.5% fee; personal hiring adds 5% to the agreed job price. Fee arithmetic uses integer cents.
+Switch accounts to try both sides of a job: post as hirer, apply as expect, accept as hirer, deliver as expect, and review as hirer. Personal hiring requires both accounts to add sample wallet addresses before simulating payment. No wallet is connected and no funds move. Company hiring shows a separate 2.5% fee; personal hiring adds 5% to the agreed job price. Fee arithmetic uses integer cents.
 
 ## Implementation
 

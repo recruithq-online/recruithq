@@ -1,4 +1,4 @@
-export type Role = "hirer" | "worker";
+export type Role = "hirer" | "expect";
 export type HiringRoute = "Hiring for company" | "Hiring for myself";
 export interface MarketplaceAccount {
   email: string;
@@ -38,7 +38,7 @@ export interface Opportunity {
   by: string;
   status: "Open" | "In progress" | "Delivered" | "Completed";
   applicants: string[];
-  worker?: string;
+  expect?: string;
   delivery?: string;
 }
 export interface Submission extends Feedback {
@@ -69,10 +69,10 @@ export const accounts: MarketplaceAccount[] = [{
   alias: "TestHirer",
   role: "hirer"
 }, {
-  email: "worker@recruit.test",
+  email: "expect@recruit.test",
   password: "Test1234!",
-  alias: "TestWorker",
-  role: "worker"
+  alias: "TestExpect",
+  role: "expect"
 }];
 export const categories = ["Design", "Development", "Marketing", "Writing", "Operations", "Community"];
 export const availabilityOptions = ["Available for projects", "Limited availability", "Not available right now"];

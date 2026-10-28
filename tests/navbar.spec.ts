@@ -6,8 +6,8 @@ test("sign up creates a temporary session and opens the dashboard", async ({ pag
   const dialog = page.getByRole("dialog");
   await expect(dialog.getByRole("heading", { name: "Create an account" })).toBeVisible();
   await expect(dialog).toContainText("temporary account for this browser session only");
-  await dialog.getByLabel("Public alias").fill("NewWorker");
-  await dialog.getByLabel("Email").fill("new-worker@example.test");
+  await dialog.getByLabel("Public alias").fill("NewExpect");
+  await dialog.getByLabel("Email").fill("new-expect@example.test");
   await dialog.getByLabel("Password", { exact: true }).fill("Temporary123!");
   await dialog.getByLabel("Confirm password").fill("Temporary123!");
   await dialog.getByRole("button", { name: "Create account" }).click();

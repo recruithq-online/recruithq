@@ -28,7 +28,7 @@ function Dashboard() {
   if (!session) return null;
   const me = session.alias,
     hirer = session.role === "hirer",
-    mine = opportunities.filter(o => hirer ? o.by === me : o.worker === me),
+    mine = opportunities.filter(o => hirer ? o.by === me : o.expect === me),
     applied = opportunities.filter(o => o.status === "Open" && o.applicants.includes(me)),
     open = opportunities.filter(o => o.status === "Open" && !o.applicants.includes(me));
   function patch(job: Opportunity, change: Partial<Opportunity>) {
@@ -40,14 +40,14 @@ function Dashboard() {
   function accept(job: Opportunity, alias: string) {
     if (session?.role !== "hirer" || job.by !== me || job.status !== "Open" || !job.applicants.includes(alias)) return;
     patch(job, {
-      worker: alias,
+      expect: alias,
       status: "In progress"
     });
     toast(`${alias} accepted. Work is in progress.`);
   }
   function deliver(event: FormEvent<HTMLFormElement>, job: Opportunity) {
     event.preventDefault();
-    if (session?.role !== "worker" || job.worker !== me || job.status !== "In progress") return;
+    if (session?.role !== "expect" || job.expect !== me || job.status !== "In progress") return;
     const note = String(new FormData(event.currentTarget).get("note")).trim();
     if (!note) {
       toast("Add a delivery note or link.");
@@ -69,8 +69,8 @@ function Dashboard() {
       return;
     }
     if (job.type === "Hiring for myself") {
-      if (!job.worker || !wallets[job.worker]) {
-        toast("The worker must add a payout wallet in Settings first.");
+      if (!job.expect || !wallets[job.expect]) {
+        toast("The expect must add a payout wallet in Settings first.");
         return;
       }
       if (!wallets[me]) {
@@ -84,7 +84,7 @@ function Dashboard() {
     toast(job.type === "Hiring for myself" ? `Simulated payment: ${money(fees(job.budget, job.type).total)} total. No money moved.` : "Work marked complete. Company payment remains off-platform.");
   }
   function apply(job: Opportunity) {
-    if (session?.role !== "worker" || job.status !== "Open" || job.applicants.includes(me)) return;
+    if (session?.role !== "expect" || job.status !== "Open" || job.applicants.includes(me)) return;
     patch(job, {
       applicants: [...job.applicants, me]
     });
@@ -95,7 +95,7 @@ function Dashboard() {
   const earned = completed.filter(o => o.type === "Hiring for myself").reduce((total, o) => total + Math.round(o.budget * 100), 0);
   return <>
     <div className="mp-panel">
-      <h2>{hirer ? "Hirer" : "Worker"} dashboard</h2>
+      <h2>{hirer ? "Hirer" : "Expect"} dashboard</h2>
       <p className="mp-intro">Signed in as <b>{me}</b>. {hirer ? "Post jobs, review applicants, and track delivery." : "Find jobs, deliver work, and explore simulated payouts."}</p>
       <div className="mp-actions">
         <Link className="mp-btn mp-primary" href={routeTo(hirer ? "hire" : "list")}>{hirer ? "Post a job →" : "My expertise profile →"}</Link>
@@ -118,9 +118,9 @@ function Dashboard() {
               <button className="mp-btn mp-primary mp-small" onClick={() => accept(job, alias)}>Accept</button>
             </div>
           </div>
-        </div>) : <p className="mp-note">No applicants yet. A worker can apply for this job.</p>)}{job.status === "In progress" && <p className="mp-note">In progress with <b>{job.worker}</b>. Waiting for delivery.</p>}{job.status === "Delivered" && <>
+        </div>) : <p className="mp-note">No applicants yet. A expect can apply for this job.</p>)}{job.status === "In progress" && <p className="mp-note">In progress with <b>{job.expect}</b>. Waiting for delivery.</p>}{job.status === "Delivered" && <>
           <div className="mp-feedback">
-            <div className="mp-muted">Delivery from {job.worker}</div>
+            <div className="mp-muted">Delivery from {job.expect}</div>
             <p>{job.delivery}</p>
           </div>
           <div className="mp-actions" style={{
@@ -132,7 +132,7 @@ function Dashboard() {
         </>}</> : <>{job.status === "In progress" && <form onSubmit={e => deliver(e, job)}>
           <Field name="note" label="Delivery note or link" maxLength={300} placeholder="What you delivered" />
           <button className="mp-btn mp-primary mp-fullbutton">Mark delivered</button>
-        </form>}{job.status === "Delivered" && <p className="mp-note">Delivered. Waiting for the hirer to approve.</p>}</>}{job.status === "Completed" && <p className="mp-note">Completed with {hirer ? job.worker : job.by}. {job.type === "Hiring for myself" ? `Simulated worker payment: ${money(Math.round(job.budget * 100))}. No funds transferred.` : "Payment is handled off-platform; platform billing is not connected."}</p>}{job.worker && <button className="mp-btn mp-secondary mp-small" onClick={() => jobChat(job)}>Message {hirer ? "worker" : "hirer"}</button>}        </OpportunityCard>) : <Empty title={hirer ? "No jobs yet" : "No active work"}>{hirer ? "Post a job to start receiving applications." : "Apply for a job below; the hirer accepts you to start."}</Empty>}{!hirer && <>{applied.length > 0 && <>
+        </form>}{job.status === "Delivered" && <p className="mp-note">Delivered. Waiting for the hirer to approve.</p>}</>}{job.status === "Completed" && <p className="mp-note">Completed with {hirer ? job.expect : job.by}. {job.type === "Hiring for myself" ? `Simulated expect payment: ${money(Math.round(job.budget * 100))}. No funds transferred.` : "Payment is handled off-platform; platform billing is not connected."}</p>}{job.expect && <button className="mp-btn mp-secondary mp-small" onClick={() => jobChat(job)}>Message {hirer ? "expect" : "hirer"}</button>}        </OpportunityCard>) : <Empty title={hirer ? "No jobs yet" : "No active work"}>{hirer ? "Post a job to start receiving applications." : "Apply for a job below; the hirer accepts you to start."}</Empty>}{!hirer && <>{applied.length > 0 && <>
         <h2>Applied</h2>{applied.map(job => <OpportunityCard key={job.id} job={job}>
           <p className="mp-note">Applied. Waiting for the hirer to accept.</p>
         </OpportunityCard>)}</>}<h2>Open jobs</h2>{open.length ? open.map(job => <OpportunityCard key={job.id} job={job}>
