@@ -1,6 +1,6 @@
 # rEcruit
 
-A frontend marketplace MVP based on `index-6.html`, built inside the existing Next.js App Router application with React, TypeScript, and Tailwind CSS 4.
+A frontend marketplace`, built inside the existing Next.js App Router application with React, TypeScript, and Tailwind CSS 4.
 
 ## Run
 
@@ -10,13 +10,6 @@ Requires Node.js 20.9 or newer. Run `npm install`, then `npm run dev`, and open 
 
 The application contains marketplace screens and the restored Team section. The old Roadmap, Whitepaper, Coming Soon, and waitlist sections and navigation links have been removed from the live UI. `/early-access` redirects to `/`. The header follows the `index-6.html` navbar: sticky single-row layout, blue rE mark, Explore/Hire/List expertise links, Sign in, and Get started. Signed-in sessions expose Messages and Dashboard. On mobile the links and Sign in control hide as in the reference; Get started remains available, or Dashboard when signed in. Team sits alongside Explore, Hire, and List expertise and follows their mobile visibility. The light/dark toggle stays in the navbar on desktop and mobile. The original Team section is restored above the footer. Marketplace destinations and contact/social links remain in the footer.
 
-- `/`: overview, pathways, and featured sample experts.
-- `/marketplace/explore`: search, category filters, reputation/rate sorting, and empty states.
-- `/marketplace/profile/1`: example expert profile, hiring conversation, and evidence submissions.
-- `/marketplace/list`: validated profile creation with a starting reputation of 50.
-- `/marketplace/hire`: company/personal hiring, fee previews, and local opportunity posting.
-- `/marketplace/work`: role-specific dashboards, applications, acceptance, delivery, changes, and completion.
-- `/marketplace/messages`, `/marketplace/reputation`, `/marketplace/settings`, `/marketplace/about`: local conversations, review simulation, account preferences, sample wallet addresses, and product explanation.
 
 Sign in using `hirer@recruit.test` or `expect@recruit.test`, both with password `Test1234!`. The sign-in dialog can fill either account and shows inline validation. All marketplace dialogs have a dedicated padded surface, an inset close button, keyboard focus management, and a scrollable layout for small screens. Light and dark themes retain the saved browser preference.
 
