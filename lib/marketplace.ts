@@ -222,7 +222,7 @@ export const money = (cents: number) => new Intl.NumberFormat("en-US", {
 }).format(cents / 100);
 export function fees(amount: number, route: HiringRoute) {
   const cents = Math.round(amount * 100),
-    rate = route === "Hiring for company" ? 2.5 : 5;
+    rate = route === "Hiring for company" ? 5 : 2.5;
   const fee = Math.round(cents * rate / 100);
   return {
     cents,

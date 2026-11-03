@@ -261,7 +261,7 @@ for (const route of ["Hiring for myself", "Hiring for company"]) {
     await page.getByLabel("Description and expected outcome").fill("A responsive landing page for a fictional product.");
     await page.getByLabel("Agreed contract / job value").fill("300");
     await page.getByLabel("Duration / deadline").fill("7 days");
-    await expect(page.locator("form")).toContainText(route === "Hiring for myself" ? "$315.00" : "$307.50");
+    await expect(page.locator("form")).toContainText(route === "Hiring for myself" ? "$307.50" : "$315.00");
     await page.getByRole("button", {
       name: "Post opportunity"
     }).click();

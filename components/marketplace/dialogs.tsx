@@ -183,7 +183,7 @@ export function ContactForm({
   }
   return <>
     <h2 id="marketplace-dialog-title">Start a hiring conversation</h2>
-    <p className="mp-intro">Connect with <b>{expert.alias}</b>. Company hiring happens off-platform with a separate 2.5% company fee. Personal hiring adds 5% to the hirer checkout. This conversation is stored in this browser only.</p>
+    <p className="mp-intro">Connect with <b>{expert.alias}</b>. Company hiring happens off-platform with a separate 5% company fee. Personal hiring adds 2.5% to the hirer checkout. This conversation is stored in this browser only.</p>
     <form onSubmit={submit}>
       <div className="mp-group">
         <label htmlFor="contact-route">Hiring route</label>

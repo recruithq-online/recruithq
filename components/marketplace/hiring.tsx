@@ -109,13 +109,13 @@ export function Hire() {
         <div className="mp-icon">↗</div>
         <h2>Hiring for company</h2>
         <p className="mp-intro">For companies hiring community managers, moderators, community leads and others. Agree terms and manage work and payment outside rEcruit. The company pays a separate platform fee based on the contract value.</p>
-        <span className="mp-badge">2.5% · Company pays rEcruit</span>
+        <span className="mp-badge">5% · Company pays rEcruit</span>
       </div>
       <div className="mp-panel">
         <div className="mp-icon">✓</div>
         <h2>Hiring for myself</h2>
         <p className="mp-intro">Hire someone for a specific task. Agree the task, give instructions, and review delivery. The platform fee is added to the agreed price so the expect receives the full amount. Payment is simulated in this MVP.</p>
-        <span className="mp-badge">5% · Added to hirer checkout</span>
+        <span className="mp-badge">2.5% · Added to hirer checkout</span>
       </div>
     </div>
     <div className="mp-panel">
