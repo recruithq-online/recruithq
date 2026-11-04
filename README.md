@@ -1,32 +1,46 @@
 # rEcruit
 
-A frontend marketplace`, built inside the existing Next.js App Router application with React, TypeScript, and Tailwind CSS 4.
+A reputation-first professional expertise marketplace built with Next.js 16, React 19, strict TypeScript and Tailwind CSS 4.
 
-## Run
+## Run locally
 
-Requires Node.js 20.9 or newer. Run `npm install`, then `npm run dev`, and open http://localhost:3000. For production, run `npm run build` then `npm start`.
+Requires Node.js 20.9 or newer.
 
-## Current frontend
+```sh
+npm install
+npm run dev
+```
 
-The application contains marketplace screens and the restored Team section. The old Roadmap, Whitepaper, Coming Soon, and waitlist sections and navigation links have been removed from the live UI. `/early-access` redirects to `/`. The header follows the `index-6.html` navbar: sticky single-row layout, blue rE mark, Explore/Hire/List expertise links, Sign in, and Get started. Signed-in sessions expose Messages and Dashboard. On mobile the links and Sign in control hide as in the reference; Get started remains available, or Dashboard when signed in. Team sits alongside Explore, Hire, and List expertise and follows their mobile visibility. The light/dark toggle stays in the navbar on desktop and mobile. The original Team section is restored above the footer. Marketplace destinations and contact/social links remain in the footer.
+Open http://localhost:3000. For production builds, run `npm run build -- --webpack` and `npm start`. The configuration uses the TypeScript compiler API because this execution environment drops captured CLI subprocess output; build-time type checking remains enabled.
 
+## Product experience
 
-Sign in using `hirer@recruit.test` or `expect@recruit.test`, both with password `Test1234!`. The sign-in dialog can fill either account and shows inline validation. All marketplace dialogs have a dedicated padded surface, an inset close button, keyboard focus management, and a scrollable layout for small screens. Light and dark themes retain the saved browser preference.
+The homepage introduces the professional record through a sample expert: completed work, vouches, refutes and reputation in context. Discovery supports text search, category, availability, sample verification, minimum reputation, maximum hourly rate and sorting. Filters are reflected in the URL and survive reload. Bookmarks create a shortlist saved on the current device; it works without an account.
 
-Switch accounts to try both sides of a job: post as hirer, apply as expect, accept as hirer, deliver as expect, and review as hirer. Personal hiring requires both accounts to add sample wallet addresses before simulating payment. No wallet is connected and no funds move. Company hiring shows a separate 5% fee; personal hiring adds 2.5% to the agreed job price. Fee arithmetic uses integer cents.
+Profiles expose both kinds of feedback, filtering, score explanations, rates, availability and hiring actions. The workspace provides direct navigation between the dashboard, messages, evidence reviews and settings. Company and personal hiring retain separate fees, application, acceptance, delivery, revisions and completion flows. Both themes follow system preferences until the visitor saves a choice.
 
-## Implementation
+The cinematic opening reveals the headline and professional record in sequence. Scroll reveals, a dark evidence section, short interaction transitions, and frosted navigation add visual rhythm. CSS and JavaScript motion follow the system’s reduced-motion preference.
 
-- `app/layout.tsx`: shared marketplace provider, header, content, and footer.
-- `components/marketplace/`: reusable screens, header, dialog forms, local state, and scoped CSS.
-- `lib/marketplace.ts`: domain types, sample profiles, fee calculations, and validation helpers.
-- `components/modal.tsx`: shared focus trapping, Escape/backdrop dismissal, scroll locking, focus restoration, and an isolated marketplace surface variant.
-- `components/site-sections.tsx`: footer branding, contact links, and current marketplace destinations.
-- `app/api/waitlist/route.ts`, `lib/waitlist.ts`, `lib/waitlist-email.ts`: retained email handling, unchanged by the UI cleanup.
+The complete route inventory, audit findings and design decisions are in [docs/product-design-audit.md](docs/product-design-audit.md). The interface uses flat surfaces without shadows, 16px body and form text, 14px secondary text and a 12px minimum for short labels. Navigation collapses below 900px to keep controls comfortable. DM Sans is bundled locally, so rendering does not depend on a Google Fonts request. The frontend uses Tailwind utilities, shared UI primitives in `components/ui`, and design tokens in `app/globals.css`. Product screens live in `components/marketplace`; obsolete landing-page modules have been removed. See [docs/frontend.md](docs/frontend.md) for the module map and examples of changing card radius, borders, typography and individual screen styles.
 
-Marketplace state survives Next.js client navigation and test-account switching within the tab and resets on refresh. Marketplace interactions do not call APIs. Evidence forms retain filenames only. Both test accounts can try the labelled review simulation: approved Vouches and Refutes affect local scores; pending or rejected evidence does not. Real accounts, durable profiles/jobs/messages, secure evidence uploads, reviewer access, notifications, and payment processing require backend integration.
+## Preview accounts and data
 
-## Checks
+Sign in through the header or workspace using either sample account:
+
+| Account      | Email                 | Password    |
+| ------------ | --------------------- | ----------- |
+| Hirer        | `hirer@recruit.test`  | `Test1234!` |
+| Professional | `expect@recruit.test` | `Test1234!` |
+
+Account creation creates a temporary session. Profiles, jobs, messages, preferences, wallets and review decisions reset on refresh. Switch accounts without refreshing to try both sides of a project. Saved expert IDs and theme preference persist in local storage; credentials do not.
+
+For personal hiring, add sample wallet addresses for both accounts before completing the simulated payment. No wallet connects and no funds move. Company hiring shows a separate 5% fee; personal hiring adds 2.5% to the job price. Fee calculations use integer cents.
+
+Vouches and refutes require evidence filenames. Files are never uploaded or retained. The review queue is explicitly a simulation available to the sample accounts. New profiles start at 50/100; approving a vouch adds 1 and approving a refute subtracts 2, bounded to 0–100. Pending/rejected submissions do not change scores. Seeded profiles have illustrative historical scores and representative feedback entries.
+
+This frontend requires backend integration for durable accounts and records, secure uploads, independent verification, reviewer permissions, message delivery, notifications and real payments.
+
+## Verification
 
 ```sh
 npm run typecheck
@@ -35,17 +49,13 @@ npm run build -- --webpack
 npm run test:e2e
 ```
 
-Browser tests require a completed build and Google Chrome. They run a local production server on port 3107. `tests/design-reference.spec.ts` compares marketplace content geometry and typography with `index-6.html` at 390px, 768px, and 1440px. Marketplace/theme checks cover 320px through desktop widths, routing, validation, account switching, conversations, evidence review, and both hiring lifecycles. `tests/modal-layout.spec.ts` checks modal insets, viewport fit, scrolling, inline validation, and keyboard behavior, including the reported 638×669 layout and 320×568 phones. `tests/site.spec.ts` checks that legacy sections are absent and the old URL redirects. Email tests mock delivery and never send a live email. Screenshots and traces are written to ignored `test-results/`.
+Playwright requires Google Chrome and a completed production build. It starts the app on port 3107; set `PLAYWRIGHT_PORT` to use another port if it is occupied. Tests cover discovery URLs, shortlist persistence, feedback filters, keyboard navigation, modal focus and scrolling, themes, route layouts from 320px through desktop, account switching, messages, evidence decisions and both hiring lifecycles. Screenshots and traces are written to ignored `test-results/`.
 
-## Waitlist submissions
+## Retained waitlist email service
 
-The existing waitlist email implementation and server configuration are retained unchanged. The public waitlist UI has been removed. New marketplace interactions do not use this endpoint; the delivery details below describe the retained email code.
+The legacy waitlist UI is disconnected; `/early-access` redirects home. The existing `/api/waitlist` endpoint and email templates are retained unchanged. It validates form submissions and sends admin notifications using Resend. All automated email tests mock delivery.
 
-The form posts to `/api/waitlist`. The server validates the submission and calls the [Resend Email API](https://resend.com/docs/api-reference/emails/send-email) to email the public alias, email address, and expertise to your admin inbox. The notification's Reply-To is the submitter's email address. The recipient and sender come exclusively from server configuration.
-
-Admin notifications include a responsive HTML design with blue accents, white surfaces, and dark text: a brand header, separate labelled signup details, and a reply button. They also include a plain-text fallback. Submitted content is escaped before insertion into HTML. Running the browser tests writes a sample to `test-results/waitlist-email-preview.html` and screenshots at 320px, 390px, and 800px; the sample uses fictional details and sends no email.
-
-For a new setup, copy `.env.example` to `.env.local` and configure the server-only settings. If `.env` or `.env.local` already exists, update the active file rather than creating conflicting copies (`.env.local` takes priority over `.env`).
+Configure the existing `.env` or `.env.local` with server-only values:
 
 ```dotenv
 RESEND_API_KEY=re_your_api_key
@@ -53,14 +63,4 @@ RESEND_FROM_EMAIL="rEcruit <onboarding@resend.dev>"
 ADMIN_EMAIL=your-resend-account@example.com
 ```
 
-Replace `ADMIN_EMAIL` with the email address associated with the Resend account that created the API key. This is the notification recipient; the submitter's email remains Reply-To. The `resend.dev` test sender can only deliver to that Resend account email. A different recipient produces a `403 validation_error`, even when the API key and form are otherwise valid. See [Resend's test-sender restriction](https://resend.com/docs/knowledge-base/403-error-resend-dev-domain).
-
-To keep notifications going to `askrecruithq@gmail.com` when it is not your Resend account email, add and verify a domain you own in Resend, then set `RESEND_FROM_EMAIL` to an address on that verified domain. Gmail can remain the recipient, but a Gmail address cannot be used as a verified-domain sender in Resend. Never change the recipient to an unrelated address just to bypass the test restriction.
-
-For production sending to other recipients, use a sending address on a [verified Resend domain](https://resend.com/docs/send-with-nextjs). Set the same three environment variables in your deployment host and restart/redeploy after changes. These variables stay on the server; never prefix them with `NEXT_PUBLIC_`. The application requires a host that runs Next.js route handlers rather than a static-only export.
-
-The form only shows success after the API returns an accepted Resend email ID; a generic HTTP 200 response is not enough. Missing configuration, provider rejection, network errors, and blocked honeypot submissions show the retry state. Resend acceptance does not guarantee inbox delivery. This emails notifications rather than storing a separate waitlist database. No live emails are sent by the automated tests: the Resend API and browser submission responses are mocked. Verify real delivery after configuring your own Resend account.
-
-If a submission does not arrive, check the terminal running Next.js for `[waitlist]` messages. They distinguish missing settings, blocked spam-trap submissions, provider rejection, and network failures. Rejection logs include Resend’s explanation, with API credentials and email addresses redacted; visitors receive a generic retry message. Successful sends log an email ID that can be checked in the Resend dashboard. Restart `npm run dev` after changing environment settings, then refresh the browser. In Gmail, also check Spam and All Mail for messages from `onboarding@resend.dev`.
-
-A repeated `400` with a honeypot warning means the hidden `bot-field` was filled before the request reached Resend. That field is read-only and includes password-manager ignore hints to prevent accidental text entry and reduce autofill interference. The server still rejects nonempty values, and the form now displays validation messages for rejected submissions. Refresh any form left open before this fix.
+Keep the intended admin recipient. Resend's test sender only sends to the account email; to send to another recipient, verify a domain you own and configure its sender address. Never prefix these settings with `NEXT_PUBLIC_`. Restart after configuration changes. This endpoint requires a Next.js server, not a static export. Provider acceptance is not a guarantee of inbox delivery. Server logs redact email addresses and credentials from provider errors.

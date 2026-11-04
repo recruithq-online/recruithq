@@ -125,7 +125,10 @@ export async function POST(request: Request) {
         // addresses removed. Visitors still receive the generic retry message.
         message: providerMessage
           .replaceAll(apiKey, "[redacted key]")
-          .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, "[redacted email]")
+          .replace(
+            /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,
+            "[redacted email]",
+          )
           .replace(/[\r\n]/g, " ")
           .slice(0, 1000),
       });

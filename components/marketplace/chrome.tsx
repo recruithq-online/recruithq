@@ -1,58 +1,176 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { Button, buttonStyles } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { cn } from "@/lib/cn";
 import { routeTo } from "@/lib/marketplace";
+import { Icon, Wordmark } from "./icons";
 import { useMarketplace } from "./provider";
 
-const links = [["explore", "Explore"], ["hire", "Hire"], ["list", "List expertise"]];
+const marketplaceLinks = [
+  ["explore", "Explore"],
+  ["hire", "Hire"],
+  ["list", "List expertise"],
+  ["about", "Our approach"],
+];
+
+const workspaceLinks = [
+  ["work", "Dashboard"],
+  ["messages", "Messages"],
+  ["reputation", "Reputation"],
+  ["settings", "Settings"],
+];
 
 export function MarketplaceNavbar() {
   const pathname = usePathname();
   const { session, setDialog } = useMarketplace();
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const menu = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    menu.current
+      ?.querySelector<HTMLAnchorElement>("a")
+      ?.focus({ preventScroll: true });
+    function dismiss(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        menuButton.current?.focus();
+      }
+    }
+    document.addEventListener("keydown", dismiss);
+    return () => document.removeEventListener("keydown", dismiss);
+  }, [menuOpen]);
+
+  function openAccount() {
+    setMenuOpen(false);
+    setDialog({ type: "signup" });
+  }
   return (
-    <header className="marketplace mp-site-header">
-      <nav className={`mp-site-nav${session ? " mp-site-signed-in" : ""}${menuOpen ? " mp-menu-open" : ""}`} aria-label="Marketplace">
-        <Link className="mp-site-brand" href="/" aria-label="rEcruit home">
-          {/* <span className="mp-site-brandmark" aria-hidden="true">rE</span> */}
-          <span>r<span className="mp-site-blue">E</span>cruit</span>
-        </Link>
-        <div className="mp-site-menu" id="marketplace-navigation-menu">
-          <div className="mp-site-links">
-            {links.map(([view, label]) => (
-              <Link key={view} href={routeTo(view)} aria-current={pathname === routeTo(view) ? "page" : undefined} onClick={() => setMenuOpen(false)}>
-                {label}
-              </Link>
-            ))}
-            {/* <a href="#team" onClick={() => setMenuOpen(false)}>Team</a> */}
-            {session && <Link className="mp-site-messages" href={routeTo("messages")} aria-current={pathname === routeTo("messages") ? "page" : undefined} onClick={() => setMenuOpen(false)}>Messages</Link>}
-          </div>
-          <div className="mp-site-actions">
-            <ThemeToggle />
-            {!session && <button className="mp-btn mp-secondary" type="button" onClick={() => {
-              setMenuOpen(false);
-              setDialog({ type: "signup" });
-            }}>Sign up</button>}
-            {session && <Link className="mp-btn mp-secondary" href={routeTo("work")} onClick={() => setMenuOpen(false)}>Dashboard</Link>}
-            <Link className="mp-btn mp-primary mp-site-start" href={routeTo("list")} onClick={() => setMenuOpen(false)}>Get started ↗</Link>
-          </div>
-        </div>
-        <button
-          className="mp-site-menu-toggle"
-          type="button"
-          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-          aria-expanded={menuOpen}
-          aria-controls="marketplace-navigation-menu"
-          onClick={() => setMenuOpen((open) => !open)}
+    <header
+      data-testid="site-header"
+      className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b-1 border-border max-nav:sticky max-nav:top-0 max-nav:z-40 max-nav:bg-background/95 max-nav:backdrop-blur-xl max-nav:border-b-1 max-nav:border-border"
+    >
+      <a
+        href="#main-content"
+        className="fixed -top-24 left-4 z-200 rounded-control bg-surface px-5 py-3 outline-2 outline-brand focus:top-2.5"
+      >
+        Skip to content
+      </a>
+      <Container className="relative flex h-20 items-center gap-8 max-nav:h-17 max-nav:px-5 max-nav:gap-4">
+        <nav
+          aria-label="Marketplace"
+          className="flex h-full w-full items-center gap-8 max-tablet:gap-5 max-nav:gap-4"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-            {menuOpen ? <path d="m6 6 12 12M18 6 6 18" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
-          </svg>
-        </button>
-      </nav>
+          <Link
+            href="/"
+            aria-label="rEcruit home"
+            data-testid="site-brand"
+            onClick={() => setMenuOpen(false)}
+            className="shrink-0"
+          >
+            <Wordmark />
+          </Link>
+          <div
+            ref={menu}
+            id="marketplace-navigation-menu"
+            className={cn(
+              "flex-1 max-nav:absolute max-nav:inset-x-0 max-nav:top-full max-nav:bg-surface max-nav:px-5 max-nav:pt-3 max-nav:pb-5",
+              menuOpen
+                ? "max-nav:block max-nav:motion-safe:animate-menu"
+                : "max-nav:hidden",
+            )}
+          >
+            <div
+              data-testid="primary-links"
+              className="flex items-center gap-1 max-nav:grid max-nav:gap-0"
+            >
+              {marketplaceLinks.map(([view, title]) => (
+                <Link
+                  key={view}
+                  href={routeTo(view)}
+                  aria-current={pathname === routeTo(view) ? "page" : undefined}
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-control px-3 py-2.5 text-base font-medium transition-colors hover:text-brand aria-[current=page]:bg-brand aria-[current=page]:text-white max-tablet:px-2 max-nav:py-3"
+                >
+                  {title}
+                </Link>
+              ))}
+            </div>
+            <div className="mt-3 hidden grid-cols-2 gap-x-5 gap-y-1 pt-3 max-nav:grid">
+              {!session && (
+                <Button onClick={openAccount} className="col-span-full mb-2.5">
+                  Create an account <Icon name="northeast" size={16} />
+                </Button>
+              )}
+              {workspaceLinks.map(([view, title]) => (
+                <Link
+                  key={view}
+                  href={routeTo(view)}
+                  className="py-2.5 text-sm"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {title}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="ml-auto flex items-center gap-1.5">
+            <ThemeToggle />
+            {session ? (
+              <Link
+                href={routeTo("work")}
+                className={buttonStyles({
+                  variant: "secondary",
+                  className: "max-nav:min-h-10 max-nav:px-2 max-nav:text-sm",
+                })}
+              >
+                <span className="size-1.5 rounded-full bg-brand" />
+                Dashboard
+              </Link>
+            ) : (
+              <Button
+                variant="ghost"
+                onClick={() => setDialog({ type: "auth" })}
+                className="max-nav:px-2 max-nav:text-sm"
+              >
+                Sign in
+              </Button>
+            )}
+            {session ? (
+              <Link
+                href={routeTo(session.role === "hirer" ? "hire" : "list")}
+                className={buttonStyles({ className: "max-tablet:hidden" })}
+              >
+                {session.role === "hirer"
+                  ? "Post opportunity"
+                  : "List expertise"}
+                <Icon name="northeast" size={16} />
+              </Link>
+            ) : (
+              <Button className="max-tablet:hidden" onClick={openAccount}>
+                Get started <Icon name="northeast" size={16} />
+              </Button>
+            )}
+            <button
+              ref={menuButton}
+              className="hidden size-10 shrink-0 place-items-center rounded-control max-nav:grid"
+              aria-label={
+                menuOpen ? "Close navigation menu" : "Open navigation menu"
+              }
+              aria-expanded={menuOpen}
+              aria-controls="marketplace-navigation-menu"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <Icon name={menuOpen ? "close" : "menu"} />
+            </button>
+          </div>
+        </nav>
+      </Container>
     </header>
   );
 }

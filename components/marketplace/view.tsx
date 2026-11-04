@@ -1,14 +1,15 @@
 "use client";
-
-import { About, CreateProfile, Explore, Profile } from "./discovery";
+import { About } from "./about";
+import { CreateProfile } from "./create-profile";
+import { Profile } from "./expert-profile";
+import { Explore } from "./explore";
 import { Hire } from "./hiring";
+import { Messages } from "./messages";
+import { Reputation } from "./reputation";
+import { Settings } from "./settings";
 import { Work } from "./work";
-import { Messages, Reputation, Settings } from "./workspace";
-export function MarketplaceView({
-  view
-}: {
-  view: string[];
-}) {
+
+export function MarketplaceView({ view }: { view: string[] }) {
   switch (view[0]) {
     case "explore":
       return <Explore />;

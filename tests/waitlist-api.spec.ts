@@ -180,22 +180,35 @@ test("reports Resend rejection, malformed responses, and network failures", asyn
 test("logs the reason for a Resend test-recipient rejection without exposing addresses or the API key", async () => {
   const originalError = console.error;
   const logs: unknown[][] = [];
-  console.error = (...args: unknown[]) => { logs.push(args); };
-  globalThis.fetch = async () => Response.json({
-    name: "validation_error",
-    message: "You can only send testing emails to your own email address (owner@example.com). To send emails to other recipients, please verify a domain at resend.com/domains. re_test_placeholder",
-  }, { status: 403 });
+  console.error = (...args: unknown[]) => {
+    logs.push(args);
+  };
+  globalThis.fetch = async () =>
+    Response.json(
+      {
+        name: "validation_error",
+        message:
+          "You can only send testing emails to your own email address (owner@example.com). To send emails to other recipients, please verify a domain at resend.com/domains. re_test_placeholder",
+      },
+      { status: 403 },
+    );
   try {
     const response = await POST(request());
     expect(response.status).toBe(502);
     expect(await response.json()).toEqual({
       error: "We couldn’t submit your details just now. Please try again.",
     });
-    expect(logs).toEqual([["[waitlist] Resend rejected the email.", {
-      status: 403,
-      code: "validation_error",
-      message: "You can only send testing emails to your own email address ([redacted email]). To send emails to other recipients, please verify a domain at resend.com/domains. [redacted key]",
-    }]]);
+    expect(logs).toEqual([
+      [
+        "[waitlist] Resend rejected the email.",
+        {
+          status: 403,
+          code: "validation_error",
+          message:
+            "You can only send testing emails to your own email address ([redacted email]). To send emails to other recipients, please verify a domain at resend.com/domains. [redacted key]",
+        },
+      ],
+    ]);
   } finally {
     console.error = originalError;
   }

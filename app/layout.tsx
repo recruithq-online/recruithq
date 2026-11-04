@@ -1,20 +1,29 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { Navbar, Footer, Team } from "@/components/site-sections";
+import { MarketplaceNavbar } from "@/components/marketplace/chrome";
+import { Footer } from "@/components/marketplace/footer";
 import { MarketplaceProvider } from "@/components/marketplace/provider";
 import { MarketplaceShell } from "@/components/marketplace/shell";
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import "./globals.css";
+
+const dmSans = localFont({
+  src: "./fonts/dm-sans.ttf",
+  variable: "--font-dm-sans",
+  display: "swap",
+  weight: "100 1000",
+});
 
 export const metadata: Metadata = {
   title: "rEcruit — Beyond CVs. Built on Reputation",
   description:
-    "Find reputable experts using work history and reviews from past hirers — not just a CV.",
+    "Discover independent experts through demonstrated work, professional vouches, and accountable reputation. Beyond CVs. Built on Reputation.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={dmSans.variable} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -26,26 +35,13 @@ export default function RootLayout({
         })();`,
           }}
         />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        {/* Retain the source font request without a build-time network dependency. */}
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body>
-          <MarketplaceProvider>
-            <Navbar />
-            <MarketplaceShell>{children}</MarketplaceShell>
-            {/* // <Team /> */}
-            <Footer />
-          </MarketplaceProvider>
+        <MarketplaceProvider>
+          <MarketplaceNavbar />
+          <MarketplaceShell>{children}</MarketplaceShell>
+          <Footer />
+        </MarketplaceProvider>
       </body>
     </html>
   );
