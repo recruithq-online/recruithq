@@ -22,7 +22,7 @@ export function Footer() {
             </p>
           </div>
           <div className="flex flex-col items-start gap-2.5">
-            <h3 className="mb-2 font-mono text-xs tracking-widest uppercase">
+            <h3 className="mb-2 font-display text-xs tracking-widest uppercase">
               Discover
             </h3>
             <Link
@@ -51,7 +51,7 @@ export function Footer() {
             </Link>
           </div>
           <div className="flex flex-col items-start gap-2.5">
-            <h3 className="mb-2 font-mono text-xs tracking-widest uppercase">
+            <h3 className="mb-2 font-display text-xs tracking-widest uppercase">
               Workspace
             </h3>
             <Link
@@ -80,7 +80,7 @@ export function Footer() {
             </Link>
           </div>
           <div className="flex flex-col items-start gap-2.5">
-            <h3 className="mb-2 font-mono text-xs tracking-widest uppercase">
+            <h3 className="mb-2 font-display text-xs tracking-widest uppercase">
               Stay connected
             </h3>
             <a

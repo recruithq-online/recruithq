@@ -7,7 +7,7 @@ export default function ErrorPage({ reset }: { reset: () => void }) {
     <section className="min-h-[60vh] py-11 max-nav:pt-8 max-nav:pb-12.5">
       <Container>
         <div className="col-span-full flex flex-col items-center gap-2.5 rounded-card bg-surface px-7 py-12 text-center text-base leading-8">
-          <span className="inline-flex items-center gap-2.5 font-mono text-xs leading-relaxed tracking-widest uppercase">
+          <span className="inline-flex items-center gap-2.5 font-display text-xs leading-relaxed tracking-widest uppercase">
             LET’S TRY THAT AGAIN
           </span>
           <h1 className="my-3.5 text-[clamp(30px,3.4vw,44px)] font-medium tracking-[-.055em] max-nav:text-[34px]">

@@ -51,7 +51,7 @@ export function ExpertCard({
           </h3>
           <Verification expert={e} />
         </div>
-        <span className="ml-auto hidden font-mono text-xs tracking-wide uppercase laptop:inline max-nav:inline">
+        <span className="ml-auto hidden font-display text-xs tracking-wide uppercase laptop:inline max-nav:inline">
           {e.category}
         </span>
       </div>

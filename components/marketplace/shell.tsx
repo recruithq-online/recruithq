@@ -32,7 +32,7 @@ export function MarketplaceShell({ children }: { children: React.ReactNode }) {
     >
       {isWorkspace && (
         <aside className="flex min-h-[calc(100vh-80px)] flex-col px-5 py-9 max-nav:min-h-0 max-nav:py-0">
-          <div className="mb-3.5 px-3 font-mono text-xs tracking-widest max-nav:hidden">
+          <div className="mb-3.5 px-3 font-display text-xs tracking-widest max-nav:hidden">
             WORKSPACE
           </div>
           <nav
@@ -51,7 +51,7 @@ export function MarketplaceShell({ children }: { children: React.ReactNode }) {
               </Link>
             ))}
           </nav>
-          <div className="mb-3 px-3 font-mono text-xs tracking-widest max-nav:hidden">
+          <div className="mb-3 px-3 font-display text-xs tracking-widest max-nav:hidden">
             MARKETPLACE
           </div>
           <Link

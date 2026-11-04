@@ -91,7 +91,7 @@ export function About() {
         </Card>
       </div>
       <Card id="team" as="section" className="mt-7 grid gap-6">
-        <span className="inline-flex items-center gap-2.5 font-mono text-xs leading-relaxed tracking-widest uppercase">
+        <span className="inline-flex items-center gap-2.5 font-display text-xs leading-relaxed tracking-widest uppercase">
           THE PEOPLE BEHIND rEcruit
         </span>
         <h2 className="mb-3 tracking-tight mt-2.5 text-[22px]">

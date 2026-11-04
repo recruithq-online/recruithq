@@ -19,7 +19,7 @@ export function Avatar({
         className,
       )}
     >
-      <span className="z-1 -mt-1 font-editorial text-[32px] italic">
+      <span className="z-1 -mt-1 font-display text-[32px] italic">
         {alias.slice(0, 1).toUpperCase()}
       </span>
       <svg

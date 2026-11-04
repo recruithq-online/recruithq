@@ -11,6 +11,15 @@ const dmSans = localFont({
   variable: "--font-dm-sans",
   display: "swap",
   weight: "100 1000",
+  adjustFontFallback: false,
+});
+
+const spaceGrotesk = localFont({
+  src: "./fonts/space-grotesk.ttf",
+  variable: "--font-space-grotesk",
+  display: "swap",
+  weight: "300 700",
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
@@ -23,7 +32,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={dmSans.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${dmSans.variable} ${spaceGrotesk.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{

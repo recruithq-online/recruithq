@@ -1,6 +1,6 @@
 # Frontend development
 
-The UI uses Tailwind CSS 4. DM Sans is loaded from `app/fonts/dm-sans.ttf` with `next/font/local`; its OFL license is kept beside it. Page layout and responsive styles live beside the JSX. Shared UI defaults live in `components/ui`; product-specific screens live in `components/marketplace`.
+The UI uses Tailwind CSS 4. Use only DM Sans and Space Grotesk throughout the website. Both variable fonts are bundled in `app/fonts/` and loaded with `next/font/local`; their OFL licenses are kept beside them. DM Sans (`font-sans`) is for body text and controls. Space Grotesk (`font-display`) is for headings, display text and short metadata. Headings use Space Grotesk by default. Do not introduce serif, monospace or other font families. Page layout and responsive styles live beside the JSX. Shared UI defaults live in `components/ui`; product-specific screens live in `components/marketplace`.
 
 ## Where to change a design choice
 

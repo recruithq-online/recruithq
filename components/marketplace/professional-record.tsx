@@ -12,7 +12,7 @@ export function ProfessionalRecord({ expert }: { expert: MarketplaceExpert }) {
         aria-hidden="true"
         className="pointer-events-none absolute -inset-y-1/3 left-0 -z-10 w-[70%] bg-linear-to-r from-transparent via-white/15 to-transparent opacity-0 motion-safe:animate-light-pass"
       />
-      <div className="flex items-center justify-between pb-6 font-mono text-xs tracking-widest max-nav:pb-5">
+      <div className="flex items-center justify-between pb-6 font-display text-xs tracking-widest max-nav:pb-5">
         <span>PROOF OVER PROMISES</span>
         <Icon name="shield" size={19} />
       </div>
@@ -20,7 +20,7 @@ export function ProfessionalRecord({ expert }: { expert: MarketplaceExpert }) {
         className="p-0 px-6 pt-5.5 max-tablet:px-4"
         data-testid="professional-record"
       >
-        <div className="flex justify-between pb-4.5 font-mono text-xs tracking-wide">
+        <div className="flex justify-between pb-4.5 font-display text-xs tracking-wide">
           <span>THE PROFESSIONAL RECORD</span>
           <span>№ 001</span>
         </div>
@@ -37,7 +37,7 @@ export function ProfessionalRecord({ expert }: { expert: MarketplaceExpert }) {
         </div>
         <div className="flex items-center justify-between gap-5 py-5.5 max-tablet:py-4 max-nav:py-6 max-phone:gap-3">
           <div>
-            <span className="font-mono text-xs tracking-wide">
+            <span className="font-display text-xs tracking-wide">
               REPUTATION SCORE
             </span>
             <div className="text-[76px] leading-[1.1] font-medium tracking-[-.07em] whitespace-nowrap max-tablet:text-[62px] max-nav:text-[72px] max-phone:text-[60px]">
@@ -48,7 +48,7 @@ export function ProfessionalRecord({ expert }: { expert: MarketplaceExpert }) {
           </div>
           <div className="mr-2 flex size-24 shrink-0 flex-col items-center justify-center gap-1 rounded-full bg-brand text-white max-tablet:size-20 max-nav:size-24 max-phone:mr-0 max-phone:size-20">
             <Icon name="shield" size={32} />
-            <span className="text-center font-mono text-xs leading-tight tracking-wide">
+            <span className="text-center font-display text-xs leading-tight tracking-wide">
               WORK
               <br />
               BACKED
@@ -76,7 +76,7 @@ export function ProfessionalRecord({ expert }: { expert: MarketplaceExpert }) {
           </div>
         </div>
         <div className="my-5">
-          <div className="flex items-center gap-1.5 font-mono text-xs tracking-wide text-brand">
+          <div className="flex items-center gap-1.5 font-display text-xs tracking-wide text-brand">
             <Icon name="check" size={14} />
             <span>FROM A PAST HIRER</span>
           </div>

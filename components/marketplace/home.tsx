@@ -36,7 +36,7 @@ export function MarketplaceHome() {
       >
         <Container className="grid grid-cols-1 items-center gap-9 nav:grid-cols-[1.05fr_1fr] nav:gap-7 tablet:gap-10 laptop:gap-17.5">
           <div className="py-1">
-            <div className="motion-safe:animate-hero-kicker inline-flex items-start gap-2.5 font-mono text-xs leading-relaxed tracking-widest uppercase">
+            <div className="motion-safe:animate-hero-kicker inline-flex items-start gap-2.5 font-display text-xs leading-relaxed tracking-widest uppercase">
               <span className="size-1.5 bg-brand" />
               THE REPUTATION-FIRST EXPERTISE MARKETPLACE
             </div>
@@ -61,7 +61,7 @@ export function MarketplaceHome() {
                 className="-mb-[.15em] block overflow-clip pb-[.15em]"
                 data-hero-line=""
               >
-                <em className="font-editorial font-normal text-brand italic block motion-safe:animate-headline [animation-delay:.23s]">
+                <em className="font-display font-normal text-brand italic block motion-safe:animate-headline [animation-delay:.23s]">
                   Reputation.
                 </em>
               </span>
@@ -138,7 +138,7 @@ export function MarketplaceHome() {
               data-reveal=""
               className="flex items-center gap-4 py-6"
             >
-              <span className="font-mono text-xs text-brand">{n}</span>
+              <span className="font-display text-xs text-brand">{n}</span>
               <div>
                 <strong className="block text-sm font-medium">{title}</strong>
                 <small className="text-xs">{detail}</small>
@@ -159,7 +159,7 @@ export function MarketplaceHome() {
             data-reveal=""
           >
             <div>
-              <span className="inline-flex items-center gap-2.5 font-mono text-xs leading-relaxed tracking-widest uppercase">
+              <span className="inline-flex items-center gap-2.5 font-display text-xs leading-relaxed tracking-widest uppercase">
                 PEOPLE BEHIND THE PROOF
               </span>
               <h2 className="my-3 text-4xl tracking-[-.05em] max-nav:text-3xl">
@@ -209,7 +209,7 @@ export function MarketplaceHome() {
         </Container>
       </section>
       <section
-        className="bg-black py-21 text-white max-nav:py-11"
+        className=" py-21 text-black max-nav:py-11"
         data-testid="trust-section"
       >
         <Container
@@ -217,14 +217,14 @@ export function MarketplaceHome() {
           data-testid="trust-content"
         >
           <div data-reveal="">
-            <span className="inline-flex items-center gap-2.5 font-mono text-xs leading-relaxed tracking-widest uppercase">
+            <span className="inline-flex items-center gap-2.5 font-display text-xs leading-relaxed tracking-widest uppercase">
               TRUST IS A RECORD. NOT A CLAIM.
             </span>
             <h2 className="my-4.5 text-[40px] tracking-[-.05em] max-tablet:text-[34px]">
               A reputation should
               <br />
               stand up to{" "}
-              <em className="font-editorial font-normal text-brand">
+              <em className="font-display font-normal text-brand">
                 scrutiny.
               </em>
             </h2>
@@ -262,7 +262,7 @@ export function MarketplaceHome() {
                 data-reveal=""
                 className="flex items-start gap-5 py-6 first:pt-0 last:pb-0"
               >
-                <span className="pt-1 font-mono text-xs">0{index + 1}</span>
+                <span className="pt-1 font-display text-xs">0{index + 1}</span>
                 <div>
                   <h3 className="mb-2 text-base">{title}</h3>
                   <p className="max-w-95 m-0 text-sm leading-7">{copy}</p>
@@ -280,7 +280,7 @@ export function MarketplaceHome() {
       <section className="py-15 max-nav:py-11">
         <Container className="flex items-center justify-between gap-10 max-nav:flex-col max-nav:items-start max-nav:gap-7">
           <div>
-            <span className="inline-flex items-center gap-2.5 font-mono text-xs leading-relaxed tracking-widest uppercase">
+            <span className="inline-flex items-center gap-2.5 font-display text-xs leading-relaxed tracking-widest uppercase">
               YOUR NEXT CHAPTER STARTS WITH YOUR WORK
             </span>
             <h2 className="mt-4 text-[38px] tracking-[-.05em] max-nav:text-[32px]">
