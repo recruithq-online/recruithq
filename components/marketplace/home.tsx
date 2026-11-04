@@ -7,14 +7,13 @@ import { Container } from "@/components/ui/container";
 import { categories, routeTo } from "@/lib/marketplace";
 import { ExpertCard } from "./expert-card";
 import { Icon } from "./icons";
-import { ProfessionalRecord } from "./professional-record";
+import { ProfessionalRecordCarousel } from "./professional-record";
 import { useMarketplace } from "./provider";
 
 export function MarketplaceHome() {
   const { experts } = useMarketplace();
   const [category, setCategory] = useState("");
   const router = useRouter();
-  const featured = experts.find((e) => e.id === 1) ?? experts[0];
   const selected = experts
     .filter((e) => !category || e.category === category)
     .slice(0, 3);
@@ -123,7 +122,7 @@ export function MarketplaceHome() {
               </Link>
             </div>
           </div>
-          {featured && <ProfessionalRecord expert={featured} />}
+          <ProfessionalRecordCarousel experts={experts} />
         </Container>
       </section>
       <div>

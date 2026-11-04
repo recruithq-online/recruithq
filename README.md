@@ -15,7 +15,7 @@ Open http://localhost:3000. For production builds, run `npm run build -- --webpa
 
 ## Product experience
 
-The homepage introduces the professional record through a sample expert: completed work, vouches, refutes and reputation in context. Discovery supports text search, category, availability, sample verification, minimum reputation, maximum hourly rate and sorting. Filters are reflected in the URL and survive reload. Bookmarks create a shortlist saved on the current device; it works without an account.
+The homepage introduces professional records through a compact carousel of sample experts: completed work, vouches, refutes and reputation in context. Records rotate every five seconds, pause on hover or keyboard focus, and support swipe, previous/next, direct selection and a pause control. Reduced motion disables automatic rotation. Discovery supports text search, category, availability, sample verification, minimum reputation, maximum hourly rate and sorting. Filters are reflected in the URL and survive reload. Bookmarks create a shortlist saved on the current device; it works without an account.
 
 Profiles expose both kinds of feedback, filtering, score explanations, rates, availability and hiring actions. The workspace provides direct navigation between the dashboard, messages, evidence reviews and settings. Company and personal hiring retain separate fees, application, acceptance, delivery, revisions and completion flows. Both themes follow system preferences until the visitor saves a choice.
 

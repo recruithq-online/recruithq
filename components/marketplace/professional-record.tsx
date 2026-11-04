@@ -1,105 +1,229 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
-import type { MarketplaceExpert } from "@/lib/marketplace";
-import { routeTo } from "@/lib/marketplace";
+import { routeTo, type MarketplaceExpert } from "@/lib/marketplace";
 import { Icon } from "./icons";
 import { Avatar, Verification } from "./profile-signals";
 
-export function ProfessionalRecord({ expert }: { expert: MarketplaceExpert }) {
+function ProfessionalRecord({ expert }: { expert: MarketplaceExpert }) {
+  const feedback = expert.feedback.find((item) => item.type === "vouch");
+
   return (
-    <div className="relative isolate overflow-hidden rounded-card bg-brand px-7 pt-5.5 pb-5 text-white motion-safe:animate-record-enter max-tablet:px-4">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -inset-y-1/3 left-0 -z-10 w-[70%] bg-linear-to-r from-transparent via-white/15 to-transparent opacity-0 motion-safe:animate-light-pass"
-      />
-      <div className="flex items-center justify-between pb-6 font-display text-xs tracking-widest max-nav:pb-5">
-        <span>PROOF OVER PROMISES</span>
-        <Icon name="shield" size={19} />
+    <Card className="flex h-full flex-col gap-3 p-4">
+      <div className="flex items-center gap-3">
+        <Avatar alias={expert.alias} />
+        <div className="flex min-w-0 flex-col items-start gap-0.5">
+          <h2 className="text-xl">{expert.alias}</h2>
+          <p className="text-sm">{expert.headline}</p>
+          <Verification expert={expert} />
+        </div>
       </div>
-      <Card
-        className="p-0 px-6 pt-5.5 max-tablet:px-4"
-        data-testid="professional-record"
-      >
-        <div className="flex justify-between pb-4.5 font-display text-xs tracking-wide">
-          <span>THE PROFESSIONAL RECORD</span>
-          <span>№ 001</span>
+      <div className="flex items-center justify-between gap-3 border-y border-border py-3">
+        <div>
+          <p className="font-display text-xs tracking-wide">REPUTATION</p>
+          <p className="font-display text-4xl leading-tight font-medium tracking-tight">
+            {expert.score}
+            <span className="ml-1 text-sm tracking-normal">/ 100</span>
+          </p>
         </div>
-        <div className="my-5.5 flex items-center gap-3.5 max-tablet:gap-2.5">
-          <Avatar alias={expert.alias} className="h-17 w-15" />
-          <div className="min-w-0">
-            <h2 className="mb-1 flex items-center gap-2 text-2xl">
-              {expert.alias}
-              <Icon name="shield" size={18} />
-            </h2>
-            <p className="mb-1 text-sm">{expert.headline}</p>
-            <Verification expert={expert} />
-          </div>
-        </div>
-        <div className="flex items-center justify-between gap-5 py-5.5 max-tablet:py-4 max-nav:py-6 max-phone:gap-3">
-          <div>
-            <span className="font-display text-xs tracking-wide">
-              REPUTATION SCORE
-            </span>
-            <div className="text-[76px] leading-[1.1] font-medium tracking-[-.07em] whitespace-nowrap max-tablet:text-[62px] max-nav:text-[72px] max-phone:text-[60px]">
-              {expert.score}
-              <span className="ml-2.5 text-base tracking-tight">/ 100</span>
+        <dl className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1 text-xs">
+          {[
+            [expert.projects, "Projects"],
+            [expert.vouches, "Vouches"],
+            [expert.refutes, "Accountable refute"],
+          ].map(([value, label]) => (
+            <div key={label} className="contents">
+              <dt>{label}</dt>
+              <dd className="text-right font-display text-sm font-medium">
+                {value}
+              </dd>
             </div>
-            <span className="text-xs">A record built through real work.</span>
-          </div>
-          <div className="mr-2 flex size-24 shrink-0 flex-col items-center justify-center gap-1 rounded-full bg-brand text-white max-tablet:size-20 max-nav:size-24 max-phone:mr-0 max-phone:size-20">
-            <Icon name="shield" size={32} />
-            <span className="text-center font-display text-xs leading-tight tracking-wide">
-              WORK
-              <br />
-              BACKED
-            </span>
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-3 py-4 max-phone:grid-cols-1 max-phone:[&>div]:flex max-phone:[&>div]:items-center max-phone:[&>div]:justify-between">
-          <div>
-            <strong className="block text-[22px] leading-snug font-medium">
-              {expert.projects}
-            </strong>
-            <span className="text-sm">Projects delivered</span>
-          </div>
-          <div>
-            <strong className="block text-[22px] leading-snug font-medium">
-              {expert.vouches}
-            </strong>
-            <span className="text-sm">Professional vouches</span>
-          </div>
-          <div>
-            <strong className="block text-[22px] leading-snug font-medium">
-              {expert.refutes}
-            </strong>
-            <span className="text-sm">Accountable refute</span>
-          </div>
-        </div>
-        <div className="my-5">
-          <div className="flex items-center gap-1.5 font-display text-xs tracking-wide text-brand">
-            <Icon name="check" size={14} />
-            <span>FROM A PAST HIRER</span>
-          </div>
-          <blockquote className="mt-2 text-sm leading-7">
-            “{expert.feedback.find((f) => f.type === "vouch")?.text}”
-          </blockquote>
-        </div>
-        <Link
-          href={routeTo(`profile/${expert.id}`)}
-          className="flex items-center justify-between py-4 text-sm font-semibold text-brand motion-safe:[&_svg]:transition-transform motion-safe:hover:[&_svg]:translate-x-0.5"
-        >
-          See the work behind the reputation <Icon name="northeast" size={17} />
-        </Link>
-      </Card>
-      <div className="flex justify-between gap-2.5 pt-5 text-xs max-tablet:flex-col max-nav:flex-row max-phone:flex-col">
-        <span className="inline-flex items-center gap-1.5">
-          <i className="size-1 rounded-full bg-white" />
-          Evidence. Context. Accountability.
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          ILLUSTRATIVE PROFILE
-        </span>
+          ))}
+        </dl>
       </div>
-    </div>
+      <div className="mt-auto">
+        <p className="mb-1 flex items-center gap-1.5 font-display text-xs tracking-wide text-brand">
+          <Icon name="check" size={14} /> FROM A PAST HIRER
+        </p>
+        <blockquote className="line-clamp-2 min-h-10 text-sm leading-5">
+          {feedback
+            ? `“${feedback.text}”`
+            : "This record is ready for its first professional vouch."}
+        </blockquote>
+      </div>
+      <Link
+        href={routeTo(`profile/${expert.id}`)}
+        aria-label={`View professional record for ${expert.alias}`}
+        className="flex min-h-10 items-center justify-between border-t border-border pt-2 text-sm font-semibold text-brand"
+      >
+        View professional record <Icon name="northeast" size={16} />
+      </Link>
+    </Card>
+  );
+}
+
+export function ProfessionalRecordCarousel({
+  experts,
+}: {
+  experts: MarketplaceExpert[];
+}) {
+  const track = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(true);
+  const count = experts.length;
+  const current = Math.min(active, Math.max(0, count - 1));
+
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(preference.matches);
+    update();
+    preference.addEventListener("change", update);
+    return () => preference.removeEventListener("change", update);
+  }, []);
+
+  const show = useCallback(
+    (index: number) => {
+      const element = track.current;
+      if (!element || !count) return;
+      const next = (index + count) % count;
+      element.scrollTo({
+        left: next * element.clientWidth,
+        behavior: reducedMotion ? "instant" : "smooth",
+      });
+    },
+    [count, reducedMotion],
+  );
+
+  useEffect(() => {
+    if (count < 2 || !playing || hovered || focused || reducedMotion) return;
+    const timer = window.setInterval(() => {
+      const bounds = track.current?.getBoundingClientRect();
+      if (
+        !document.hidden &&
+        bounds &&
+        bounds.top < innerHeight &&
+        bounds.bottom > 0
+      ) {
+        show(current + 1);
+      }
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [count, current, playing, hovered, focused, reducedMotion, show]);
+
+  if (!count) return null;
+
+  return (
+    <section
+      aria-label="Professional records"
+      aria-roledescription="carousel"
+      className="min-w-0 w-full max-w-112 justify-self-center rounded-card bg-brand p-3 text-white motion-safe:animate-record-enter"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget))
+          setFocused(false);
+      }}
+    >
+      <div className="mb-3 flex items-center justify-between gap-2 font-display text-xs tracking-wide">
+        <span>PROOF OVER PROMISES</span>
+        {/* <span>
+          {current + 1} / {count}
+        </span> */}
+      </div>
+      <div
+        ref={track}
+        data-testid="professional-record"
+        className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-card text-foreground [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        aria-live={playing && !reducedMotion ? "off" : "polite"}
+        onScroll={(event) => {
+          const element = event.currentTarget;
+          setActive(Math.round(element.scrollLeft / element.clientWidth));
+        }}
+      >
+        {experts.map((expert, index) => (
+          <div
+            key={expert.id}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${count}: ${expert.alias}`}
+            aria-hidden={index !== current}
+            inert={index !== current}
+            className="w-full shrink-0 snap-start snap-always"
+          >
+            <ProfessionalRecord expert={expert} />
+          </div>
+        ))}
+      </div>
+      {count > 1 && (
+        <div className="mt-2 flex items-center gap-1">
+          {/* <button
+            type="button"
+            aria-label="Previous professional record"
+            className="grid size-10 shrink-0 place-items-center rounded-control hover:bg-white/15"
+            onClick={() => show(current - 1)}
+          >
+            <Icon name="arrow" size={18} className="rotate-180" />
+          </button> */}
+          <div
+            className="flex flex-1 flex-wrap justify-center align-middle gap-1"
+            aria-label="Choose a professional record"
+          >
+            {experts.map((expert, index) => (
+              <button
+                key={expert.id}
+                type="button"
+                aria-label={`Show ${expert.alias}'s record`}
+                aria-current={index === current ? "true" : undefined}
+                className="group grid h-10 w-5 place-items-center rounded-control"
+                onClick={() => show(index)}
+              >
+                <span className="size-1.5 rounded-full bg-white/40 group-aria-[current=true]:bg-white" />
+              </button>
+            ))}
+          </div>
+          {/* <button
+            type="button"
+            aria-label="Next professional record"
+            className="grid size-10 shrink-0 place-items-center rounded-control hover:bg-white/15"
+            onClick={() => show(current + 1)}
+          >
+            <Icon name="arrow" size={18} />
+          </button> */}
+          {/* {!reducedMotion && (
+            <button
+              type="button"
+              aria-label={
+                playing ? "Pause record rotation" : "Play record rotation"
+              }
+              className="grid size-10 shrink-0 place-items-center rounded-control hover:bg-white/15"
+              onClick={() => setPlaying((value) => !value)}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                {playing ? (
+                  <path d="M4 3h3v10H4zM9 3h3v10H9z" />
+                ) : (
+                  <path d="m4 2 9 6-9 6z" />
+                )}
+              </svg>
+            </button>
+          )} */}
+        </div>
+      )}
+      <p className="mt-1 text-center text-xs">
+        Illustrative profiles · real work, in context.
+      </p>
+    </section>
   );
 }

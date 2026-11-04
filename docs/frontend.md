@@ -53,7 +53,7 @@ Use a button for an action and a link for navigation. Both share the same visual
 
 ## Product modules
 
-- `home.tsx` introduces the marketplace; `professional-record.tsx` renders its featured record.
+- `home.tsx` introduces the marketplace; `professional-record.tsx` renders its compact expert record carousel with native swipe scrolling, automatic rotation and accessible controls.
 - `explore.tsx`, `expert-card.tsx`, `expert-profile.tsx` and `create-profile.tsx` handle discovery and professional profiles.
 - `hiring.tsx`, `opportunity-card.tsx`, `fee-breakdown.tsx` and `work.tsx` handle hiring and delivery.
 - `messages.tsx`, `reputation.tsx` and `settings.tsx` contain their respective workspace screens.
