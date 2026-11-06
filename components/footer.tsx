@@ -10,8 +10,8 @@ export function Footer() {
       data-testid="site-footer"
     >
       <Container>
-        <div className="grid grid-cols-2 items-start gap-8 pb-10 nav:grid-cols-3 nav:gap-6 laptop:gap-10">
-          <div className="col-span-full nav:col-span-1">
+        <div className="grid grid-cols-[repeat(2,max-content)] items-start justify-between gap-x-6 gap-y-8 pb-8 nav:grid-cols-[repeat(3,max-content)] nav:gap-x-16 nav:pb-10 laptop:gap-x-24">
+          <div className="col-span-full flex flex-col items-center gap-4 text-center nav:col-span-1 nav:items-start nav:text-left">
             <Link
               className="inline-flex [&_.logo-image]:size-16"
               href="/"
@@ -19,42 +19,42 @@ export function Footer() {
             >
               <BrandLogo variant="owl" />
             </Link>
-            <p className="mt-4.5 max-w-60 text-sm leading-7">
+            <p className="max-w-60 text-sm leading-7">
               Beyond CVs. Built on Reputation.
             </p>
           </div>
-          <div className="flex flex-col items-start gap-2.5">
-            <h3 className="mb-2 font-display text-xs tracking-widest uppercase">
+          <div className="flex min-w-0 flex-col items-start gap-1">
+            <h3 className="mb-3 font-display text-xs leading-5 tracking-widest uppercase">
               Discover
             </h3>
             <Link
-              className="py-1 text-sm hover:text-brand max-nav:min-h-10"
+              className="inline-flex min-h-11 items-center py-2 text-sm leading-5 hover:text-brand"
               href="#expertise"
             >
               Explore Expertise
             </Link>
             <Link
-              className="py-1 text-sm hover:text-brand max-nav:min-h-10"
+              className="inline-flex min-h-11 items-center py-2 text-sm leading-5 hover:text-brand"
               href="#early-access"
             >
               Hire An Expert
             </Link>
             <Link
-              className="py-1 text-sm hover:text-brand max-nav:min-h-10"
+              className="inline-flex min-h-11 items-center py-2 text-sm leading-5 hover:text-brand"
               href="#early-access"
             >
               List Your Expertise
             </Link>
           </div>
-          <div className="flex flex-col items-start gap-2.5">
-            <h3 className="mb-2 font-display text-xs tracking-widest uppercase">
+          <div className="flex min-w-0 flex-col items-start gap-1">
+            <h3 className="mb-3 font-display text-xs leading-5 tracking-widest uppercase">
               Stay connected
             </h3>
             <a
               href="https://x.com/the_rEcruitHQ"
               target="_blank"
               rel="noopener noreferrer"
-              className="py-1 text-sm hover:text-brand max-nav:inline-flex max-nav:min-h-10 max-nav:items-center"
+              className="inline-flex min-h-11 items-center py-2 text-sm leading-5 hover:text-brand"
             >
               X / Twitter ↗
             </a>
@@ -62,7 +62,7 @@ export function Footer() {
               href="https://www.linkedin.com/company/therecruithq"
               target="_blank"
               rel="noopener noreferrer"
-              className="py-1 text-sm hover:text-brand max-nav:inline-flex max-nav:min-h-10 max-nav:items-center"
+              className="inline-flex min-h-11 items-center py-2 text-sm leading-5 hover:text-brand"
             >
               LinkedIn ↗
             </a>
@@ -70,28 +70,28 @@ export function Footer() {
               href="https://t.me/rEcruitHQ"
               target="_blank"
               rel="noopener noreferrer"
-              className="py-1 text-sm hover:text-brand max-nav:inline-flex max-nav:min-h-10 max-nav:items-center"
+              className="inline-flex min-h-11 items-center py-2 text-sm leading-5 hover:text-brand"
             >
               Telegram ↗
             </a>
-             <a
+            <a
               href="https://github.com/recruithq-online/recruithq"
               target="_blank"
               rel="noopener noreferrer"
-              className="py-1 text-sm hover:text-brand max-nav:inline-flex max-nav:min-h-10 max-nav:items-center"
+              className="inline-flex min-h-11 items-center py-2 text-sm leading-5 hover:text-brand"
             >
               GitHub ↗
             </a>
             <a
               href="mailto:support@recruithq.online"
               aria-label="company mail"
-              className="py-1 text-sm hover:text-brand max-nav:inline-flex max-nav:min-h-10 max-nav:items-center"
+              className="inline-flex min-h-11 items-center py-2 text-sm leading-5 hover:text-brand"
             >
               Get in touch ↗
             </a>
           </div>
         </div>
-        <div className="flex items-center justify-between gap-5 border-t border-border py-5 text-xs max-nav:flex-col max-nav:items-start max-nav:gap-2.5">
+        <div className="border-t border-border py-5 text-center text-xs leading-relaxed">
           <span>© 2026 rEcruit. Reputation is earned.</span>
         </div>
       </Container>

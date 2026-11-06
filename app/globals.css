@@ -106,9 +106,6 @@
   [data-testid="wordmark"] {
     color: #000;
   }
-  [data-theme="dark"] [data-testid="wordmark"] {
-    color: #fff;
-  }
   .logo-image {
     display: block;
     width: auto;
@@ -141,27 +138,6 @@
     padding: 0 14px;
     color: #fff;
     background: #155eef;
-  }
-  .nav .theme-toggle {
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    padding: 9px;
-    color: var(--ink);
-    cursor: pointer;
-    border: 1px solid var(--line);
-  }
-  .theme-toggle:hover {
-    background: #edf3ff;
-  }
-  .theme-toggle svg {
-    width: 20px;
-    height: 20px;
-  }
-  .theme-sun {
-    display: none;
   }
   :where(button, a, input, select, textarea):focus-visible {
     outline: 2px solid #2864f0;
@@ -1084,118 +1060,6 @@
     }
     .footer-grid > div:first-child {
       grid-column: 1;
-    }
-  }
-}
-
-/* Light mode follows the approved HTML; dark mode keeps its layout and blue identity. */
-@layer components {
-  :root[data-theme="dark"] {
-    color-scheme: dark;
-    --bg: #0c1321;
-    --surface: #141f32;
-    --ink: #edf2ff;
-    --muted: #a7b4ca;
-    --line: #2c3b52;
-    --color-ink: #edf2ff;
-    --color-muted: #a7b4ca;
-    --color-line: #2c3b52;
-    --color-brand: #8eafff;
-  }
-  [data-theme="dark"] .theme-moon {
-    display: none;
-  }
-  [data-theme="dark"] .theme-sun {
-    display: block;
-  }
-  [data-theme="dark"] .nav {
-    background: #101a2ded;
-    border-color: var(--line);
-  }
-  [data-theme="dark"] .whitepaper-cta {
-    color: #a9c3ff;
-    border-color: #8eafff;
-    background: #141f32;
-  }
-  [data-theme="dark"] .whitepaper-cta:hover {
-    background: #243654;
-  }
-  [data-theme="dark"] .roadmap-card {
-    background: #141f32;
-  }
-  [data-theme="dark"] :is(.roadmap-achieved, .roadmap-current) .roadmap-card {
-    background: #1b2940;
-  }
-  [data-theme="dark"] :is(.roadmap-intro strong, .roadmap-tagline, .roadmap-current .roadmap-marker, .roadmap-current .roadmap-status) {
-    color: #a9c3ff;
-  }
-  [data-theme="dark"] .roadmap-card li::marker {
-    color: #a9c3ff;
-  }
-  [data-theme="dark"] :is(.hero, .footer) {
-    background: var(--bg);
-    border-color: var(--line);
-  }
-  [data-theme="dark"] :is(.coming-soon, .card, .person, .sheet, .waitlist-header, .pathway-card, .social a, .chip, .search, .search input, .form-grid input, .form-grid select, .form-grid textarea) {
-    background: #141f32;
-    color: var(--ink);
-    border-color: var(--line);
-  }
-  [data-theme="dark"] :is(.score, .profile-comments, .privacy-note, .proof, .proof .quote, .tag, .close) {
-    background: #1b2940;
-    border-color: var(--line);
-    color: var(--muted);
-  }
-  [data-theme="dark"] :is(.hero h1, .pathway-card b, .profile-comments b, .form-grid label, .nav .theme-toggle) {
-    color: var(--ink);
-  }
-  [data-theme="dark"] :is(.hero p, .coming-soon p, .waitlist-note, .waitlist-header p, .waitlist-header .close, .footer a, .footer-waitlist, .navlinks a, .secondary-action, .proof .quote span, .negative-comment, .pathway-card small, .hero-note, .waitlist-footnote, .copy, .sheet p, .sheet .review > div, #count) {
-    color: var(--muted);
-  }
-  [data-theme="dark"] .logo-image {
-    color: #fff;
-  }
-  [data-theme="dark"] :is(.avatar, .vouch, .chip.active, .coming-soon .pill) {
-    color: #a9c3ff;
-    background: #20365a;
-    border-color: #39588a;
-  }
-  [data-theme="dark"] .person-owl {
-    background: #e9f0ff;
-  }
-  [data-theme="dark"] :is(.refute, .proof .negative) {
-    background: #361e29;
-    border-color: #a65360;
-    color: #ffb4ba;
-  }
-  [data-theme="dark"] :is(.impact, .negative-comment span) {
-    color: #ffb4ba;
-  }
-  [data-theme="dark"] .verified {
-    color: #81dbac;
-  }
-  [data-theme="dark"] .success {
-    background: #153629;
-    border-color: #366c52;
-    color: #abebc5;
-  }
-  [data-theme="dark"] :is(.search button, .cta, .vouch-icon) {
-    background: #2864f0;
-    color: #fff;
-  }
-  [data-theme="dark"] :is(.search button, .cta):hover {
-    background: #1748c7;
-  }
-  [data-theme="dark"] :is(.theme-toggle, .navlinks a, .secondary-action, .pathway-card, .vouch, .chip):hover {
-    background: #243654;
-    color: #c3d5ff;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *, *::before, *::after {
-      transition: none !important;
     }
   }
 }

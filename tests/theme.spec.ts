@@ -1,92 +1,100 @@
 import { test, expect } from "@playwright/test";
 
+test.use({ colorScheme: "dark", reducedMotion: "reduce" });
+
 for (const width of [320, 390, 768, 1440]) {
-  test(`light and dark mode work at ${width}px`, async ({ page }) => {
-    await page.emulateMedia({ colorScheme: "light" });
+  test(`light-only page and aligned footer at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto("/");
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
-    await expect(page.locator("#team .person")).toHaveCount(1);
-    await expect(
-      page.getByRole("link", { name: "company mail" }),
-    ).toHaveAttribute("href", "mailto:support@recruithq.online");
-    for (const wordmark of await page.getByTestId("wordmark").all()) {
-      await expect(wordmark).toBeVisible();
-      await expect(wordmark).toHaveCSS(
-        "font-size",
-        width < 360 ? "25px" : "29px",
-      );
-      await expect(wordmark).toHaveCSS("letter-spacing", "-1.7px");
-      await expect(wordmark).toHaveCSS("font-weight", "700");
-      await expect(wordmark).toHaveCSS("color", "rgb(0, 0, 0)");
-      await expect(wordmark.locator("span")).toHaveCSS(
-        "color",
-        "rgb(52, 103, 255)",
-      );
-    }
-    await expect(
-      page.getByRole("img", { name: "gemhunter, owl in a suit and tie" }),
-    ).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
-    await page.screenshot({
-      path: `test-results/light-${width}.png`,
-      fullPage: true,
-    });
-    await page.getByRole("button", { name: "Switch to dark mode" }).click();
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
-    for (const wordmark of await page.getByTestId("wordmark").all()) {
-      await expect(wordmark).toHaveCSS("color", "rgb(255, 255, 255)");
-      await expect(wordmark.locator("span")).toHaveCSS(
-        "color",
-        "rgb(52, 103, 255)",
-      );
-    }
-    await expect(page.locator("body")).toHaveCSS(
-      "background-color",
-      "rgb(12, 19, 33)",
-    );
-    await expect(page.locator("[data-testid=home-hero] h1")).toHaveCSS(
-      "color",
-      "rgb(237, 242, 255)",
-    );
-    await page.screenshot({
-      path: `test-results/dark-${width}.png`,
-      fullPage: true,
-    });
-    await expect(
-      page
-        .locator(".nav")
-        .getByRole("button", { name: "Join rEcruit Waitlist" }),
-    ).toBeDisabled();
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-    ).toBe(true);
-    await page.getByRole("button", { name: "Switch to light mode" }).click();
+    await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
     await expect(page.locator("body")).toHaveCSS(
       "background-color",
       "rgb(255, 255, 255)",
     );
+    await expect(
+      page.getByRole("button", { name: /Switch to .* mode/ }),
+    ).toHaveCount(0);
+
+    const footer = page.getByTestId("site-footer");
+    await expect(footer.getByRole("img", { name: "rEcruit owl" })).toBeVisible();
+    await expect(
+      footer.getByRole("link", { name: "company mail" }),
+    ).toHaveAttribute("href", "mailto:support@recruithq.online");
+
+    const alignment = await footer.evaluate((element) => {
+      const bounds = (node: Element) => {
+        const { x, y, width, height } = node.getBoundingClientRect();
+        return { x, y, width, height };
+      };
+      return {
+        columns: [...element.querySelectorAll("h3")].map((heading) => ({
+          heading: bounds(heading),
+          box: bounds(heading.parentElement!),
+          links: [...heading.parentElement!.querySelectorAll("a")].map(bounds),
+        })),
+        brand: bounds(element.querySelector('[aria-label="rEcruit home"]')!),
+        brandColumn: bounds(
+          element.querySelector('[aria-label="rEcruit home"]')!.parentElement!,
+        ),
+        copyright: bounds(element.querySelector("span")!),
+        footer: bounds(element),
+        overflow: document.documentElement.scrollWidth > innerWidth,
+      };
+    });
+    const [discover, social] = alignment.columns;
+    expect(Math.abs(discover.heading.y - social.heading.y)).toBeLessThan(1);
+    for (let index = 0; index < discover.links.length; index++) {
+      expect(
+        Math.abs(discover.links[index].y - social.links[index].y),
+      ).toBeLessThan(1);
+    }
+    for (const column of alignment.columns) {
+      for (const link of column.links) {
+        expect(Math.abs(column.heading.x - link.x)).toBeLessThan(1);
+        expect(link.height).toBeGreaterThanOrEqual(44);
+      }
+    }
+    const footerCenter = alignment.footer.x + alignment.footer.width / 2;
+    const contentCenter =
+      (alignment.brandColumn.x + social.box.x + social.box.width) / 2;
+    expect(Math.abs(contentCenter - footerCenter)).toBeLessThan(1);
+    expect(
+      Math.abs(
+        alignment.copyright.x + alignment.copyright.width / 2 - footerCenter,
+      ),
+    ).toBeLessThan(1);
+    if (width >= 900) {
+      expect(Math.abs(alignment.brand.y - discover.heading.y)).toBeLessThan(1);
+    } else {
+      expect(
+        Math.abs(alignment.brand.x + alignment.brand.width / 2 - footerCenter),
+      ).toBeLessThan(1);
+      expect(alignment.brand.y + alignment.brand.height).toBeLessThan(
+        discover.heading.y,
+      );
+    }
+    expect(alignment.overflow).toBe(false);
     expect(errors).toEqual([]);
+    await footer.screenshot({ path: `test-results/footer-light-${width}.png` });
   });
 }
 
-test("follows the system theme until a choice is saved, then remembers it", async ({
-  page,
-}) => {
-  await page.emulateMedia({ colorScheme: "dark" });
+test("ignores saved dark mode and system preference changes", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("recruit-theme", "dark"));
   await page.goto("/");
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  const body = page.locator("body");
+  await expect(body).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(page.locator("html")).not.toHaveAttribute("data-theme", "dark");
   await page.emulateMedia({ colorScheme: "light" });
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await expect(body).toHaveCSS("background-color", "rgb(255, 255, 255)");
   await page.emulateMedia({ colorScheme: "dark" });
-  await page.getByRole("button", { name: "Switch to light mode" }).click();
   await page.reload();
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
-  await page.getByRole("button", { name: "Switch to dark mode" }).click();
-  await page.reload();
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(body).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
+  await expect(
+    page.getByRole("button", { name: /Switch to .* mode/ }),
+  ).toHaveCount(0);
 });

@@ -28,7 +28,6 @@ Open http://localhost:3000. For production, run `npm run build` then `npm start`
 - `components/brand-logo.tsx`: transparent vector owl retained for the join modal and legacy footer.
 - `app/owl.jpeg`: retained original owl reference image.
 - `components/owl-avatar.tsx`: founder’s owl in a suit and blue tie, using the approved HTML’s vector artwork.
-- `components/theme-toggle.tsx`: light/dark switch with system preference detection and a saved browser preference.
 - `app/api/waitlist/route.ts`: server-side Resend email delivery for waitlist submissions.
 - `lib/waitlist.ts`: expertise options shared by the form and server validation.
 - `lib/waitlist-email.ts`: responsive branded HTML email and its plain-text fallback.
@@ -37,7 +36,7 @@ Open http://localhost:3000. For production, run `npm run build` then `npm start`
 
 The homepage brings v3’s layout, sample expertise cards and compact record carousel into the public site. The original “Hire people for what they can actually do.” headline, four-phase Product Roadmap and gemhunter team content remain readable. Search, records, expertise listings, the reputation explanation and the closing expertise invitation remain blurred coming-soon previews. Waitlist buttons remain disabled. Tailwind Preflight is omitted to preserve the retained form defaults; the v3 baseline is scoped to the homepage.
 
-The theme defaults to the visitor's system preference. The navigation toggle saves the selection in local storage, and a small initialization script applies it before rendering to avoid a theme flash. Dark mode adapts backgrounds, panels, text, borders, and forms. Navigation and footer logos have no background in either theme. The navigation text changes from dark to light while its capital E stays blue; the footer uses the transparent blue owl logo. The join modal uses the transparent vector owl with no background, border, or shadow. The favicon uses the same transparent vector owl (`app/icon.svg`).
+The site always uses light mode, regardless of system preferences or previously saved theme choices. Navigation and footer logos have transparent backgrounds. The navigation uses a text wordmark with a blue E; the footer uses the transparent blue owl logo. The footer uses content-sized columns with balanced outer spacing, matching link rows and heading alignment. Mobile shows two link columns below the centered brand; desktop shows three columns. The copyright is centered below them. The join modal and favicon (`app/icon.svg`) use the same transparent vector owl.
 
 ## Preserved behavior and assets
 
@@ -100,6 +99,6 @@ npm run test:e2e
 
 If this environment prevents Turbopack from binding its worker port, use `npm run build -- --webpack`.
 
-Browser tests start the production server and require a completed build and Google Chrome installed. Homepage tests cover the retained headline, roadmap and founder, all five blur gates and the v3 footer, keyboard exclusion, disabled waitlist buttons, public links, local font loading, record rotation and reduced motion at widths from 320px to 1440px. Theme tests cover light/dark rendering, system preferences and saved choices. The existing API and email tests mock Resend and do not send live emails.
+Browser tests start the production server and require a completed build and Google Chrome installed. Homepage tests cover the retained headline, roadmap and founder, all five blur gates and the v3 footer, keyboard exclusion, disabled waitlist buttons, public links, local font loading, record rotation and reduced motion at widths from 320px to 1440px. Theme tests verify that the site stays light under dark system preferences and previously saved choices, and that footer link rows align on mobile and desktop. The existing API and email tests mock Resend and do not send live emails.
 
 Tests use their own server on port 3107. Screenshots and failure traces are written to the ignored `test-results/` directory. Type checking during builds uses the same compiler API setting as v3 because this environment does not capture TypeScript CLI subprocess output reliably.
