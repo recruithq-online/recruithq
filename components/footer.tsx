@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import { Icon, Wordmark } from "./icons";
+import { BrandLogo } from "./brand-logo";
 
 export function Footer() {
   return (
@@ -12,8 +12,12 @@ export function Footer() {
       <Container>
         <div className="grid grid-cols-2 items-start gap-8 pb-10 nav:grid-cols-3 nav:gap-6 laptop:gap-10">
           <div className="col-span-full nav:col-span-1">
-            <Link className="inline-flex" href="/" aria-label="rEcruit home">
-              <Wordmark />
+            <Link
+              className="inline-flex [&_.logo-image]:size-16"
+              href="/"
+              aria-label="rEcruit home"
+            >
+              <BrandLogo variant="owl" />
             </Link>
             <p className="mt-4.5 max-w-60 text-sm leading-7">
               Beyond CVs. Built on Reputation.
