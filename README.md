@@ -1,7 +1,3 @@
-# rEcruit
-
-Conversion of `recruithq-site-4-6.html` to Next.js App Router, TypeScript, React, and Tailwind CSS 4.
-
 ## Run
 
 Requires Node.js 20.9 or newer.
