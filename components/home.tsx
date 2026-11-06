@@ -28,7 +28,7 @@ export function HomeExperience() {
         className="relative pt-16 pb-14.5 max-nav:pt-9.5 max-nav:pb-9 wide:py-21"
         data-testid="home-hero"
       >
-        <Container className="grid grid-cols-1 items-center gap-9 nav:grid-cols-[1.05fr_1fr] nav:gap-7 tablet:gap-10 laptop:gap-17.5">
+        <Container className="grid grid-cols-1 items-center gap-9 nav:grid-cols-[1.05fr_1fr] nav:gap-7  laptop:gap-17.5">
           <div className="py-1">
             <h1 className="my-6 text-[clamp(44px,5.1vw,68px)] leading-[1.03] font-bold tracking-[-.06em] max-phone:text-[40px]">
               Hire people for what they can actually do.
@@ -62,7 +62,7 @@ export function HomeExperience() {
                   aria-label="Find experts"
                   className="px-3 text-sm whitespace-nowrap"
                 >
-                  <span className="max-tablet:hidden max-nav:inline max-phone:hidden">
+                  <span className="max-nav:inline max-phone:hidden">
                     Find experts
                   </span>
                   <Icon name="arrow" size={18} />
