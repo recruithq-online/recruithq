@@ -1,7 +1,3 @@
-# rEcruit
-
-The public rEcruit landing page, built with Next.js App Router, TypeScript, React, and Tailwind CSS 4. Its homepage uses the v3 layout and compact rotating professional records while preserving main’s headline, roadmap, founder profile, whitepaper and coming-soon access state.
-
 ## Run
 
 Requires Node.js 20.9 or newer.
