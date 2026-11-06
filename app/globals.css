@@ -2,6 +2,7 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
+@import "./motion.css";
 
 @theme {
   --color-brand: #2864f0;
@@ -11,12 +12,26 @@
   --color-line: #dfe6f1;
   --color-paper: #fff;
   --color-white: #fff;
-  --font-sans: "DM Sans", system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
+  --radius-card: 0.75rem;
+  --radius-control: 0.375rem;
+  --breakpoint-phone: 22.5rem;
+  --breakpoint-nav: 56.25rem;
+  --breakpoint-tablet: 56.25rem;
+  --breakpoint-laptop: 68.75rem;
+  --breakpoint-wide: 93.75rem;
   --text-xs--line-height: normal;
   --text-sm--line-height: normal;
   --text-base--line-height: normal;
   --text-xl--line-height: normal;
+}
+
+@theme inline {
+  --font-sans: var(--font-satoshi), sans-serif;
+  --font-display: var(--font-satoshi), sans-serif;
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-foreground: var(--ink);
+  --color-border: var(--line);
 }
 
 @layer base {
@@ -28,6 +43,7 @@
     --line: #dfe6f1;
     color-scheme: light;
     --bg: #fff;
+    --surface: #fff;
     --green: #08783b;
   }
   * {
@@ -56,6 +72,19 @@
   textarea {
     font: inherit;
   }
+  /* Scope v3's baseline to the homepage; preserve the legacy form metrics. */
+  .v3-home :where(h1, h2, h3, p, blockquote, dl, dd) {
+    margin: 0;
+  }
+  .v3-home :where(a) {
+    color: inherit;
+    text-decoration: inherit;
+  }
+  .v3-home :where(button) {
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
 }
 
 @layer components {
@@ -74,14 +103,11 @@
   .brand {
     @apply flex items-center gap-2.5 no-underline text-ink;
   }
-  .brand-wordmark {
-    @apply font-sans font-bold text-[40px] leading-none tracking-[1px] whitespace-nowrap;
+  [data-testid="wordmark"] {
+    color: #000;
   }
-  .brand-initial {
-    color: #0828cb;
-    /* Match the capital E's visible height to the surrounding lowercase text. */
-    font-size: 0.78em;
-    vertical-align: baseline;
+  [data-theme="dark"] [data-testid="wordmark"] {
+    color: #fff;
   }
   .logo-image {
     display: block;
@@ -985,11 +1011,11 @@
       border-radius: 4px;
       background: var(--blue);
     }
-    .nav .brand-wordmark {
-      font-size: 25px;
-    }
     .nav {
       padding-inline: 4%;
+    }
+    .navlinks a {
+      padding-inline: 8px;
     }
     .nav .waitlist-cta {
       padding-inline: 10px;
@@ -1067,6 +1093,7 @@
   :root[data-theme="dark"] {
     color-scheme: dark;
     --bg: #0c1321;
+    --surface: #141f32;
     --ink: #edf2ff;
     --muted: #a7b4ca;
     --line: #2c3b52;

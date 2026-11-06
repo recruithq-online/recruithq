@@ -1,17 +1,18 @@
 import { ExperienceProvider } from "@/components/experience-provider";
-import { Navbar, Footer, Team } from "@/components/site-sections";
-import { Hero } from "@/components/hero";
-import { ExpertDirectory } from "@/components/expert-directory";
+import { Navbar, Team } from "@/components/site-sections";
+import { Footer } from "@/components/footer";
+import { HomeExperience } from "@/components/home";
 import { Roadmap } from "@/components/roadmap";
 
 export default function Home() {
   return (
     <ExperienceProvider>
       <Navbar />
-      <Hero />
-      <ExpertDirectory />
-      <Roadmap />
-      <Team />
+      <main id="main-content" className="v3-home">
+        <HomeExperience />
+        <Roadmap />
+        <Team />
+      </main>
       <Footer />
     </ExperienceProvider>
   );

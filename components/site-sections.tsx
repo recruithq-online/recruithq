@@ -2,7 +2,7 @@ import { Brand } from "./brand";
 import { WaitlistTrigger } from "./waitlist-trigger";
 import { team } from "@/lib/team";
 import { TeamCarousel } from "./team-carousel";
-import { ThemeToggle } from "./theme-toggle";
+// import { ThemeToggle } from "./theme-toggle";
 import { OwlAvatar } from "./owl-avatar";
 
 export function Navbar() {
@@ -19,7 +19,7 @@ export function Navbar() {
         <a href="#contact">Contact</a>
       </div>
       <div className="nav-actions flex items-center gap-2">
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <WaitlistTrigger>Join rEcruit Waitlist</WaitlistTrigger>
       </div>
     </nav>

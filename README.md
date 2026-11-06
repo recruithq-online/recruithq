@@ -1,6 +1,6 @@
 # rEcruit
 
-Conversion of `recruithq-site-4-6.html` to Next.js App Router, TypeScript, React, and Tailwind CSS 4.
+The public rEcruit landing page, built with Next.js App Router, TypeScript, React, and Tailwind CSS 4. Its homepage uses the v3 layout and compact rotating professional records while preserving main’s headline, roadmap, founder profile, whitepaper and coming-soon access state.
 
 ## Run
 
@@ -16,14 +16,20 @@ Open http://localhost:3000. For production, run `npm run build` then `npm start`
 ## Structure
 
 - `app/`: route, root layout, metadata, design tokens, and global styles.
-- `components/`: navigation, hero, directory, cards, profiles, forms, dialog, and footer.
+- `components/home.tsx`: v3 homepage layout, retained public headline and early-access/whitepaper section.
+- `components/professional-record.tsx`: compact sample records with automatic rotation.
+- `components/preview-expert-card.tsx`: sample expertise cards.
+- `components/ui/`: shared v3 button, card and container styling.
+- `lib/record-preview.ts`: adapts the existing sample experts for the v3 preview.
+- `components/footer.tsx`: v3 footer layout, with marketplace links pointing to the coming-soon section or existing public sections.
+- `components/`: retained public navigation, roadmap, team, forms and dialogs.
 - `components/experience-provider.tsx`: shared search, demo profile state, dialog, and toast state. Static sections remain Server Components.
 - `lib/experts.ts`: typed original expert profiles and filter options.
 - `lib/team.ts`: the founder profile and complete bio from the approved HTML.
 - `components/team-carousel.tsx`: reusable team container; controls are hidden for the single founder in this design.
 - `app/logo.jpeg`: retained official raster logo reference.
 - `components/brand.tsx`: the navigation uses normal text for rEcruit, with a blue E.
-- `components/brand-logo.tsx`: transparent vector owl used in the footer and join modal.
+- `components/brand-logo.tsx`: transparent vector owl retained for the join modal and legacy footer.
 - `app/owl.jpeg`: retained original owl reference image.
 - `components/owl-avatar.tsx`: founder’s owl in a suit and blue tie, using the approved HTML’s vector artwork.
 - `components/theme-toggle.tsx`: light/dark switch with system preference detection and a saved browser preference.
@@ -33,15 +39,15 @@ Open http://localhost:3000. For production, run `npm run build` then `npm start`
 - `.env.example`: required server-side email settings.
 - `tests/site.spec.ts`: source layout comparisons and browser interaction checks.
 
-Tailwind utilities cover layouts, spacing, typography, and reusable component styles through `@apply`. Light mode matches the latest HTML's plain white backgrounds, blue accents, DM Sans body text, and Space Grotesk headings. It preserves the source section order, typography, spacing, breakpoints, transitions, and teaser blur. The explicit client overrides are “Join rEcruit Waitlist” on waitlist buttons and “Select an expertise” in the form. Tailwind Preflight is omitted to preserve native form defaults.
+The homepage brings v3’s layout, sample expertise cards and compact record carousel into the public site. The original “Hire people for what they can actually do.” headline, four-phase Product Roadmap and gemhunter team content remain readable. Search, records, expertise listings, the reputation explanation and the closing expertise invitation remain blurred coming-soon previews. Waitlist buttons remain disabled. Tailwind Preflight is omitted to preserve the retained form defaults; the v3 baseline is scoped to the homepage.
 
-The theme defaults to the visitor's system preference. The navigation toggle saves the selection in local storage, and a small initialization script applies it before rendering to avoid a theme flash. Dark mode adapts backgrounds, panels, text, borders, and forms. Navigation and footer logos have no background in either theme. The navigation text changes from dark to light while its capital E stays blue; the footer owl stays blue. The join modal uses the transparent vector owl with no background, border, or shadow. The favicon uses the same transparent vector owl (`app/icon.svg`).
+The theme defaults to the visitor's system preference. The navigation toggle saves the selection in local storage, and a small initialization script applies it before rendering to avoid a theme flash. Dark mode adapts backgrounds, panels, text, borders, and forms. Navigation and footer logos have no background in either theme. The navigation text changes from dark to light while its capital E stays blue; the footer uses v3’s text wordmark with a blue E. The join modal uses the transparent vector owl with no background, border, or shadow. The favicon uses the same transparent vector owl (`app/icon.svg`).
 
 ## Preserved behavior and assets
 
-The marketplace preview intentionally remains blurred with pointer interactions disabled, as in the supplied HTML. Its search, skill filters, expert dialogs, vouches, refute acknowledgements, hire acknowledgement, and expertise preview still have React implementations. Those demo actions remain browser-local and do not create real hires, publish profiles, or persist reputation changes.
+The marketplace previews intentionally remain blurred and faded. Their wrappers use `inert`, `aria-hidden` and disabled pointer interaction, so keyboard navigation cannot enter the previews. The six compact professional records rotate every five seconds while visible, and respect reduced motion. This public homepage does not enable v3’s account, hiring, payment or profile routes. The retained demo components and email handler are separate from the public preview.
 
-Fonts use the exact Google Fonts request from the HTML. Loading them requires an internet connection; builds do not fetch fonts. The navigation displays rEcruit as text with a blue E, and the transparent owl appears in the footer. The founder card uses the suited owl from the approved HTML. Contact links match the supplied HTML, including X, Telegram, and email.
+Satoshi is used for body text and headings. Its regular and italic variable fonts and license are bundled in `app/fonts/` and loaded with `next/font/local`; neither rendering nor builds request an external font provider. The navigation displays rEcruit as text with a blue E, and the v3 footer uses the same text wordmark. The founder card uses the suited owl from the approved HTML. Contact links match the supplied HTML, including X, Telegram, and email.
 
 Dialogs support initial focus, focus trapping, Escape, backdrop dismissal, scroll locking, and returning focus to the trigger.
 
@@ -85,7 +91,7 @@ The `.product-faded` rule in `app/globals.css` uses:
 }
 ```
 
-`components/search-pathways.tsx` applies it to the search/pathway area. `components/expert-directory.tsx` applies it to the expert directory. Remove `product-faded` from both elements to show those areas clearly and enable clicks. Changing only `filter` leaves the fade and disabled pointer interactions in place. The navbar's separate `backdrop-filter: blur(16px)` blurs the background behind the navigation bar.
+`components/home.tsx` applies it separately to the search, record carousel, expertise section, reputation explanation and closing expertise invitation. Those wrappers also use `inert` and `aria-hidden`. The headline, roadmap, team, whitepaper and public contact links remain readable. Changing only `filter` does not enable interactions. The navbar’s separate `backdrop-filter: blur(16px)` blurs the background behind the navigation bar.
 
 ## Checks
 
@@ -98,6 +104,6 @@ npm run test:e2e
 
 If this environment prevents Turbopack from binding its worker port, use `npm run build -- --webpack`.
 
-Browser tests start the production server and require a completed build and Google Chrome installed. They compare the original and converted page at 1440px, 768px, and 390px, checking section geometry, typography, exact copy (with the client overrides), overflow, cards, and dialogs. Theme tests cover light/dark rendering at 320px, 390px, 768px, and 1440px, system preferences, and persistence after reload. They also exercise waitlist validation/retry/success, focus trapping, search, filters, vouch updates, refute notices, hire acknowledgements, and safe profile previews. Server tests verify the exact Resend request, fixed admin recipient, validation, honeypot, missing configuration, and provider/network failures. The demo tests temporarily remove the pointer gate only in the browser test, leaving the shipped coming-soon design intact.
+Browser tests start the production server and require a completed build and Google Chrome installed. Homepage tests cover the retained headline, roadmap and founder, all five blur gates and the v3 footer, keyboard exclusion, disabled waitlist buttons, public links, local font loading, record rotation and reduced motion at widths from 320px to 1440px. Theme tests cover light/dark rendering, system preferences and saved choices. The existing API and email tests mock Resend and do not send live emails.
 
-Source comparison tests require `recruithq-site-4-6.html` at the project root; they are explicitly skipped if that reference is absent. Responsive rendering, form, and email-handler tests still run. Tests use their own server on port 3107 to avoid reusing a running development server. Screenshots and failure traces are written to the ignored `test-results/` directory.
+Tests use their own server on port 3107. Screenshots and failure traces are written to the ignored `test-results/` directory. Type checking during builds uses the same compiler API setting as v3 because this environment does not capture TypeScript CLI subprocess output reliably.
