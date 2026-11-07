@@ -1,13 +1,13 @@
 # Frontend development
 
-The UI uses Tailwind CSS 4. Use only DM Sans and Space Grotesk throughout the website. Both variable fonts are bundled in `app/fonts/` and loaded with `next/font/local`; their OFL licenses are kept beside them. DM Sans (`font-sans`) is for body text and controls. Space Grotesk (`font-display`) is for headings, display text and short metadata. Headings use Space Grotesk by default. Do not introduce serif, monospace or other font families. Page layout and responsive styles live beside the JSX. Shared UI defaults live in `components/ui`; product-specific screens live in `components/marketplace`.
+The UI uses Tailwind CSS 4. Use Satoshi throughout the website for body text, controls, headings and metadata. The normal and italic variable fonts and Fontshare license are bundled in `app/fonts/` and loaded with `next/font/local`. Both `font-sans` and `font-display` use Satoshi. Do not introduce additional font families. Page layout and responsive styles live beside the JSX. Shared UI defaults live in `components/ui`; product-specific screens live in `components/marketplace`.
 
 ## Where to change a design choice
 
 | Change                                   | File                                 |
 | ---------------------------------------- | ------------------------------------ |
 | Every card's corner radius               | `app/globals.css`: `--radius-card`   |
-| Card border colour in each theme         | `app/globals.css`: `--card-border`   |
+| Card border colour                       | `app/globals.css`: `--card-border`   |
 | Card padding, border and hover behaviour | `components/ui/card.tsx`             |
 | Button variants and sizes                | `components/ui/button.tsx`           |
 | Inputs, selects and textareas            | `components/ui/input.tsx`            |
@@ -15,7 +15,7 @@ The UI uses Tailwind CSS 4. Use only DM Sans and Space Grotesk throughout the we
 | Animation timing and keyframes           | `app/motion.css`                     |
 | A particular page's layout               | Its file in `components/marketplace` |
 
-Only white, black and blue are used. Transparent versions of these colours provide borders and lighting. Dark mode uses the same tokens and the `dark:` variant.
+Only white, black and blue are used. Transparent versions of these colours provide borders and lighting. The site uses light mode only; system preferences and old saved theme choices do not change it.
 
 The interface has no box or text shadows. Body text and form controls use `text-base` (16px), secondary text uses `text-sm` (14px), and short metadata uses `text-xs` (12px). Avoid smaller arbitrary sizes or mobile overrides that shrink text. Navigation switches to its menu below 900px.
 
@@ -53,7 +53,7 @@ Use a button for an action and a link for navigation. Both share the same visual
 
 ## Product modules
 
-- `home.tsx` introduces the marketplace; `professional-record.tsx` renders its compact expert record carousel with native swipe scrolling, automatic rotation and accessible controls.
+- `welcome.tsx` provides the unblurred Explore, Hire and List entry cards; `home.tsx` introduces the marketplace; `professional-record.tsx` renders its compact expert record carousel with native swipe scrolling, automatic rotation and accessible controls.
 - `explore.tsx`, `expert-card.tsx`, `expert-profile.tsx` and `create-profile.tsx` handle discovery and professional profiles.
 - `hiring.tsx`, `opportunity-card.tsx`, `fee-breakdown.tsx` and `work.tsx` handle hiring and delivery.
 - `messages.tsx`, `reputation.tsx` and `settings.tsx` contain their respective workspace screens.

@@ -15,7 +15,7 @@ test("product entry explains reputation and keeps legacy signup sections absent"
     await page
       .locator("html")
       .evaluate((el) =>
-        getComputedStyle(el).getPropertyValue("--font-dm-sans"),
+        getComputedStyle(el).getPropertyValue("--font-satoshi"),
       ),
   ).not.toBe("");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(

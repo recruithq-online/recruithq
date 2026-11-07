@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button, buttonStyles } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/cn";
 import { routeTo } from "@/lib/marketplace";
 import { Icon, Wordmark } from "./icons";
@@ -13,8 +12,7 @@ import { useMarketplace } from "./provider";
 const marketplaceLinks = [
   ["explore", "Explore"],
   ["hire", "Hire"],
-  ["list", "List expertise"],
-  ["about", "Our approach"],
+  ["list", "List Expertise"],
 ];
 
 const workspaceLinks = [
@@ -104,7 +102,7 @@ export function MarketplaceNavbar() {
             <div className="mt-3 hidden grid-cols-2 gap-x-5 gap-y-1 pt-3 max-nav:grid">
               {!session && (
                 <Button onClick={openAccount} className="col-span-full mb-2.5">
-                  Create an account <Icon name="northeast" size={16} />
+                  Create Account <Icon name="northeast" size={16} />
                 </Button>
               )}
               {workspaceLinks.map(([view, title]) => (
@@ -120,7 +118,6 @@ export function MarketplaceNavbar() {
             </div>
           </div>
           <div className="ml-auto flex items-center gap-1.5">
-            <ThemeToggle />
             {session ? (
               <Link
                 href={routeTo("work")}
@@ -138,7 +135,7 @@ export function MarketplaceNavbar() {
                 onClick={() => setDialog({ type: "auth" })}
                 className="max-nav:px-2 max-nav:text-sm"
               >
-                Sign in
+                Sign In
               </Button>
             )}
             {session ? (
@@ -147,8 +144,8 @@ export function MarketplaceNavbar() {
                 className={buttonStyles({ className: "max-tablet:hidden" })}
               >
                 {session.role === "hirer"
-                  ? "Post opportunity"
-                  : "List expertise"}
+                  ? "Post Opportunity"
+                  : "List Expertise"}
                 <Icon name="northeast" size={16} />
               </Link>
             ) : (

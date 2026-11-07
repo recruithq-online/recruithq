@@ -33,7 +33,7 @@ const titles: Record<string, string> = {
   hire: "Hire for the work you need",
   work: "Your workspace",
   messages: "Messages",
-  reputation: "Reputation review",
+  reputation: "Reputation Review",
   settings: "Account settings",
   about: "Our approach",
   profile: "Professional record",

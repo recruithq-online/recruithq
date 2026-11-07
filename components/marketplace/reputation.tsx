@@ -10,7 +10,7 @@ import { useMarketplace } from "./provider";
 export function Reputation() {
   return (
     <Page>
-      <PageHeading eyebrow="Evidence before impact" title="Reputation review">
+      <PageHeading eyebrow="Evidence before impact" title="Reputation Review">
         Every new profile starts at 50/100. Pending evidence does not affect
         scores. Only approved Vouches or Refutes change reputation.
       </PageHeading>

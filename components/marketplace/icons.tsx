@@ -14,6 +14,11 @@ const paths = {
   check: "m5 12 4 4L19 6",
   flag: "M5 21V3m0 1c5-4 9 4 14 0v10c-5 4-9-4-14 0",
   plus: "M12 5v14M5 12h14",
+  compass:
+    "M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM16 8l-2.5 5.5L8 16l2.5-5.5L16 8Z",
+  "add-square":
+    "M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2ZM12 7v10M7 12h10",
+  "chevron-right": "m9 5 7 7-7 7",
   close: "m6 6 12 12M18 6 6 18",
   menu: "M4 6h16M4 12h16M4 18h16",
   clock: "M12 8v4l3 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",

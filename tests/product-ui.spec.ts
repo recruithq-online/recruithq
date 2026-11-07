@@ -156,10 +156,10 @@ test("mobile filters and account creation remain reachable", async ({
   await expect(page.locator("[data-testid=expert-card]")).toHaveCount(6);
   await page.getByRole("button", { name: "Open navigation menu" }).click();
   await page
-    .getByRole("button", { name: "Create an account", exact: true })
+    .getByRole("button", { name: "Create Account", exact: true })
     .click();
   await expect(page.getByRole("dialog").getByRole("heading")).toHaveText(
-    "Create an account",
+    "Create Account",
   );
 });
 
@@ -197,13 +197,14 @@ test("cinematic motion respects reduced motion and navigation stays shadow-free 
     "animation-name",
     "none",
   );
-  await page.locator("[data-testid=trust-section]").scrollIntoViewIfNeeded();
+  await page.locator("#expertise").scrollIntoViewIfNeeded();
   expect(
     await page
-      .locator("[data-testid=trust-content]")
+      .locator("#expertise [data-reveal]")
+      .first()
       .evaluate((el) => el.getAnimations({ subtree: true }).length),
   ).toBe(0);
   await expect(
-    page.getByRole("link", { name: "Understand the rEcruit approach" }),
+    page.getByRole("link", { name: "Explore all expertise" }),
   ).toBeVisible();
 });

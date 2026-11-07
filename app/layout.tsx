@@ -6,19 +6,21 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const dmSans = localFont({
-  src: "./fonts/dm-sans.ttf",
-  variable: "--font-dm-sans",
+const satoshi = localFont({
+  src: [
+    {
+      path: "./fonts/Satoshi-Variable.woff2",
+      weight: "300 900",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Satoshi-VariableItalic.woff2",
+      weight: "300 900",
+      style: "italic",
+    },
+  ],
+  variable: "--font-satoshi",
   display: "swap",
-  weight: "100 1000",
-  adjustFontFallback: false,
-});
-
-const spaceGrotesk = localFont({
-  src: "./fonts/space-grotesk.ttf",
-  variable: "--font-space-grotesk",
-  display: "swap",
-  weight: "300 700",
   adjustFontFallback: false,
 });
 
@@ -32,23 +34,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${dmSans.variable} ${spaceGrotesk.variable}`}
-      suppressHydrationWarning
-    >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(() => {
-          let theme;
-          try { theme = localStorage.getItem('recruit-theme'); } catch {}
-          document.documentElement.dataset.theme = theme === 'light' || theme === 'dark'
-            ? theme : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        })();`,
-          }}
-        />
-      </head>
+    <html lang="en" className={satoshi.variable}>
       <body>
         <MarketplaceProvider>
           <MarketplaceNavbar />

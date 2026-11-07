@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "./motion.css";
 
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-
 /* Product-wide choices. Change --radius-card here to update every Card. */
 @theme {
   --color-brand: #3467ff;
@@ -17,8 +15,8 @@
   --breakpoint-wide: 93.75rem;
 }
 @theme inline {
-  --font-sans: var(--font-dm-sans), var(--font-space-grotesk), sans-serif;
-  --font-display: var(--font-space-grotesk), var(--font-dm-sans), sans-serif;
+  --font-sans: var(--font-satoshi), sans-serif;
+  --font-display: var(--font-satoshi), sans-serif;
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-foreground: var(--foreground);
@@ -31,13 +29,7 @@
   --foreground: #000000;
   --card-border: #3467ff24;
 }
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --background: #000000;
-  --surface: #000000;
-  --foreground: #ffffff;
-  --card-border: #3467ff52;
-}
+
 @layer base {
   html {
     scroll-behavior: smooth;

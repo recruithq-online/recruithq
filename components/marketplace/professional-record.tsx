@@ -121,7 +121,7 @@ export function ProfessionalRecordCarousel({
     <section
       aria-label="Professional records"
       aria-roledescription="carousel"
-      className="min-w-0 w-full max-w-112 justify-self-center rounded-card bg-brand p-3 text-white motion-safe:animate-record-enter"
+      className="min-w-0 w-full max-w-90 justify-self-center rounded-card bg-brand p-3 text-white motion-safe:animate-record-enter"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setFocused(true)}
@@ -162,14 +162,6 @@ export function ProfessionalRecordCarousel({
       </div>
       {count > 1 && (
         <div className="mt-2 flex items-center gap-1">
-          {/* <button
-            type="button"
-            aria-label="Previous professional record"
-            className="grid size-10 shrink-0 place-items-center rounded-control hover:bg-white/15"
-            onClick={() => show(current - 1)}
-          >
-            <Icon name="arrow" size={18} className="rotate-180" />
-          </button> */}
           <div
             className="flex flex-1 flex-wrap justify-center align-middle gap-1"
             aria-label="Choose a professional record"
@@ -221,9 +213,6 @@ export function ProfessionalRecordCarousel({
           )} */}
         </div>
       )}
-      <p className="mt-1 text-center text-xs">
-        Illustrative profiles · real work, in context.
-      </p>
     </section>
   );
 }

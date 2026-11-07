@@ -112,7 +112,7 @@ export function Hire() {
     <Page>
       <PageHeading
         eyebrow="Two ways to work"
-        title="Hire for the work you need"
+        title="Hire For The Work You Need"
       >
         Choose the right route. Company hiring happens off-platform after
         rEcruit connects both sides; personal hiring lets you explore task
@@ -199,7 +199,7 @@ export function Hire() {
         <p className="mb-6 max-w-2xl text-base leading-7">
           Preview the platform fee before posting. Live payment collection is
           not connected. Use the hirer test account to post; switch to the
-          expect account to apply.
+          expert account to apply.
         </p>
         <form onSubmit={submit}>
           <div className="grid grid-cols-1 gap-x-4.5 gap-y-5.5 nav:grid-cols-2">

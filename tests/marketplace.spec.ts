@@ -17,10 +17,22 @@ async function go(page: Page, name: string) {
     Settings: "settings",
     About: "about",
   };
-  await page
-    .locator(`a[href="/marketplace/${views[name]}"]:visible`)
-    .first()
-    .click();
+  const destination = `/marketplace/${views[name]}`;
+  if (!(await page.locator(`a[href="${destination}"]:visible`).count())) {
+    if (name === "About") {
+      await page.goto(destination);
+      return;
+    }
+    const menu = page.getByRole("button", { name: "Open navigation menu" });
+    if (await menu.isVisible()) await menu.click();
+    else
+      await page
+        .locator("header")
+        .getByRole("link", { name: "Dashboard", exact: true })
+        .click();
+  }
+  await page.locator(`a[href="${destination}"]:visible`).first().click();
+  await expect(page).toHaveURL(new RegExp(`${destination}$`));
 }
 async function signIn(page: Page, role: "hirer" | "expect") {
   await go(page, "Dashboard");
@@ -70,7 +82,7 @@ for (const width of [320, 390, 768, 1440]) {
       0,
     );
     await expect(
-      page.locator("[data-testid=site-footer] [data-testid=wordmark]"),
+      page.getByTestId("site-footer").getByRole("img", { name: "rEcruit owl" }),
     ).toBeVisible();
     await page.screenshot({
       path: `test-results/mvp-home-${width}.png`,

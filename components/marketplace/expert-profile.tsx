@@ -29,16 +29,6 @@ export function Profile({ id }: { id: number }) {
   const e: MarketplaceExpert = expert;
   return (
     <Page>
-      <Link
-        href={routeTo("explore")}
-        className={buttonStyles({
-          variant: "ghost",
-          size: "small",
-          className: "mb-4",
-        })}
-      >
-        ← Back to explore
-      </Link>
       <div className="grid grid-cols-1 items-start gap-7 laptop:grid-cols-[minmax(0,1.6fr)_minmax(290px,.8fr)]">
         <Card>
           <div

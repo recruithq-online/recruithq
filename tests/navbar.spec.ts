@@ -9,14 +9,14 @@ for (const width of [320, 390, 900, 1440]) {
     if (width < 900) {
       await page.getByRole("button", { name: "Open navigation menu" }).click();
       await page
-        .getByRole("button", { name: "Create an account", exact: true })
+        .getByRole("button", { name: "Create Account", exact: true })
         .click();
     } else {
       await page.getByRole("button", { name: "Get started" }).click();
     }
     const dialog = page.getByRole("dialog");
-    await expect(dialog.getByRole("heading")).toHaveText("Create an account");
-    await dialog.getByLabel("Public alias").fill("NewExpert");
+    await expect(dialog.getByRole("heading")).toHaveText("Create Account");
+    await dialog.getByLabel("Public Alias").fill("NewExpert");
     await dialog.getByLabel("Email").fill("expert@example.test");
     await dialog.getByLabel("Password", { exact: true }).fill("Temporary123!");
     await dialog.getByLabel("Confirm password").fill("Temporary123!");

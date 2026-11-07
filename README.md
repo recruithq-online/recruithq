@@ -15,13 +15,13 @@ Open http://localhost:3000. For production builds, run `npm run build -- --webpa
 
 ## Product experience
 
-The homepage introduces professional records through a compact carousel of sample experts: completed work, vouches, refutes and reputation in context. Records rotate every five seconds, pause on hover or keyboard focus, and support swipe, previous/next, direct selection and a pause control. Reduced motion disables automatic rotation. Discovery supports text search, category, availability, sample verification, minimum reputation, maximum hourly rate and sorting. Filters are reflected in the URL and survive reload. Bookmarks create a shortlist saved on the current device; it works without an account.
+The homepage opens with an unblurred “What would you like to do?” section: Explore, Hire and List open their respective marketplace routes. It introduces professional records through a compact carousel of sample experts: completed work, vouches, refutes and reputation in context. Records rotate every five seconds, pause on hover or keyboard focus, and support swipe and direct selection. Rotation pauses while hovered or focused. Reduced motion disables automatic rotation. Discovery supports text search, category, availability, sample verification, minimum reputation, maximum hourly rate and sorting. Filters are reflected in the URL and survive reload. Bookmarks create a shortlist saved on the current device; it works without an account.
 
-Profiles expose both kinds of feedback, filtering, score explanations, rates, availability and hiring actions. The workspace provides direct navigation between the dashboard, messages, evidence reviews and settings. Company and personal hiring retain separate fees, application, acceptance, delivery, revisions and completion flows. Both themes follow system preferences until the visitor saves a choice.
+Profiles expose both kinds of feedback, filtering, score explanations, rates, availability and hiring actions. The workspace provides direct navigation between the dashboard, messages, evidence reviews and settings. Company and personal hiring retain separate fees, application, acceptance, delivery, revisions and completion flows. The interface always uses light mode, including when the device or an old saved preference requests dark mode. Page back buttons and back-arrow links are removed; the header and workspace navigation remain available.
 
-The cinematic opening reveals the headline and professional record in sequence. Scroll reveals, a dark evidence section, short interaction transitions, and frosted navigation add visual rhythm. CSS and JavaScript motion follow the system’s reduced-motion preference.
+The cinematic opening reveals the headline and professional record in sequence. Scroll reveals, short interaction transitions, and frosted navigation add visual rhythm. CSS and JavaScript motion follow the system’s reduced-motion preference.
 
-The complete route inventory, audit findings and design decisions are in [docs/product-design-audit.md](docs/product-design-audit.md). The interface uses flat surfaces without shadows, 16px body and form text, 14px secondary text and a 12px minimum for short labels. Navigation collapses below 900px to keep controls comfortable. Only DM Sans (body text and controls) and Space Grotesk (headings and display text) are used. Both variable fonts are bundled locally, so rendering does not depend on a Google Fonts request. The frontend uses Tailwind utilities, shared UI primitives in `components/ui`, and design tokens in `app/globals.css`. Product screens live in `components/marketplace`; obsolete landing-page modules have been removed. See [docs/frontend.md](docs/frontend.md) for the module map and examples of changing card radius, borders, typography and individual screen styles.
+The complete route inventory, audit findings and design decisions are in [docs/product-design-audit.md](docs/product-design-audit.md). The interface uses flat surfaces without shadows, 16px body and form text, 14px secondary text and a 12px minimum for short labels. Navigation collapses below 900px to keep controls comfortable. Satoshi is used for text, controls and headings. Its regular and italic variable fonts and Fontshare license are bundled locally in `app/fonts/`, so rendering does not depend on an external font request. The footer matches the public site: a blue owl logo, Discover links and social links with balanced spacing and a centered copyright. The frontend uses Tailwind utilities, shared UI primitives in `components/ui`, and design tokens in `app/globals.css`. Product screens live in `components/marketplace`; obsolete landing-page modules have been removed. See [docs/frontend.md](docs/frontend.md) for the module map and examples of changing card radius, borders, typography and individual screen styles.
 
 ## Preview accounts and data
 
@@ -32,7 +32,7 @@ Sign in through the header or workspace using either sample account:
 | Hirer        | `hirer@recruit.test`  | `Test1234!` |
 | Professional | `expect@recruit.test` | `Test1234!` |
 
-Account creation creates a temporary session. Profiles, jobs, messages, preferences, wallets and review decisions reset on refresh. Switch accounts without refreshing to try both sides of a project. Saved expert IDs and theme preference persist in local storage; credentials do not.
+Account creation creates a temporary session. Profiles, jobs, messages, preferences, wallets and review decisions reset on refresh. Switch accounts without refreshing to try both sides of a project. Saved expert IDs persist in local storage; credentials do not.
 
 For personal hiring, add sample wallet addresses for both accounts before completing the simulated payment. No wallet connects and no funds move. Company hiring shows a separate 5% fee; personal hiring adds 2.5% to the job price. Fee calculations use integer cents.
 
@@ -49,7 +49,7 @@ npm run build -- --webpack
 npm run test:e2e
 ```
 
-Playwright requires Google Chrome and a completed production build. It starts the app on port 3107; set `PLAYWRIGHT_PORT` to use another port if it is occupied. Tests cover discovery URLs, shortlist persistence, feedback filters, keyboard navigation, modal focus and scrolling, themes, route layouts from 320px through desktop, account switching, messages, evidence decisions and both hiring lifecycles. Screenshots and traces are written to ignored `test-results/`.
+Playwright requires Google Chrome and a completed production build. It starts the app on port 3107; set `PLAYWRIGHT_PORT` to use another port if it is occupied. Tests cover discovery URLs, shortlist persistence, feedback filters, keyboard navigation, modal focus and scrolling, light-only rendering, footer alignment, route layouts from 320px through desktop, account switching, messages, evidence decisions and both hiring lifecycles. Screenshots and traces are written to ignored `test-results/`.
 
 ## Retained waitlist email service
 

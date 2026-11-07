@@ -19,7 +19,7 @@ export function Explore() {
         <Page>
           <PageHeading
             eyebrow="The expertise directory"
-            title="Find your kind of expert."
+            title="Find Your Kind Of Expert."
           />
           <p className="mb-6 text-base leading-7" role="status">
             Loading the directory…
@@ -109,7 +109,7 @@ function ExploreDirectory() {
         <div>
           <PageHeading
             eyebrow="The expertise directory"
-            title="Find your kind of expert."
+            title="Find Your Kind Of Expert."
           >
             Look beyond the pitch. Find the skills, work, and reputation to back
             it up.

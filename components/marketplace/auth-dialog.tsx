@@ -28,7 +28,7 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
     }
     if (mode === "signup") {
       if (!alias.trim()) {
-        setError("Enter the public alias you want to use.");
+        setError("Enter the public Alias you want to use.");
         return;
       }
       if (password.length < 8) {
@@ -60,7 +60,7 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
   return (
     <>
       <DialogTitle id="marketplace-dialog-title">
-        {mode === "signup" ? "Create an account" : "Sign in to rEcruit"}
+        {mode === "signup" ? "Create Account" : "Sign In"}
       </DialogTitle>
       {mode === "signup" ? (
         <p className="mb-6 max-w-2xl text-base leading-7">
@@ -70,7 +70,7 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
       ) : (
         <>
           <p className="mb-6 max-w-2xl text-base leading-7">
-            Use a sample hirer or expect account below. Please don’t enter your
+            Use a sample hirer or expert account below. Please don’t enter your
             personal credentials.
           </p>
           <div className="grid gap-2.5">
@@ -110,7 +110,7 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
           <>
             <div className="flex min-w-0 flex-col gap-2">
               <label htmlFor="alias" className="text-sm font-semibold">
-                Public alias
+                Public Alias
               </label>
               <Input
                 id="alias"
@@ -123,7 +123,7 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
             </div>
             <div className="flex min-w-0 flex-col gap-2">
               <label htmlFor="role" className="text-sm font-semibold">
-                I want to
+               Join rEcruit To
               </label>
               <Select
                 id="role"

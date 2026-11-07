@@ -2,13 +2,14 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button, buttonStyles } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { categories, routeTo } from "@/lib/marketplace";
 import { ExpertCard } from "./expert-card";
 import { Icon } from "./icons";
 import { ProfessionalRecordCarousel } from "./professional-record";
 import { useMarketplace } from "./provider";
+import { Welcome } from "./welcome";
 
 export function MarketplaceHome() {
   const { experts } = useMarketplace();
@@ -29,7 +30,7 @@ export function MarketplaceHome() {
   return (
     <>
       <section
-        id="top"
+        id="overview"
         className="relative pt-16 pb-14.5 max-nav:pt-9.5 max-nav:pb-9 wide:py-21"
         data-testid="home-hero"
       >
@@ -125,32 +126,7 @@ export function MarketplaceHome() {
           <ProfessionalRecordCarousel experts={experts} />
         </Container>
       </section>
-      <div>
-        <Container className="grid grid-cols-1 nav:grid-cols-3">
-          {[
-            ["01", "Work you can see", "Demonstrated expertise"],
-            ["02", "People who can vouch", "Context from collaborators"],
-            ["03", "Claims you can question", "Accountable feedback"],
-          ].map(([n, title, detail]) => (
-            <div
-              key={n}
-              data-reveal=""
-              className="flex items-center gap-4 py-6"
-            >
-              <span className="font-display text-xs text-brand">{n}</span>
-              <div>
-                <strong className="block text-sm font-medium">{title}</strong>
-                <small className="text-xs">{detail}</small>
-              </div>
-              <Icon
-                name="northeast"
-                size={18}
-                className="ml-auto mr-4 shrink-0"
-              />
-            </div>
-          ))}
-        </Container>
-      </div>
+      <Welcome />
       <section id="expertise" className="py-17.5 max-nav:py-11">
         <Container>
           <div
@@ -199,107 +175,6 @@ export function MarketplaceHome() {
             {selected.map((e) => (
               <ExpertCard key={e.id} expert={e} reveal />
             ))}
-          </div>
-          <div className="mt-5.5 flex items-center justify-center gap-2 text-xs max-nav:items-start">
-            <Icon name="document" size={14} />
-            Explore with sample professionals. Profiles and reputation signals
-            are illustrative.
-          </div>
-        </Container>
-      </section>
-      <section
-        className=" py-21 text-black max-nav:py-11"
-        data-testid="trust-section"
-      >
-        <Container
-          className="grid grid-cols-1 gap-9 nav:grid-cols-2 tablet:gap-12.5 laptop:gap-21"
-          data-testid="trust-content"
-        >
-          <div data-reveal="">
-            <span className="inline-flex items-center gap-2.5 font-display text-xs leading-relaxed tracking-widest uppercase">
-              TRUST IS A RECORD. NOT A CLAIM.
-            </span>
-            <h2 className="my-4.5 text-[40px] tracking-[-.05em] max-tablet:text-[34px]">
-              A reputation should
-              <br />
-              stand up to{" "}
-              <em className="font-display font-normal text-brand">
-                scrutiny.
-              </em>
-            </h2>
-            <p className="mb-6 max-w-95 text-base leading-7">
-              A score is the starting point. The work, the feedback, and the
-              context behind it are what help you make a confident decision.
-            </p>
-            <Link
-              href={routeTo("about")}
-              className="inline-flex items-center gap-3 text-base font-semibold hover:text-brand motion-safe:[&_svg]:transition-transform motion-safe:hover:[&_svg]:translate-x-0.5"
-            >
-              Understand the rEcruit approach <Icon name="arrow" size={18} />
-            </Link>
-          </div>
-          <div data-reveal="">
-            {[
-              [
-                "document",
-                "Proof of work",
-                "See expertise in context through completed projects and professional work.",
-              ],
-              [
-                "check",
-                "Vouches with substance",
-                "Recommendations from people who can speak to the work and the working relationship.",
-              ],
-              [
-                "flag",
-                "Room for accountability",
-                "Refutes challenge inaccurate claims. Evidence is reviewed before it affects reputation.",
-              ],
-            ].map(([icon, title, copy], index) => (
-              <div
-                key={title}
-                data-reveal=""
-                className="flex items-start gap-5 py-6 first:pt-0 last:pb-0"
-              >
-                <span className="pt-1 font-display text-xs">0{index + 1}</span>
-                <div>
-                  <h3 className="mb-2 text-base">{title}</h3>
-                  <p className="max-w-95 m-0 text-sm leading-7">{copy}</p>
-                </div>
-                <Icon
-                  name={icon as "document" | "check" | "flag"}
-                  size={22}
-                  className="ml-2.5 shrink-0"
-                />
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-      <section className="py-15 max-nav:py-11">
-        <Container className="flex items-center justify-between gap-10 max-nav:flex-col max-nav:items-start max-nav:gap-7">
-          <div>
-            <span className="inline-flex items-center gap-2.5 font-display text-xs leading-relaxed tracking-widest uppercase">
-              YOUR NEXT CHAPTER STARTS WITH YOUR WORK
-            </span>
-            <h2 className="mt-4 text-[38px] tracking-[-.05em] max-nav:text-[32px]">
-              Let your reputation
-              <br />
-              open the right doors.
-            </h2>
-          </div>
-          <div>
-            <Link href={routeTo("list")} className={buttonStyles({})}>
-              List your expertise{" "}
-              <Icon
-                name="northeast"
-                size={18}
-                className="ml-auto mr-4 shrink-0"
-              />
-            </Link>
-            <p className="mt-3 text-xs">
-              Your alias. Your expertise. Your professional record.
-            </p>
           </div>
         </Container>
       </section>
