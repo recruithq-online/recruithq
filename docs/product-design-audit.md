@@ -56,7 +56,7 @@ Desktop, scrolled navigation and mobile-menu captures were visually reviewed; no
 
 ## Palette and surface refinement
 
-The latest design direction uses white, black and a single accessible blue (`#3467ff`). Light surfaces are pure white; dark surfaces are pure black. Avatars, vouches, refutes, notifications and the evidence section follow the same palette. Black and blue transparency is used for shadows and lighting.
+The latest design direction uses white, black and a single accessible blue (`#101F8F`). Light surfaces are pure white; dark surfaces are pure black. Avatars, vouches, refutes, notifications and the evidence section follow the same palette. Black and blue transparency is used for shadows and lighting.
 
 Cards and panels have no outer borders. Internal record dividers, section rules, footer rules, sidebar rules and skill-tag outlines have been removed. Spacing and soft shadows establish hierarchy. Blue keyboard focus rings and the active category underline remain as functional navigation cues. Cinematic entrance and scroll motion are preserved.
 

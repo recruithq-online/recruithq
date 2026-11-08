@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="25 20 300 300">
   <title>rEcruit owl</title>
-  <g transform="translate(20,20)" fill="none" stroke="#0828CB" stroke-width="22" stroke-linejoin="miter" stroke-linecap="butt">
+  <g transform="translate(20,20)" fill="none" stroke="#101F8F" stroke-width="22" stroke-linejoin="miter" stroke-linecap="butt">
     <path d="M17 288V150A138 138 0 0 1 293 150V288Z" stroke-width="24"/>
     <path d="M29 98A137 137 0 1 0 281 98"/>
     <path d="M22 112C28 76 110 60 155 134"/>
     <path d="M288 112C282 76 200 60 155 134"/>
     <path d="M155 112V290"/>
-    <circle cx="86" cy="157" r="20" fill="#0828CB" stroke="none"/>
-    <circle cx="224" cy="157" r="20" fill="#0828CB" stroke="none"/>
+    <circle cx="86" cy="157" r="20" fill="#101F8F" stroke="none"/>
+    <circle cx="224" cy="157" r="20" fill="#101F8F" stroke="none"/>
   </g>
 </svg>

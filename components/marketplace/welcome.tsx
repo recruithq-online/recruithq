@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ImageWelcome from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Icon, type IconName } from "./icons";
@@ -11,19 +11,19 @@ const pathways: {
 }[] = [
   {
     title: "Explore",
-    description: "Browse experts and see their vouches and feedback.",
+    description: "Browse Experts and their Reputation.",
     icon: "compass",
     href: "/marketplace/explore",
   },
   {
     title: "Hire",
-    description: "Bring in an expert for your company or for yourself.",
+    description: "Bring in an Expert for your project or your company's.",
     icon: "briefcase",
     href: "/marketplace/hire",
   },
   {
     title: "List",
-    description: "List your expertise and build your reputation record.",
+    description: "List your expertise and build a vouchable Reputation.",
     icon: "add-square",
     href: "/marketplace/list",
   },
@@ -38,14 +38,14 @@ export function Welcome() {
     >
       <Container>
         <div className="flex items-center gap-3 nav:gap-4">
-          <Image
+          <ImageWelcome
             src="/stickers/hello.svg"
             alt="Hi!"
             width={72}
             height={72}
             className="size-16 shrink-0 nav:size-20"
           />
-          <div className="min-w-0">
+          <div className="min-w-0 pt-14">
             <h2
               id="welcome-heading"
               className="text-[clamp(23px,2.6vw,32px)] font-semibold leading-tight tracking-[-.04em]"
@@ -57,7 +57,7 @@ export function Welcome() {
             </p>
           </div>
         </div>
-        <div className="mt-6 grid grid-cols-1 gap-4 min-[768px]:grid-cols-3 nav:mt-8 nav:gap-5">
+        <div className="my-6 grid grid-cols-1 gap-4 min-[768px]:grid-cols-3 nav:mt-8 nav:gap-5">
           {pathways.map(({ title, description, icon, href }) => (
             <Link
               key={title}

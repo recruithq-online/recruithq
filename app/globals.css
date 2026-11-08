@@ -3,7 +3,7 @@
 
 /* Product-wide choices. Change --radius-card here to update every Card. */
 @theme {
-  --color-brand: #3467ff;
+  --color-brand: #101F8F;
   --font-serif: initial;
   --font-mono: initial;
   --radius-card: 0.75rem;
@@ -27,7 +27,7 @@
   --background: #ffffff;
   --surface: #ffffff;
   --foreground: #000000;
-  --card-border: #3467ff24;
+  --card-border: #101F8F24;
 }
 
 @layer base {

@@ -67,7 +67,7 @@ test("emails submitted details to the configured admin, with the submitter as re
       subject: "New rEcruit expert waitlist submission",
       text: "A new expert joined the rEcruit waitlist.\n\nPublic alias: <Atlas>\nEmail address: atlas@example.com\nMain area of expertise: Design",
     });
-    expect(message.html).toContain("#2864F0");
+    expect(message.html).toContain("#101F8F");
     expect(message.html).toContain("#FFFFFF");
     expect(message.html).toContain("Meet &lt;Atlas&gt;.");
     expect(message.html).not.toContain("<Atlas>");

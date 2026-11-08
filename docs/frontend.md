@@ -15,7 +15,7 @@ The UI uses Tailwind CSS 4. Use Satoshi throughout the website for body text, co
 | Animation timing and keyframes           | `app/motion.css`                     |
 | A particular page's layout               | Its file in `components/marketplace` |
 
-Only white, black and blue are used. Transparent versions of these colours provide borders and lighting. The site uses light mode only; system preferences and old saved theme choices do not change it.
+Only white, black and brand blue (`#101F8F`) are used. Use the `brand` token for accents and its opacity variants for lighter surfaces. Transparent versions of these colours provide borders and lighting. The site uses light mode only; system preferences and old saved theme choices do not change it.
 
 The interface has no box or text shadows. Body text and form controls use `text-base` (16px), secondary text uses `text-sm` (14px), and short metadata uses `text-xs` (12px). Avoid smaller arbitrary sizes or mobile overrides that shrink text. Navigation switches to its menu below 900px.
 

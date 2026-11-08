@@ -9,19 +9,6 @@ import { routeTo } from "@/lib/marketplace";
 import { Icon, Wordmark } from "./icons";
 import { useMarketplace } from "./provider";
 
-const marketplaceLinks = [
-  ["explore", "Explore"],
-  ["hire", "Hire"],
-  ["list", "List Expertise"],
-];
-
-const workspaceLinks = [
-  ["work", "Dashboard"],
-  ["messages", "Messages"],
-  ["reputation", "Reputation"],
-  ["settings", "Settings"],
-];
-
 export function MarketplaceNavbar() {
   const pathname = usePathname();
   const { session, setDialog } = useMarketplace();
@@ -83,38 +70,13 @@ export function MarketplaceNavbar() {
                 : "max-nav:hidden",
             )}
           >
-            <div
-              data-testid="primary-links"
-              className="flex items-center gap-1 max-nav:grid max-nav:gap-0"
-            >
-              {marketplaceLinks.map(([view, title]) => (
-                <Link
-                  key={view}
-                  href={routeTo(view)}
-                  aria-current={pathname === routeTo(view) ? "page" : undefined}
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-control px-3 py-2.5 text-base font-medium transition-colors hover:text-brand aria-[current=page]:bg-brand aria-[current=page]:text-white max-tablet:px-2 max-nav:py-3"
-                >
-                  {title}
-                </Link>
-              ))}
-            </div>
+          
             <div className="mt-3 hidden grid-cols-2 gap-x-5 gap-y-1 pt-3 max-nav:grid">
               {!session && (
                 <Button onClick={openAccount} className="col-span-full mb-2.5">
                   Create Account <Icon name="northeast" size={16} />
                 </Button>
               )}
-              {workspaceLinks.map(([view, title]) => (
-                <Link
-                  key={view}
-                  href={routeTo(view)}
-                  className="py-2.5 text-sm"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {title}
-                </Link>
-              ))}
             </div>
           </div>
           <div className="ml-auto flex items-center gap-1.5">
