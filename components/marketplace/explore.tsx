@@ -16,7 +16,7 @@ export function Explore() {
   return (
     <Suspense
       fallback={
-        <Page>
+        <Page back>
           <PageHeading
             eyebrow="The expertise directory"
             title="Find Your Kind Of Expert."
@@ -104,7 +104,7 @@ function ExploreDirectory() {
     query || category || available || verified || savedOnly || score || rate,
   );
   return (
-    <Page>
+    <Page back>
       <div className="flex items-center justify-between gap-7 max-laptop:flex-col max-laptop:items-start max-laptop:gap-0">
         <div>
           <PageHeading

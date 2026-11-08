@@ -5,6 +5,7 @@ import { DialogTitle } from "@/components/ui/dialog";
 import { Input, Select } from "@/components/ui/input";
 import { accounts, type Role } from "@/lib/marketplace";
 import { useMarketplace } from "./provider";
+import { BackButton } from "./back-button";
 
 export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
   const { signIn, signUp, closeDialog } = useMarketplace();
@@ -16,7 +17,7 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState<Role>("expect");
+  const [role, setRole] = useState<Role>("expert");
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   function submit(event: FormEvent) {
@@ -59,6 +60,14 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
   }
   return (
     <>
+      <BackButton
+        onClick={() => {
+          if (mode !== initialMode) {
+            setMode(initialMode);
+            setError("");
+          } else closeDialog();
+        }}
+      />
       <DialogTitle id="marketplace-dialog-title">
         {mode === "signup" ? "Create Account" : "Sign In"}
       </DialogTitle>
@@ -81,7 +90,7 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
               >
                 <div className="grid min-w-0 gap-1 text-sm wrap-anywhere">
                   <strong className="text-sm font-medium">
-                    {account.role === "hirer" ? "Hirer" : "Expect"} account
+                    {account.role === "hirer" ? "Hirer" : "Expert"} account
                   </strong>
                   <span>{account.email}</span>
                   <span>
@@ -123,7 +132,7 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
             </div>
             <div className="flex min-w-0 flex-col gap-2">
               <label htmlFor="role" className="text-sm font-semibold">
-               Join rEcruit To
+                Join rEcruit To
               </label>
               <Select
                 id="role"
@@ -131,13 +140,13 @@ export function AuthForm({ initialMode }: { initialMode: "auth" | "signup" }) {
                 onChange={(event) => {
                   if (
                     event.target.value === "hirer" ||
-                    event.target.value === "expect"
+                    event.target.value === "expert"
                   ) {
                     setRole(event.target.value);
                   }
                 }}
               >
-                <option value="expect">Offer my expertise</option>
+                <option value="expert">Offer my expertise</option>
                 <option value="hirer">Hire expertise</option>
               </Select>
             </div>

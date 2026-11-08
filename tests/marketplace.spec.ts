@@ -34,10 +34,10 @@ async function go(page: Page, name: string) {
   await page.locator(`a[href="${destination}"]:visible`).first().click();
   await expect(page).toHaveURL(new RegExp(`${destination}$`));
 }
-async function signIn(page: Page, role: "hirer" | "expect") {
-  await go(page, "Dashboard");
+async function signIn(page: Page, role: "hirer" | "expert") {
   await page
-    .getByRole("button", { name: "Sign in to continue", exact: true })
+    .locator("header")
+    .getByRole("button", { name: "Sign In", exact: true })
     .click();
   const dialog = page.getByRole("dialog");
   await dialog
@@ -54,6 +54,7 @@ async function signIn(page: Page, role: "hirer" | "expect") {
   await expect(
     workspace(page).getByRole("link", { name: "Dashboard", exact: true }),
   ).toBeVisible();
+  await expect(page).toHaveURL(/\/marketplace\/work$/);
 }
 async function signOut(page: Page) {
   await go(page, "Settings");
@@ -402,7 +403,7 @@ for (const route of ["Hiring for myself", "Hiring for company"]) {
       })
       .click();
     await signOut(page);
-    await signIn(page, "expect");
+    await signIn(page, "expert");
     await page
       .getByRole("button", {
         name: "Apply",
@@ -436,7 +437,7 @@ for (const route of ["Hiring for myself", "Hiring for company"]) {
       })
       .click();
     await signOut(page);
-    await signIn(page, "expect");
+    await signIn(page, "expert");
     await page.getByLabel("Delivery note or link").fill("First version ready.");
     await page
       .getByRole("button", {
@@ -451,7 +452,7 @@ for (const route of ["Hiring for myself", "Hiring for company"]) {
       })
       .click();
     await signOut(page);
-    await signIn(page, "expect");
+    await signIn(page, "expert");
     await page
       .getByLabel("Delivery note or link")
       .fill("Revised version ready.");

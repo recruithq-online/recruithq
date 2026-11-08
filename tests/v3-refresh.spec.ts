@@ -20,7 +20,7 @@ for (const width of [390, 1440]) {
 }
 
 for (const width of [320, 390, 768, 1440]) {
-  test(`welcome cards are clear and open v3 routes at ${width}px`, async ({
+  test(`welcome cards open v3 routes with Back to home at ${width}px`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: 1000 });
@@ -65,18 +65,15 @@ for (const width of [320, 390, 768, 1440]) {
       await expect(link).toHaveAttribute("href", `/marketplace/${route}`);
       await link.click();
       await expect(page).toHaveURL(new RegExp(`/marketplace/${route}$`));
-      await expect(
-        page.getByRole("button", { name: /^(Go back|Back)$/ }),
-      ).toHaveCount(0);
-      await page
-        .locator("header")
-        .getByRole("link", { name: "rEcruit home" })
-        .click();
+      const back = page.getByRole("button", { name: "Go back", exact: true });
+      await expect(back.locator("svg")).toBeVisible();
+      await back.click();
+      await expect(page).toHaveURL(/\/$/);
     }
   });
 }
 
-test("signed-in workspace, listing and profiles have no back controls", async ({
+test("signed-in listing has Back while workspace and profiles keep their navigation", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -85,7 +82,7 @@ test("signed-in workspace, listing and profiles have no back controls", async ({
     .getByRole("button", { name: "Sign in to continue", exact: true })
     .click();
   const dialog = page.getByRole("dialog");
-  await dialog.getByLabel("Email", { exact: true }).fill("expect@recruit.test");
+  await dialog.getByLabel("Email", { exact: true }).fill("expert@recruit.test");
   await dialog.getByLabel("Password", { exact: true }).fill("Test1234!");
   await dialog.getByRole("button", { name: "Sign in", exact: true }).click();
   await expect(dialog).toHaveCount(0);
@@ -112,9 +109,63 @@ test("signed-in workspace, listing and profiles have no back controls", async ({
     .first()
     .click();
   await expect(page).toHaveURL(/\/marketplace\/list$/);
+  await page.getByRole("button", { name: "Go back", exact: true }).click();
+  await expect(page).toHaveURL(/\/marketplace\/work$/);
   await check();
   await navigation.getByRole("link", { name: "Explore", exact: true }).click();
   await page.getByRole("link", { name: "View profile for Nova" }).click();
   await expect(page).toHaveURL(/\/marketplace\/profile\/1$/);
   await check();
+});
+
+for (const route of ["explore", "hire", "list"]) {
+  test(`direct entry to ${route} has a Home fallback`, async ({ page }) => {
+    await page.goto(`/marketplace/${route}`);
+    await page.getByRole("button", { name: "Go back", exact: true }).click();
+    await expect(page).toHaveURL(/\/$/);
+    await expect(
+      page.getByRole("region", { name: "What would you like to do?" }),
+    ).toBeVisible();
+  });
+}
+
+for (const width of [320, 1440]) {
+  test(`sign-in Back restores the page and previous form at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto("/marketplace/explore?q=Figma");
+    const open = page
+      .locator("header")
+      .getByRole("button", { name: "Sign In", exact: true });
+    await open.click();
+    const dialog = page.getByRole("dialog");
+    const back = dialog.getByRole("button", { name: "Go back", exact: true });
+    await expect(back.locator("svg")).toBeVisible();
+    await back.click();
+    await expect(dialog).toHaveCount(0);
+    await expect(page).toHaveURL(/\/marketplace\/explore\?q=Figma$/);
+    await expect(open).toBeFocused();
+    await expect(page.getByLabel("Search experts")).toHaveValue("Figma");
+    await open.click();
+    await dialog.getByRole("button", { name: "Sign up", exact: true }).click();
+    await expect(dialog.getByRole("heading")).toHaveText("Create Account");
+    await back.click();
+    await expect(dialog.getByRole("heading")).toHaveText("Sign In");
+    await dialog.screenshot({ path: `test-results/signin-back-${width}.png` });
+    await back.click();
+    await expect(dialog).toHaveCount(0);
+    await expect(page).toHaveURL(/\/marketplace\/explore\?q=Figma$/);
+  });
+}
+
+test("Hire Back restores the filtered Explore page", async ({ page }) => {
+  await page.goto("/marketplace/explore?q=Figma");
+  await page
+    .getByRole("link", { name: "Have a brief? Post an opportunity" })
+    .click();
+  await expect(page).toHaveURL(/\/marketplace\/hire$/);
+  await page.getByRole("button", { name: "Go back", exact: true }).click();
+  await expect(page).toHaveURL(/\/marketplace\/explore\?q=Figma$/);
+  await expect(page.getByLabel("Search experts")).toHaveValue("Figma");
 });

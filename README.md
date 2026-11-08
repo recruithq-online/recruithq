@@ -17,7 +17,7 @@ Open http://localhost:3000. For production builds, run `npm run build -- --webpa
 
 The homepage opens with an unblurred “What would you like to do?” section: Explore, Hire and List open their respective marketplace routes. It introduces professional records through a compact carousel of sample experts: completed work, vouches, refutes and reputation in context. Records rotate every five seconds, pause on hover or keyboard focus, and support swipe and direct selection. Rotation pauses while hovered or focused. Reduced motion disables automatic rotation. Discovery supports text search, category, availability, sample verification, minimum reputation, maximum hourly rate and sorting. Filters are reflected in the URL and survive reload. Bookmarks create a shortlist saved on the current device; it works without an account.
 
-Profiles expose both kinds of feedback, filtering, score explanations, rates, availability and hiring actions. The workspace provides direct navigation between the dashboard, messages, evidence reviews and settings. Company and personal hiring retain separate fees, application, acceptance, delivery, revisions and completion flows. The interface always uses light mode, including when the device or an old saved preference requests dark mode. Page back buttons and back-arrow links are removed; the header and workspace navigation remain available.
+Profiles expose both kinds of feedback, filtering, score explanations, rates, availability and hiring actions. The workspace provides direct navigation between the dashboard, messages, evidence reviews and settings. Company and personal hiring retain separate fees, application, acceptance, delivery, revisions and completion flows. The interface always uses light mode, including when the device or an old saved preference requests dark mode. Explore, Hire and List include a Back button with a left arrow that returns through browser history, or Home for direct entries. The sign-in form has a Back button that restores the previous form or closes the dialog without changing the page. Header and workspace navigation remain available.
 
 The cinematic opening reveals the headline and professional record in sequence. Scroll reveals, short interaction transitions, and frosted navigation add visual rhythm. CSS and JavaScript motion follow the system’s reduced-motion preference.
 
@@ -30,7 +30,7 @@ Sign in through the header or workspace using either sample account:
 | Account      | Email                 | Password    |
 | ------------ | --------------------- | ----------- |
 | Hirer        | `hirer@recruit.test`  | `Test1234!` |
-| Professional | `expect@recruit.test` | `Test1234!` |
+| Professional | `expert@recruit.test` | `Test1234!` |
 
 Account creation creates a temporary session. Profiles, jobs, messages, preferences, wallets and review decisions reset on refresh. Switch accounts without refreshing to try both sides of a project. Saved expert IDs persist in local storage; credentials do not.
 

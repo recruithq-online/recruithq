@@ -90,8 +90,8 @@ export function Hire() {
       requireAccount(() => {});
       return;
     }
-    if (session.role !== "expect") {
-      toast("Use the expect test account to apply.");
+    if (session.role !== "expert") {
+      toast("Use the expert test account to apply.");
       return;
     }
     setOpportunities((current) =>
@@ -109,11 +109,8 @@ export function Hire() {
     toast("Your application recorded locally. No application was sent.");
   }
   return (
-    <Page>
-      <PageHeading
-        eyebrow="Two ways to work"
-        title="Hire For The Work You Need"
-      >
+    <Page back>
+      <PageHeading eyebrow="" title="Hire For The Work You Need">
         Choose the right route. Company hiring happens off-platform after
         rEcruit connects both sides; personal hiring lets you explore task
         agreement, delivery, and simulated payment on rEcruit.
@@ -280,7 +277,7 @@ export function Hire() {
                   <Button onClick={() => jobChat(job)} variant="secondary">
                     Message hirer
                   </Button>
-                  {job.status === "Open" && session?.role === "expect" && (
+                  {job.status === "Open" && session?.role === "expert" && (
                     <Button
                       disabled={job.applicants.includes(session.alias)}
                       onClick={() => apply(job)}

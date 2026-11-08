@@ -1,6 +1,7 @@
 import { cn } from "@/lib/cn";
 
 const paths = {
+  back: "M19 12H5m7-7-7 7 7 7",
   arrow: "M5 12h14m-6-6 6 6-6 6",
   northeast: "M6 18 18 6M6 6h12v12",
   search: "m21 21-5-5M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Z",

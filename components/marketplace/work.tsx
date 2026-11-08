@@ -67,7 +67,7 @@ function Dashboard() {
   function deliver(event: FormEvent<HTMLFormElement>, job: Opportunity) {
     event.preventDefault();
     if (
-      session?.role !== "expect" ||
+      session?.role !== "expert" ||
       job.expect !== me ||
       job.status !== "In progress"
     )
@@ -118,7 +118,7 @@ function Dashboard() {
   }
   function apply(job: Opportunity) {
     if (
-      session?.role !== "expect" ||
+      session?.role !== "expert" ||
       job.status !== "Open" ||
       job.applicants.includes(me)
     )
@@ -312,7 +312,7 @@ function Dashboard() {
                 variant="secondary"
                 size="small"
               >
-                Message {hirer ? "expect" : "hirer"}
+                Message {hirer ? "expert" : "hirer"}
               </Button>
             )}{" "}
           </OpportunityCard>

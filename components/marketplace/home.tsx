@@ -29,7 +29,7 @@ export function MarketplaceHome() {
   }
   return (
     <>
-      <section
+      {/* <section
         id="overview"
         className="relative pt-16 pb-14.5 max-nav:pt-9.5 max-nav:pb-9 wide:py-21"
         data-testid="home-hero"
@@ -125,9 +125,9 @@ export function MarketplaceHome() {
           </div>
           <ProfessionalRecordCarousel experts={experts} />
         </Container>
-      </section>
+      </section> */}
       <Welcome />
-      <section id="expertise" className="py-17.5 max-nav:py-11">
+      {/* <section id="expertise" className="py-17.5 max-nav:py-11">
         <Container>
           <div
             className="mb-7 flex items-end justify-between gap-6 max-nav:mb-4.5 max-nav:flex-col max-nav:items-start max-nav:gap-4.5"
@@ -177,7 +177,7 @@ export function MarketplaceHome() {
             ))}
           </div>
         </Container>
-      </section>
+      </section> */}
     </>
   );
 }

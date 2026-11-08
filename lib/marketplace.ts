@@ -1,4 +1,4 @@
-export type Role = "hirer" | "expect";
+export type Role = "hirer" | "expert";
 export type HiringRoute = "Hiring for company" | "Hiring for myself";
 export interface MarketplaceAccount {
   email: string;
@@ -71,10 +71,10 @@ export const accounts: MarketplaceAccount[] = [
     role: "hirer",
   },
   {
-    email: "expect@recruit.test",
+    email: "expert@recruit.test",
     password: "Test1234!",
-    alias: "TestExpect",
-    role: "expect",
+    alias: "TestExpert",
+    role: "expert",
   },
 ];
 export const categories = [

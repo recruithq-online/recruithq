@@ -92,7 +92,7 @@ export function CreateProfile() {
     );
   }
   return (
-    <Page>
+    <Page back>
       <SignInPageHeading
         eyebrow="Make your work visible"
         title="List Your Expertise"

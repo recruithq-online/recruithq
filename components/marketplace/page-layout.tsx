@@ -3,6 +3,7 @@ import { type ComponentProps, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { useMarketplace } from "./provider";
+import { BackButton } from "./back-button";
 
 export function PageHeading({
   eyebrow,
@@ -52,10 +53,19 @@ export function WorkspacePageHeading(
   return <PageHeading {...props} />;
 }
 
-export function Page({ children }: { children: ReactNode }) {
+export function Page({
+  children,
+  back = false,
+}: {
+  children: ReactNode;
+  back?: boolean;
+}) {
   return (
     <section className="min-h-[60vh] py-11 max-nav:pt-8 max-nav:pb-12.5">
-      <Container>{children}</Container>
+      <Container>
+        {back && <BackButton />}
+        {children}
+      </Container>
     </section>
   );
 }

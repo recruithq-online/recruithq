@@ -130,7 +130,7 @@ function AccountSettings() {
       <div className="mt-7 grid gap-6">
         <Card>
           <h2 className="mt-2.5 mb-3 text-xl tracking-tight">
-            {session.role === "expect" ? "Payout" : "Funding"} wallet
+            {session.role === "expert" ? "Payout" : "Funding"} wallet
           </h2>
           <p className="mb-6 max-w-2xl text-base leading-7">
             Add a sample public address to explore the payment simulation. No
