@@ -5,8 +5,8 @@
 @import "./motion.css";
 
 @theme {
-  --color-brand: #2864f0;
-  --color-brand-dark: #1748c7;
+  --color-brand: #101F8F;
+  --color-brand-dark: #101F8F;
   --color-ink: #111b2e;
   --color-muted: #68758b;
   --color-line: #dfe6f1;
@@ -36,8 +36,8 @@
 
 @layer base {
   :root {
-    --blue: #2864f0;
-    --blue2: #1748c7;
+    --blue: #101F8F;
+    --blue2: #101F8F;
     --ink: #111b2e;
     --muted: #68758b;
     --line: #dfe6f1;
@@ -98,7 +98,7 @@
     backdrop-filter: blur(16px);
     border-bottom: 1px solid #e4eaf4;
     padding: 0 max(5%, calc((100% - 1240px) / 2));
-    box-shadow: 0 3px 18px #0b173006;
+    box-shadow: 0 3px 18px #101F8F06;
   }
   .brand {
     @apply flex items-center gap-2.5 no-underline text-ink;
@@ -128,7 +128,7 @@
     @apply no-underline text-[13px] font-semibold text-[#596780] px-[13px] py-2.5 rounded-[9px];
   }
   .navlinks a:hover {
-    @apply bg-[#edf3ff] text-brand-dark;
+    @apply bg-[#101F8F0D] text-brand-dark;
   }
   .nav button {
     @apply border-0 bg-transparent px-[14px] py-2.5 rounded-[10px];
@@ -137,10 +137,10 @@
     min-height: 40px;
     padding: 0 14px;
     color: #fff;
-    background: #155eef;
+    background: #101F8F;
   }
   :where(button, a, input, select, textarea):focus-visible {
-    outline: 2px solid #2864f0;
+    outline: 2px solid #101F8F;
     outline-offset: 3px;
   }
   button:disabled {
@@ -181,7 +181,7 @@
   .search {
     @apply max-w-[740px] mx-auto mt-8 text-left bg-white rounded-[14px] p-[5px];
     border: 1px solid #dce4f1;
-    box-shadow: 0 10px 30px #19315a0a;
+    box-shadow: 0 10px 30px #101F8F0A;
   }
   .search input {
     @apply flex-1 bg-white outline-none rounded-[10px] min-w-0;
@@ -207,17 +207,17 @@
   }
   .pathway-card {
     @apply flex items-center justify-between gap-[14px] text-left px-5 py-[18px] bg-white cursor-pointer min-h-[88px] rounded-[13px] text-[#101a2d];
-    border: 1px solid #d6e2fb;
-    box-shadow: 0 5px 20px #17315c08;
+    border: 1px solid #101F8F26;
+    box-shadow: 0 5px 20px #101F8F08;
     transition:
       transform 0.18s,
       box-shadow 0.18s;
   }
   .pathway-card:hover {
     transform: translateY(-3px);
-    background: #f8faff;
-    border-color: #a9c3ff;
-    box-shadow: 0 12px 26px #17315c10;
+    background: #101F8F05;
+    border-color: #101F8F59;
+    box-shadow: 0 12px 26px #101F8F10;
   }
   .pathway-card b {
     @apply block font-display font-bold text-[16px] tracking-[-.025em] text-[#101a2d];
@@ -236,13 +236,13 @@
     margin: 26px auto 0;
     padding: 30px 24px;
     text-align: center;
-    border: 1px solid #d6e2ff;
+    border: 1px solid #101F8F26;
     border-radius: 22px;
     background: #fff;
-    box-shadow: 0 16px 45px #155eef0d;
+    box-shadow: 0 16px 45px #101F8F0D;
   }
   .coming-soon .pill {
-    @apply inline-block px-2.5 py-1.5 rounded-full bg-[#e8efff] text-[#155eef] text-[11px] font-extrabold tracking-[.1em] uppercase;
+    @apply inline-block px-2.5 py-1.5 rounded-full bg-[#101F8F14] text-[#101F8F] text-[11px] font-extrabold tracking-[.1em] uppercase;
   }
   .coming-soon h2 {
     font-size: clamp(28px, 4vw, 40px);
@@ -284,22 +284,22 @@
     gap: 12px;
     min-height: 48px;
     padding: 0 20px;
-    border: 1px solid #155eef;
+    border: 1px solid #101F8F;
     border-radius: 12px;
-    color: #155eef;
+    color: #101F8F;
     background: #fff;
     font-weight: 700;
     text-decoration: none;
   }
   .whitepaper-cta:hover {
-    background: #edf3ff;
+    background: #101F8F0D;
   }
   .waitlist-cta {
-    @apply min-h-12 px-5 py-0 border-0 rounded-xl bg-[#155eef] text-white font-bold cursor-pointer;
-    box-shadow: 0 8px 20px #155eef22;
+    @apply min-h-12 px-5 py-0 border-0 rounded-xl bg-[#101F8F] text-white font-bold cursor-pointer;
+    box-shadow: 0 8px 20px #101F8F22;
   }
   .waitlist-cta:hover {
-    background: #0b4bc4;
+    background: #101F8F;
   }
   .waitlist-disabled,
   .cta:disabled {
@@ -308,10 +308,10 @@
     opacity: 0.65;
   }
   .waitlist-disabled:hover {
-    background: #155eef;
+    background: #101F8F;
   }
   .cta:disabled:hover {
-    background: #2864f0;
+    background: #101F8F;
   }
   .waitlist-note {
     @apply text-xs text-[#667085] mt-3;
@@ -372,7 +372,7 @@
     left: 0;
     right: -20px;
     height: 3px;
-    background: #cbd5f6;
+    background: #101F8F33;
   }
   .roadmap-phase:last-child::before {
     right: 0;
@@ -387,7 +387,7 @@
     width: 34px;
     height: 34px;
     margin-bottom: 16px;
-    border: 2px solid #cbd5f6;
+    border: 2px solid #101F8F33;
     border-radius: 50%;
     background: var(--bg);
     font-weight: 700;
@@ -400,19 +400,19 @@
   .roadmap-current .roadmap-marker {
     color: var(--blue2);
     border-color: var(--blue2);
-    box-shadow: 0 0 0 4px #2864f020;
+    box-shadow: 0 0 0 4px #101F8F20;
   }
   .roadmap-card {
     flex: 1;
     padding: 18px 16px;
     border: 1px solid transparent;
-    border-top: 3px solid #cbd5f6;
+    border-top: 3px solid #101F8F33;
     background: #f7f8fa;
   }
   .roadmap-achieved .roadmap-card,
   .roadmap-current .roadmap-card {
     border-top-color: var(--blue2);
-    background: #eef2ff;
+    background: #101F8F0D;
   }
   .roadmap-current .roadmap-card {
     border-color: var(--blue2);
@@ -431,7 +431,7 @@
   }
   .roadmap-status {
     padding: 3px 6px;
-    border: 1px solid #cbd5f6;
+    border: 1px solid #101F8F33;
     border-radius: 20px;
     background: var(--bg);
     letter-spacing: 0.04em;
@@ -481,12 +481,12 @@
     border: 1px solid #dce3ef;
   }
   .chip.active {
-    @apply bg-[#eaf1ff] border-[#a9c3ff] text-brand-dark font-semibold;
+    @apply bg-[#101F8F0F] border-[#101F8F59] text-brand-dark font-semibold;
   }
   .card {
     @apply bg-white rounded-[14px] p-[19px];
     border: 1px solid #e0e6f0;
-    box-shadow: 0 4px 16px #162b4d05;
+    box-shadow: 0 4px 16px #101F8F05;
     transition:
       transform 0.18s,
       border-color 0.18s,
@@ -494,11 +494,11 @@
   }
   .card:hover {
     transform: translateY(-2px);
-    border-color: #c5d5f6;
-    box-shadow: 0 12px 28px #162b4d0b;
+    border-color: #101F8F30;
+    box-shadow: 0 12px 28px #101F8F0B;
   }
   .avatar {
-    @apply w-12 h-12 rounded-xl grid place-items-center bg-[#eaf1ff] text-[#2259d5] font-bold text-base;
+    @apply w-12 h-12 rounded-xl grid place-items-center bg-[#101F8F0F] text-[#101F8F] font-bold text-base;
   }
   .top {
     @apply flex gap-[13px] items-center;
@@ -522,12 +522,12 @@
   .vouch,
   .refute {
     @apply inline-flex items-center gap-1.5 rounded-full px-[9px] py-[5px] text-xs font-bold cursor-pointer;
-    border: 1px solid #d6e3ff;
-    background: #edf3ff;
-    color: #2259d5;
+    border: 1px solid #101F8F26;
+    background: #101F8F0D;
+    color: #101F8F;
   }
   .vouch:hover {
-    background: #e3edff;
+    background: #101F8F1A;
   }
   .vouch-icon {
     @apply w-4 h-4 rounded-full grid place-items-center bg-brand text-white text-[10px];
@@ -543,7 +543,7 @@
     @apply text-xs text-muted leading-[1.45] mt-2;
   }
   .profile-comments {
-    @apply my-3 px-[14px] py-3 rounded-[10px] bg-[#f8faff] text-xs leading-[1.5] text-[#475467];
+    @apply my-3 px-[14px] py-3 rounded-[10px] bg-[#101F8F05] text-xs leading-[1.5] text-[#475467];
     border: 1px solid #e6ebf4;
   }
   .profile-comments > div + div {
@@ -574,7 +574,7 @@
   .person {
     @apply bg-white rounded-[14px] p-5;
     border: 1px solid #e0e6f0;
-    box-shadow: 0 4px 16px #162b4d05;
+    box-shadow: 0 4px 16px #101F8F05;
   }
   .person-owl {
     display: block;
@@ -582,7 +582,7 @@
     height: 76px;
     overflow: hidden;
     padding: 0;
-    background: #e9f0ff;
+    background: #101F8F12;
     margin-bottom: 14px;
     object-fit: contain;
   }
@@ -679,7 +679,7 @@
     position: relative;
     padding: 32px 34px 24px;
     background: #fff;
-    border-bottom: 1px solid #e7edf8;
+    border-bottom: 1px solid #101F8F14;
   }
   .waitlist-header .close {
     @apply absolute right-[18px] top-[18px] w-[34px] h-[34px] text-[22px] text-[#526079];
@@ -743,15 +743,15 @@
   .form-grid input:focus,
   .form-grid select:focus,
   .form-grid textarea:focus {
-    border-color: #7aa2ff;
-    box-shadow: 0 0 0 3px #155eef18;
+    border-color: #101F8F80;
+    box-shadow: 0 0 0 3px #101F8F18;
   }
   .privacy-note {
-    @apply flex gap-2.5 items-start mt-5 px-[13px] py-3 rounded-[11px] bg-[#f8faff] text-[#667085] text-xs leading-[1.55];
+    @apply flex gap-2.5 items-start mt-5 px-[13px] py-3 rounded-[11px] bg-[#101F8F05] text-[#667085] text-xs leading-[1.55];
     border: 1px solid #e4eaf5;
   }
   .privacy-note > span:first-child {
-    @apply text-[#155eef] text-[17px] leading-none;
+    @apply text-[#101F8F] text-[17px] leading-none;
   }
   .form-actions {
     @apply flex flex-col gap-2.5 mt-5;
@@ -980,7 +980,7 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #c5d5f6;
+      background: #101F8F30;
     }
     .team-carousel[data-carousel="true"] .team-carousel-dot[aria-current="true"]::before {
       width: 20px;

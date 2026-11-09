@@ -26,7 +26,7 @@ export function createWaitlistEmail({
   const address = escapeHtml(email);
   const skill = escapeHtml(expertise);
   const replyUrl = `mailto:${encodeURIComponent(email).replace(/%40/g, "@")}?subject=${encodeURIComponent("Your rEcruit waitlist signup")}`;
-  const brand = "#2864F0";
+  const brand = "#101F8F";
   const paper = "#FFFFFF";
   const ink = "#101828";
 

@@ -59,7 +59,7 @@ export function Wordmark() {
       data-testid="wordmark"
       className="text-[29px] leading-none font-bold tracking-[-1.7px] max-phone:text-[25px]"
     >
-      r<span className="text-[#3467ff]">E</span>cruit
+      r<span className="text-[#101F8F]">E</span>cruit
     </span>
   );
 }
