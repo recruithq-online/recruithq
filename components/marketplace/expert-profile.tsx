@@ -19,7 +19,7 @@ export function Profile({ id }: { id: number }) {
   const expert = experts.find((e) => e.id === id);
   if (!expert)
     return (
-      <Page>
+      <Page back>
         <Empty title="Profile unavailable">
           This profile may have been reset by a refresh.{" "}
           <Link href={routeTo("explore")}>Browse sample experts →</Link>
@@ -28,7 +28,7 @@ export function Profile({ id }: { id: number }) {
     );
   const e: MarketplaceExpert = expert;
   return (
-    <Page>
+    <Page back>
       <div className="grid grid-cols-1 items-start gap-7 laptop:grid-cols-[minmax(0,1.6fr)_minmax(290px,.8fr)]">
         <Card>
           <div

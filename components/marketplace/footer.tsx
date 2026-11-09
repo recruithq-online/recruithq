@@ -87,9 +87,9 @@ export function Footer() {
             </a>
           </div>
         </div>
-        <div className="border-t border-border py-5 text-center text-xs leading-relaxed">
+        {/* <div className="border-t border-border py-5 text-center text-xs leading-relaxed">
           <span>© 2026 rEcruit. Reputation is earned.</span>
-        </div>
+        </div> */}
       </Container>
     </footer>
   );

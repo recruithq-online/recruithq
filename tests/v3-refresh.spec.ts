@@ -73,7 +73,7 @@ for (const width of [320, 390, 768, 1440]) {
   });
 }
 
-test("signed-in listing has Back while workspace and profiles keep their navigation", async ({
+test("signed-in listing and profiles have Back while workspace keeps its navigation", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -112,10 +112,15 @@ test("signed-in listing has Back while workspace and profiles keep their navigat
   await page.getByRole("button", { name: "Go back", exact: true }).click();
   await expect(page).toHaveURL(/\/marketplace\/work$/);
   await check();
-  await navigation.getByRole("link", { name: "Explore", exact: true }).click();
+  await page
+    .getByRole("link", { name: "Discover expertise", exact: true })
+    .click();
   await page.getByRole("link", { name: "View profile for Nova" }).click();
   await expect(page).toHaveURL(/\/marketplace\/profile\/1$/);
-  await check();
+  const back = page.getByRole("button", { name: "Go back", exact: true });
+  await expect(back.locator("svg")).toBeVisible();
+  await back.click();
+  await expect(page).toHaveURL(/\/marketplace\/explore$/);
 });
 
 for (const route of ["explore", "hire", "list"]) {
