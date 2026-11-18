@@ -122,7 +122,7 @@ export function HomeExperience() {
               rel="noopener noreferrer"
               aria-label="Explore rEcruit (opens in a new tab)"
             >
-              Explore rEcruit <span aria-hidden="true">↗</span>
+              Public Preview <span aria-hidden="true">↗</span>
             </a>
             <WaitlistTrigger>
               Join rEcruit Waitlist <span aria-hidden="true">→</span>
