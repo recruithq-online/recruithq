@@ -115,6 +115,15 @@ export function HomeExperience() {
             and proof of work. Join the waitlist to be part of what’s next.
           </p>
           <div className="coming-soon-actions">
+                <a
+              className="whitepaper-cta"
+              href="https://stage.recruithq.online"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Explore rEcruit (opens in a new tab)"
+            >
+              Explore rEcruit <span aria-hidden="true">↗</span>
+            </a>
             <WaitlistTrigger>
               Join rEcruit Waitlist <span aria-hidden="true">→</span>
             </WaitlistTrigger>
@@ -136,6 +145,7 @@ export function HomeExperience() {
                 Download PDF <span aria-hidden="true">↓</span>
               </a> */}
             </div>
+        
           </div>
           <div className="waitlist-note">
             For experts who want to be among the first to join rEcruit.
